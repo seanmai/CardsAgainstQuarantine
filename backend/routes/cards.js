@@ -37,6 +37,8 @@ router.route('/:id').delete((req, res) => {
         name = category.name;
     });
     Card.deleteMany({category: name})
+        .then(() => res.json('Cards deleted'))
+        .catch(err => res.status(400).json(err));
     Category.findByIdAndDelete(req.params.id)
         .then(() => res.json('Category deleted'))
         .catch(err => res.status(400).json(err));
