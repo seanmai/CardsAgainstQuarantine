@@ -2,9 +2,12 @@ let game = class{
 
 	constructor(username, id, category, rounds, maxPlayers){
 		this.id = id;
+<<<<<<< HEAD
 
 	constructor(username, category, rounds, maxPlayers){
 		added game router and game classes
+=======
+>>>>>>> fixed typos
 		this.cardCategory = category;
 		this.rounds = rounds;
 		this.maxPlayers = maxPlayers;
@@ -12,17 +15,19 @@ let game = class{
 		this.currentRound = 0;
 		this.scoreboard = [];
 		this.czar = username;
+<<<<<<< HEAD
 		let user = {
 			name: username,
 			cards: []
 		}
 		this.players = [user];
+=======
+>>>>>>> fixed typos
 		let user = {
 			name: username,
-			cards: [];
+			cards: []
 		}
 		this.players = [user];
-		this.czar = user;
 	}	
 
 	setCzar(){
