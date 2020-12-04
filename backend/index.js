@@ -11,9 +11,11 @@ app.use(express.json());
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+const cardsRouter = require("./routes/cards");
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/card-categories", cardsRouter);
 
 mongoose.connect(process.env.DATABASEURI, {useNewUrlParser: true, useCreateIndex: true});
 const connection = mongoose.connection
