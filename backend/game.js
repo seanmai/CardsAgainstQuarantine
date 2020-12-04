@@ -1,18 +1,19 @@
 let game = class{
 
-	constructor(username, category, rounds, maxPlayers){
+	constructor(username, id, category, rounds, maxPlayers){
+		this.id = id;
 		this.cardCategory = category;
 		this.rounds = rounds;
 		this.maxPlayers = maxPlayers;
 		this.numPlayers = 1;
 		this.currentRound = 0;
 		this.scoreboard = [];
+		this.czar = username;
 		let user = {
 			name: username,
-			cards: [];
+			cards: []
 		}
 		this.players = [user];
-		this.czar = user;
 	}	
 
 	setCzar(){

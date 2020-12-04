@@ -13,7 +13,6 @@ router.route('/').post((req, res) => {
 router.route('/:id').post((req, res) => {
 	let username = req.body.username;
 	let gameId = req.params.id;
-	console.log("ahfahjvdfchad");
 });
 
 router.route('/:id/selectWinner').post((req, res) => {
