@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Category = require('./category.model');
 
 const cardSchema = new Schema({
     content: {
