@@ -1,0 +1,82 @@
+.Container {
+    height: 100vh;
+    display: grid;
+    place-items: center;
+}
+
+.Login {
+    margin-top: 5px;
+    display: grid;
+    place-items: center;
+    outline: 2px solid green;
+    width: 100vh;
+}
+
+/* .Login form input {
+
+    width: 100vh;
+} */
+
+
+.Title{
+    font-size: 40px;
+    margin: 10px;
+}
+
+.CredentialField {
+    display: inline-block;
+    place-items: center;
+    margin: 5px;
+
+    width: 100%;
+}
+.CredentialField label {
+    /* padding: 10px; */
+    font-size: 30px;
+}
+
+.CredentialField input {
+    padding: 10px;
+    float:right;
+    
+}
+
+
+.LoginForm {
+    margin:20px auto;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.ButtonContainer {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+
+}
+
+.Button {
+    /* outline: 2px solid green; */
+    background-color: #4A86E8;
+    border-width: 1px;
+
+    color: white;
+    margin: 5px;
+    font-size: 14px; 
+    padding: 10px 40px;
+    width: 100%;
+    border-radius: 5px;
+    white-space: nowrap;
+    text-align:center;
+
+
+}
+
+
+
+
+/* 
+.ButtonStyle {
+
+} */
