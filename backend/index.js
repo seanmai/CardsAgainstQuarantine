@@ -33,10 +33,12 @@ app.use(passport.session())
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const cardsRouter = require("./routes/cards");
+const gamesRouter = require("./routes/games");
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/card-categories", cardsRouter);
+app.use("/games", gamesRouter);
 
 mongoose.connect(process.env.DATABASEURI, {useNewUrlParser: true, useCreateIndex: true});
 const connection = mongoose.connection
