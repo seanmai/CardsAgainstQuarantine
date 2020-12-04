@@ -1,6 +1,9 @@
-var _ = require('underscore');
 
+var _ = require('underscore');
 let Game = require('./game.js');
+var _ = require('underscore'),
+
+const Game = require('game.js');
 
 let games = class{
 
@@ -15,6 +18,15 @@ let games = class{
 
 	findGame(gameId){
 		return _.findWhere(this.gamesList, {id:gameId});
+		this.games = [];
+	}	
+
+	createGame(userInfo, gameInfo){
+		let game = new Game(userInfo.username, gameInfo.category, gameInfo.rounds, gameInfo.maxPlayers);
+	}
+
+	findGame(gameId){
+		return _.findWhere(this.games, {id:gameId});
 	}
 
 	deleteGame(id){
