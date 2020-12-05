@@ -8,6 +8,9 @@ export default class Lobby extends Component {
 
         return (
             // TODO Design Lobby
+            <div>
+                <h1>Lobby</h1>
+            </div>
         );
     }
 }
