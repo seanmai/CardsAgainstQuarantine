@@ -3,14 +3,69 @@
 import React, { Component } from 'react';
 import './Lobby.css'
 
+import HelpModal from '../HelpModal/HelpModal'
+
 export default class Lobby extends Component {
+    state = {
+        display_modal: false,
+    }
+
+    showHelpModal = () => {
+        this.setState({display_modal: true})
+    }
+
+    hideHelpModal = () => {
+        this.setState({display_modal: false})
+    }
+
+    // Logout function
+    // TODO implementation
+    logoutHandler = () => {
+        console.log("Logout button clicked")
+    }
+
+    // Edit cards function
+    // TODO implementation
+    // Should load into
+    editCardHandler = () => {
+        console.log("edit card button clicked")
+    }
+
     render() {
+        let modal = null;
+        if(this.state.display_modal){
+            modal = <HelpModal showModal={this.state.display_modal} closeModal={this.hideHelpModal}></HelpModal>
+        }
 
         return (
-            // TODO Design Lobby
+            // Still need to implement admin user view
             <div>
-                <h1>Lobby</h1>
+                {modal}
+                <div className="lobby-container">
+
+                    {/* Need to pass login user through redux store */}
+                    <div><label className="loginlbl">logged in as: username</label></div>
+                    <div>
+                        <h1>Cards Against Quarantine</h1>
+                    </div>
+
+                    <div className="lobby-section">
+                        <h2>Host Game _____________. </h2>
+                        <button>Create Game</button>
+                        <h2>Join Game _____________. </h2>
+                        <input placeholder="Enter Room Code"></input>
+                        <button onClick={this.showHelpModal}>How To Play</button>
+
+                    </div> 
+
+                    <div className="footerbtn">
+                        <button className="logoutbtn" onClick={this.logoutHandler}>Logout</button>
+                        <button className="editbtn" onClick={this.editCardHandler}>Edit Cards</button>
+                    </div>
+                </div>
             </div>
+
+
         );
     }
 }
