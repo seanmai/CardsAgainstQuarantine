@@ -1,10 +1,13 @@
 const router = require('express').Router();
-const Games = require('../games.js');
+const GamesManager = require('../gamesManager.js');
 let Card = require('../models/card.model');
 
 //create a new game
+// gameInfo should contain the category, number of rounds and number 
+// of max players selected bby user 
 router.route('/').post((req, res) => {
-	Games.createGame(req.userinfo);
+	let id = GamesManager.createGame(req.username, req.gameInfo);
+	res.json('game id is: ' + id);
 });
 
 
@@ -13,10 +16,14 @@ router.route('/').post((req, res) => {
 router.route('/:id').post((req, res) => {
 	let username = req.body.username;
 	let gameId = req.params.id;
-	console.log("ahfahjvdfchad");
+	GamesManager.joinGame(username, gameId);
 });
 
 router.route('/:id/selectWinner').post((req, res) => {
+
+});
+
+router.route('/:id/roundWinner').post((req, res) => {
 
 });
 
