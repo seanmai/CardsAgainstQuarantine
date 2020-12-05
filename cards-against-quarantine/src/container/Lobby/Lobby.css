@@ -1,0 +1,81 @@
+.lobby-container {
+    height: 95vh;
+}
+
+.lobby-container button{
+    background-color: white;
+    border-width: 1px;
+    margin: 5px;
+    font-size: 1em; 
+    padding: 10px 40px;
+    border-radius: 5px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.lobby-container h1 {
+    font-size: 3em;
+    display: grid;
+    place-items: center;
+}
+
+.lobby-container input{
+    background-color: white;
+    border-width: 1px;
+    margin: 5px;
+    font-size: 1em; 
+    /* padding: 10px 40px; */
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    text-align:center;
+}
+
+
+
+.lobby-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 60vh;
+    width: 100%;
+    margin-top: 10%;
+    top: 50%;
+}
+
+.lobby-section h2{
+    font-size: 2em;
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.lobby-section button{
+    display: grid;
+}
+
+.logoutbtn {
+    left: 20px;
+}
+.editbtn {
+    right: 20px;
+}
+
+.loginlbl {
+    position: absolute;
+    top: 5px;
+    right: 5px;  
+}
+
+.footerbtn {
+    margin-top: 5vh;
+    vertical-align: bottom;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+
