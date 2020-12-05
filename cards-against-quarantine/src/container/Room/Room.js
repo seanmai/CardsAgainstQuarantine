@@ -1,5 +1,4 @@
-// Design the game room 
-
+// This container is the game room
 import React, { Component } from 'react';
 import './Room.css'
 
@@ -9,6 +8,7 @@ export default class Room extends Component {
     render() {
 
         return (
+            // TODO Design the Game Room
             <Card text={"Card Description"}></Card>
         );
     }
