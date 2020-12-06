@@ -5,18 +5,20 @@ const passport = require('passport');
 let User = require('../models/user.model');
 
 router.route('/login').get((req, res) => {
-
+    // TODO: Replace this debugging console log
+    console.log('failure')
 })
 
-router.route('/login'), passport.authenticate('local', {
+router.route('/login').post(passport.authenticate('local', {
     successRedirect: '/',
-    failureRedirect: '/login',
+    failureRedirect: '/users/login',
     // TODO: Show flash message on client side 
-    failureFlash: true
-})
+    failureFlash : true
+}))
 
 router.route('/logout').get((req, res) => {
-
+    req.logout();
+    res.redirect('/');
 })
 
 router.route('/:id').get((req, res) => {
@@ -24,14 +26,17 @@ router.route('/:id').get((req, res) => {
 })
 
 router.route('/register').post(async (req, res) => {
-    // Temp logic -- will need to use an auth middleware like passport or something
-    const username = req.body.username;
-    const password = await bcrypt.hash(req.body.password, 10);
-    const newUser = new User({username, password});
+    try {
+        const username = req.body.username;
+        const password = await bcrypt.hash(req.body.password, 10);
+        const newUser = new User({username, password});
 
-    newUser.save()
+        newUser.save()
         .then(() => res.json('User added.'))
         .catch(err => res.status(400).json(err));
+    } catch {
+        res.redirect('/register');
+    }
 });
 
 module.exports = router;
