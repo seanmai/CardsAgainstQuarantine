@@ -26,7 +26,7 @@ function initialize(passport) {
   // Support login sessions
   passport.serializeUser((user, done) => { 
     // TODO: Might need to use _id 
-    done(null, user.id);
+    done(null, user._id);
   });
   passport.deserializeUser((id, done) => { 
     User.findById(id, function(err, user) {

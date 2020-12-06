@@ -1,25 +1,28 @@
 .Container {
-    height: 100vh;
+    height: 100%;
     display: grid;
     place-items: center;
 }
 
 .Login {
-    margin-top: 5px;
+    margin: 5px;
+    margin-top: 10vh;
     display: grid;
     place-items: center;
-    outline: 2px solid green;
-    width: 100vh;
+    box-shadow: 5px;
+    padding:30px;
+    border: 1px solid #ccc ;
+    box-shadow: 1px 1px 5px #888888
 }
 
-/* .Login form input {
+.MainTitle{
+    font-size: 4em;
+    margin: 10px;
 
-    width: 100vh;
-} */
-
+}
 
 .Title{
-    font-size: 40px;
+    font-size: 2.5em;
     margin: 10px;
 }
 
@@ -27,18 +30,19 @@
     display: inline-block;
     place-items: center;
     margin: 5px;
-
     width: 100%;
 }
 .CredentialField label {
-    /* padding: 10px; */
-    font-size: 30px;
+    font-size: 1.5em;
+    height: 100%;
+    margin-top: 15px;
 }
 
 .CredentialField input {
     padding: 10px;
     float:right;
-    
+    border-width: 1px;
+    border-radius: 5px;
 }
 
 
@@ -53,14 +57,11 @@
     display: flex;
     width: 100%;
     justify-content: space-around;
-
 }
 
 .Button {
-    /* outline: 2px solid green; */
     background-color: #4A86E8;
     border-width: 1px;
-
     color: white;
     margin: 5px;
     font-size: 14px; 
@@ -69,14 +70,24 @@
     border-radius: 5px;
     white-space: nowrap;
     text-align:center;
-
-
 }
 
 
+/* Handle Small devices */
+@media screen and (max-width: 540px) {
 
+    .CredentialField label {
+        font-size: 1.3em;
+        vertical-align: center;
+    }
 
-/* 
-.ButtonStyle {
+    .Title{
+        font-size: 2.5em;
+        margin: 10px;
+    }
 
-} */
+    .MainTitle{
+        font-size: 3em;
+        margin: 10px;
+    }
+}

@@ -1,0 +1,209 @@
+.createRoomContainer {
+    width: 100%;
+    height: 100%;
+    position:relative;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.settings-div{
+    border: 1px solid #ccc;
+    padding: 30px;
+    box-shadow: 1px 1px 5px #888888;
+}
+
+.modelSelectBox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 60vh;
+    width: 100%;
+    margin-top: 10%;
+    top: 50%; 
+}
+
+.title{
+    font-size: 4em;
+    margin-top: 10vh;
+    text-align: center;
+}
+
+.createRoomContainer button{
+    background-color: white;
+    border-width: 1px;
+    margin: 5px;
+    font-size: 1em; 
+    padding: 10px 40px;
+    border-radius: 5px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.button-div{
+    margin-top: 10vh;
+    padding: 10px; 
+    display: flex;
+    align-items: center;
+}
+
+.cancelButton{
+    width:50%;
+}
+
+.createButton{
+    width:50%;
+    color: white;
+    background-color: #4A86E8 !important;
+}
+
+
+
+.category-div{
+    margin: 10px;
+}
+
+.condition-div{
+    margin: 10px;
+}
+
+.player-div{
+    margin: 10px;
+}
+
+.selector{
+    width: 20vw;
+    background-color: white;
+    border-width: 1px;
+    margin: 2px;
+    font-size: 1em; 
+    padding: 10px 40px;
+    border-radius: 5px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.category-div label{
+    font-size: 1.6em;
+    width: 30%;
+}
+
+.category-div select{
+    font-size:0.8em;
+    padding: 10px 40px;
+}
+
+.condition-div label{
+    font-size: 1.6em;
+    width: 20vw;
+}
+
+.condition-div select{
+    width: 15vw;
+    padding: 10px 5px;
+    font-size: 0.8em;
+}
+
+.condition-number-selector{
+    width: 5vw !important;
+}
+
+.player-div label{
+    font-size: 1.6em;
+    width: 20vw;
+}
+
+.player-div select{
+    padding: 10px 40px;
+    font-size: 0.8em;
+    width: 10vw;
+}
+
+/* Handle Small devices */
+@media screen and (max-width: 540px) {
+
+    .title{
+        font-size: 3em;
+        margin-top: 10vh;
+        text-align: center;
+        margin-bottom: 5vh;
+    }
+    .category-div{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .category-div select{
+        /* width: 40%; */
+        font-size:0.8em;
+        padding: 10px 10px;
+    
+    }
+
+    .condition-div{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        /* align-items: center; */
+    }
+
+    .condition-div select{
+        width: 30vw;
+        padding: 10px 0px;
+        font-size: 0.8em;
+    }
+
+    .condition-number-selector{
+        width: 12vw !important;
+        padding: 10px 5px !important;
+        font-size: 0.8em;
+    }
+
+    .player-div{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        /* align-items: center; */
+    }
+
+    .player-div select{
+        font-size: 0.8em;
+        width: 20vw;
+        padding: 10px 20px;
+    }
+
+    .category-div label{
+        font-size: 1.5em;
+        width: 30%;
+    }
+    
+    .condition-div label{
+        font-size: 1.5em;
+        width: 20vw;
+    }
+    .player-div label{
+        font-size: 1.5em;
+        width: 20vw;
+    }
+
+    .selector{
+        width: 40vw;
+        background-color: white;
+        border-width: 1px;
+        margin: 2px;
+        font-size: 1em; 
+        padding: 10px 40px;
+        border-radius: 5px;
+        white-space: nowrap;
+        text-align: center;
+    }
+
+    .settings-div{
+        border: 1px solid #ccc;
+        padding: 15px;
+        box-shadow: 1px 1px 5px #888888;
+    }
+
+}

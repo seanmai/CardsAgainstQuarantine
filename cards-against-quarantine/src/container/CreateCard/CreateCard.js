@@ -33,11 +33,16 @@ const CreateCard = () => {
             content: content,
         }
 
-        axios.post('http://localhost:4000/cards/add', card)
+        axios.post('http://localhost:4000/card-categories/cards/add', card)
             .then(res => console.log(res.data));
 
         window.location = '/cards'
     }
+
+    axios.get('http://localhost:4000/card-categories/cards')
+        .then((res) => { 
+            console.log(res);
+        });
 
 
     return (
