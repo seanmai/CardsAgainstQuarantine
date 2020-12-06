@@ -9,7 +9,11 @@ router.route('/login').get((req, res) => {
 })
 
 router.route('/login/fail').get((req, res) => {
-    res.status(400).send({ error: "login failed" });
+    res.status(401).send({ error: "login failed" });
+})
+
+router.route('/register/fail').get((req, res) => {
+    res.status(401).send({ error: "user already exists" });
 })
 
 router.route('/login').post(passport.authenticate('local', {
@@ -44,7 +48,7 @@ router.route('/register').post(async (req, res) => {
         }
     } else {
         console.log('User Already Exists');
-        res.redirect('/users/register');
+        res.redirect('/register/fail');
     }   
 });
 
