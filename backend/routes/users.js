@@ -4,13 +4,17 @@ const passport = require('passport');
 
 let User = require('../models/user.model');
 
-router.route('/login').get(checkNotAuthenticated, (req, res) => {
+router.route('/login').get((req, res) => {
     // res.render login react front-end
 })
 
+router.route('/login/fail').get((req, res) => {
+    res.status(400).send({ error: "login failed" });
+})
+
 router.route('/login').post(passport.authenticate('local', {
-    successRedirect: res.json('login successful'),
-    failureRedirect: res.status(400),
+    successRedirect: '/',
+    failureRedirect: '/users/login/fail',
     // TODO: Show flash message on client side 
     failureFlash : true
 }))
