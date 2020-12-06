@@ -1,5 +1,7 @@
 const defaultState = {
-    currentUser: {},
+    currentUser: {
+        name: null
+    },
     redirect: '/login',
     authenticated: false
 }
@@ -21,6 +23,15 @@ function reducer (state = defaultState, action){
                 ...state,
                 authenticated: true,
                 redirect: '/'
+            }
+        case "SET_UNAUTH":
+            return {
+                ...state, 
+                authenticated: false,
+                redirect: '/login',
+                currentUser: {
+                    name: null,
+                }
             }
         default: return state
     }

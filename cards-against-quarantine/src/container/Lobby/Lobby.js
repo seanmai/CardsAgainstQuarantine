@@ -23,7 +23,8 @@ class Lobby extends Component {
     // Logout function
     // TODO implementation
     logoutHandler = () => {
-        console.log("Logout button clicked")
+        console.log("Logout button clicked");
+        this.props.setLogout();
     }
 
     // Edit cards function
@@ -51,8 +52,8 @@ class Lobby extends Component {
         return (
             // Still need to implement admin user view
             <div>
-                {modal}
                 {redirect}
+                {modal}
                 <div className="lobby-container">
 
                     {/* Need to pass login user through redux store */}
@@ -96,6 +97,9 @@ function mapDispatchToProps(dispatch){
     return {
         setUser: (userObj) => {
             dispatch({type: "SET_USER", payload:userObj})
+        },
+        setLogout: (logout) => {
+            dispatch({type: "SET_UNAUTH"})
         }
     }
 }
