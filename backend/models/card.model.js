@@ -13,7 +13,12 @@ const cardSchema = new Schema({
         required: true,
         trim: true
     },
-    Category: Category.schema
+    category: {
+        type: String,
+        required: true,
+        trim: true
+    }
+    // Category: Category.schema
 });
 
 module.exports = mongoose.model('Card', cardSchema);
