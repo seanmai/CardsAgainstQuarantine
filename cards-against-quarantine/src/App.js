@@ -7,6 +7,7 @@ import CardsList from './components/cards-list.component';
 import Login from './container/Login/Login';
 import Lobby from './container/Lobby/Lobby';
 import Room from './container/Room/Room';
+import AdminPage from './container/AdminPage/AdminPage';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Route path='/login' exact component={Login}/>
       <Route path='/lobby' exact component={Lobby}/>
       <Route path='/room' exact component={Room}/>
+      <Route path='/admin' exact component={AdminPage}/>
       
     </Router>
   );

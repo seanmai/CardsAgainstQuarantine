@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class CardsList extends Component {
-    render() {
-        return (
-            <div>Cards list</div>
-        );
-    }
+const CardsList = () => {
+    return (
+        <div>Cards list</div>
+    );
 }
+
+
+export default CardsList;
