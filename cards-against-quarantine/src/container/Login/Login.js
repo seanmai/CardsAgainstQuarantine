@@ -17,9 +17,14 @@ export default class Login extends Component {
         event.preventDefault();
         if (this.state.mode === 'Sign up' && this.state.valid){
             //Signup logic
-            console.log("JACKY");
+            axios.post('http://localhost:4000/users/register', this.state.credentials)
+            .then(res => console.log(res.data));
+        }else if (this.state.mode === 'Login'){
+            
+            axios.post('http://localhost:4000/users/login', this.state.credentials)
+            .then(res => console.log(res.data));
         }
-        console.log("wu");
+
     }
 
     createNewUser = () => {
