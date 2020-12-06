@@ -64,9 +64,7 @@ class Login extends Component {
                 <label className="MainTitle">Cards Against Humanity</label>
                 <div className="Login">
                     <label className="Title">{this.state.mode}</label>
-
                     <form className="LoginForm" onSubmit={this.submitHandler}>
-
                         <div className="CredentialField">
                             <label>Username: </label>
                             <input type="text" onChange={e => this.setState(prevState => ({
