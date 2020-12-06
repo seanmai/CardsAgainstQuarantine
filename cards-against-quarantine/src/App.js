@@ -20,17 +20,11 @@ function App() {
 
       {/* Routes to check UI containers */}
       <Route path='/login' exact component={Login}/>
-      <Route path='/lobby' exact component={Lobby}/>
       <Route path='/room' exact component={Room}/>
       <Route path='/create' exact component={CreateRoom}/>
+      <Route path='/' exact component={Lobby}/>
     </Router>
   );
 }
-
-// function mapStateToProps(state) {
-//   return {
-//     currentUser: state.currentUser
-//   }
-// }
 
 export default connect() (App);
