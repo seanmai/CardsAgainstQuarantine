@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Login.css'
+import axios from 'axios';
 
 export default class Login extends Component {
 
@@ -33,13 +34,16 @@ export default class Login extends Component {
         if(this.state.mode === 'Sign up'){
             confirmPassword = (
                 <div className="CredentialField">
-                    {/* <label>Confirm Password: </label> */}
-                    <input type="text" onChange={e => this.setState({valid: e.target.value===this.state.credentials.password})}></input>     
+                    <label>Confirm Password: </label>
+                    <input type="password" onChange={e => this.setState({valid: e.target.value===this.state.credentials.password})}></input>     
                 </div>
             )
         }
+
         return (
             <div className="Container">
+                <label className="MainTitle">Cards Against Humanity</label>
+
                 <div className="Login">
                     <label className="Title">{this.state.mode}</label>
 
@@ -58,7 +62,7 @@ export default class Login extends Component {
 
                         <div className="CredentialField">
                             <label>Password: </label>
-                            <input type="text" onChange={e => this.setState(prevState => ({
+                            <input type="password" onChange={e => this.setState(prevState => ({
                                 ...prevState,
                                 credentials: {
                                     ...prevState.credentials,
