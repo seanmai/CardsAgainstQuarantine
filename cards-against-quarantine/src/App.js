@@ -7,6 +7,9 @@ import CardsList from './components/cards-list.component';
 import Login from './container/Login/Login';
 import Lobby from './container/Lobby/Lobby';
 import Room from './container/Room/Room';
+import CreateRoom from './container/CreateRoom/CreateRoom';
+
+import { connect } from 'react-redux';
 
 function App() {
   return (
@@ -19,9 +22,15 @@ function App() {
       <Route path='/login' exact component={Login}/>
       <Route path='/lobby' exact component={Lobby}/>
       <Route path='/room' exact component={Room}/>
-      
+      <Route path='/create' exact component={CreateRoom}/>
     </Router>
   );
 }
 
-export default App;
+// function mapStateToProps(state) {
+//   return {
+//     currentUser: state.currentUser
+//   }
+// }
+
+export default connect() (App);

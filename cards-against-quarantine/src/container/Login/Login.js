@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import './Login.css'
 import axios from 'axios';
+import {connect} from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
-export default class Login extends Component {
+class Login extends Component {
 
     state = {
         mode: 'Login',
@@ -12,6 +14,8 @@ export default class Login extends Component {
         },
         valid: false
     }
+
+
 
     submitHandler = (event) => {
         event.preventDefault();
@@ -31,10 +35,19 @@ export default class Login extends Component {
         this.setState({mode: 'Sign up'})
     }
 
+    componentDidMount(){
+        const user = {
+            name: "Jacky",
+        }
+        this.props.setUser(user);
+        
+        
 
+    }
 
     render() {
         let confirmPassword = null;
+
         console.log(this.state.credentials);
         if(this.state.mode === 'Sign up'){
             confirmPassword = (
@@ -45,8 +58,10 @@ export default class Login extends Component {
             )
         }
 
+        let redirect = <Redirect to={this.props.redirect}/>;
         return (
             <div className="Container">
+                {redirect}
                 <label className="MainTitle">Cards Against Humanity</label>
 
                 <div className="Login">
@@ -85,10 +100,23 @@ export default class Login extends Component {
                     </form>
                 </div>
             </div>
-
-
-        
         );
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        currentUser: state.currentUser,
+        redirect: state.redirect
+    }
+}
+
+function mapDispatchToProps(dispatch){
+    return {
+        setUser: (userObj) => {
+            dispatch({type: "SET_USER", payload:userObj})
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps) (Login);

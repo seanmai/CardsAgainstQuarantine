@@ -2,10 +2,11 @@
 
 import React, { Component } from 'react';
 import './Lobby.css'
-
 import HelpModal from '../HelpModal/HelpModal'
+import {connect} from 'react-redux';
 
-export default class Lobby extends Component {
+
+class Lobby extends Component {
     state = {
         display_modal: false,
     }
@@ -31,12 +32,13 @@ export default class Lobby extends Component {
         console.log("edit card button clicked")
     }
 
+
     render() {
         let modal = null;
         if(this.state.display_modal){
             modal = <HelpModal showModal={this.state.display_modal} closeModal={this.hideHelpModal}></HelpModal>
         }
-
+        
         return (
             // Still need to implement admin user view
             <div>
@@ -44,7 +46,7 @@ export default class Lobby extends Component {
                 <div className="lobby-container">
 
                     {/* Need to pass login user through redux store */}
-                    <div><label className="loginlbl">logged in as: username</label></div>
+                    <div><label className="loginlbl">logged in as: {this.props.currentUser.name}</label></div>
                     <div>
                         <h1>Cards Against Quarantine</h1>
                     </div>
@@ -70,3 +72,20 @@ export default class Lobby extends Component {
     }
 }
 
+
+
+function mapStateToProps(state) {
+    return {
+        currentUser: state.currentUser
+    }
+}
+
+function mapDispatchToProps(dispatch){
+    return {
+        setUser: (userObj) => {
+            dispatch({type: "SET_USER", payload:userObj})
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps) (Lobby);
