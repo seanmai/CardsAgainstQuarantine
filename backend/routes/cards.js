@@ -11,7 +11,7 @@ router.route('/').get((req, res) => {
 router.route('/add').post((req, res) => {
     const name = req.body.name;
 
-    const newCategory = new Category({});
+    const newCategory = new Category({name});
 
     newCategory.save()
         .then(() => res.json('Category added.'))
@@ -55,7 +55,7 @@ router.route('/cards/add').post((req, res) => {
     const type = req.body.type;
     const category = req.body.category;
 
-    const newCard = new Card({});
+    const newCard = new Card({content, type, category});
 
     newCard.save()
         .then(() => res.json('Card added.'))
