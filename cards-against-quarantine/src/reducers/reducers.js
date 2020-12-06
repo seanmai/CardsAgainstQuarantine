@@ -1,6 +1,7 @@
 const defaultState = {
     currentUser: {},
-    redirect: '/login'
+    redirect: '/login',
+    authenticated: false
 }
 
 function reducer (state = defaultState, action){
@@ -8,8 +9,18 @@ function reducer (state = defaultState, action){
         case "SET_USER":
             return {
                 ...state,
-                currentUser: action.payload,
-                redirect: '/lobby'
+                currentUser: action.payload
+            }
+        case "SET_REDIRECT":
+            return {
+                ...state,
+                redirect: action.payload
+            }
+        case "SET_AUTH":
+            return {
+                ...state,
+                authenticated: true,
+                redirect: '/'
             }
         default: return state
     }

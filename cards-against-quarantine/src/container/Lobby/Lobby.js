@@ -3,7 +3,8 @@
 import React, { Component } from 'react';
 import './Lobby.css'
 import HelpModal from '../HelpModal/HelpModal'
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 
 class Lobby extends Component {
@@ -38,11 +39,20 @@ class Lobby extends Component {
         if(this.state.display_modal){
             modal = <HelpModal showModal={this.state.display_modal} closeModal={this.hideHelpModal}></HelpModal>
         }
-        
+
+        //Redirect to '/login' if authenticated
+        let redirect = null;
+        if (!this.props.auth) {
+            redirect = <Redirect to={this.props.redirect}/>;
+        }else {
+            redirect = null;
+        }
+    
         return (
             // Still need to implement admin user view
             <div>
                 {modal}
+                {redirect}
                 <div className="lobby-container">
 
                     {/* Need to pass login user through redux store */}
@@ -76,7 +86,9 @@ class Lobby extends Component {
 
 function mapStateToProps(state) {
     return {
-        currentUser: state.currentUser
+        currentUser: state.currentUser,
+        redirect: state.redirect,
+        auth: state.authenticated
     }
 }
 

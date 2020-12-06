@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Login.css'
 import axios from 'axios';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 class Login extends Component {
@@ -12,10 +12,9 @@ class Login extends Component {
             username: '',
             password: ''
         },
-        valid: false
+        valid: false,
+        auth: false
     }
-
-
 
     submitHandler = (event) => {
         event.preventDefault();
@@ -23,10 +22,10 @@ class Login extends Component {
             //Signup logic
             axios.post('http://localhost:4000/users/register', this.state.credentials)
             .then(res => console.log(res.data));
+
         }else if (this.state.mode === 'Login'){
-            
             axios.post('http://localhost:4000/users/login', this.state.credentials)
-            .then(res => console.log(res.data));
+            .then(res => this.setState({auth: res.status === 200}));
         }
 
     }
@@ -35,14 +34,14 @@ class Login extends Component {
         this.setState({mode: 'Sign up'})
     }
 
-    componentDidMount(){
-        const user = {
-            name: "Jacky",
+    componentDidUpdate(){
+        // Authentication steps
+        if (this.state.auth){
+            this.props.setUser({
+                name: this.state.credentials.username
+            })
+            this.props.setAuth(this.state.auth);
         }
-        this.props.setUser(user);
-        
-        
-
     }
 
     render() {
@@ -63,7 +62,6 @@ class Login extends Component {
             <div className="Container">
                 {redirect}
                 <label className="MainTitle">Cards Against Humanity</label>
-
                 <div className="Login">
                     <label className="Title">{this.state.mode}</label>
 
@@ -94,7 +92,7 @@ class Login extends Component {
                         {confirmPassword}
                         <div className="ButtonContainer">
                             <button className="Button" type="submit">{this.state.mode}</button>
-                            {this.state.mode == 'Login' ? <button className="Button" onClick={this.createNewUser}>New User</button> : null}
+                            {this.state.mode === 'Login' ? <button className="Button" onClick={this.createNewUser}>New User</button> : null}
 
                         </div>
                     </form>
@@ -107,7 +105,8 @@ class Login extends Component {
 function mapStateToProps(state) {
     return {
         currentUser: state.currentUser,
-        redirect: state.redirect
+        redirect: state.redirect,
+        auth: state.authenticated
     }
 }
 
@@ -115,6 +114,12 @@ function mapDispatchToProps(dispatch){
     return {
         setUser: (userObj) => {
             dispatch({type: "SET_USER", payload:userObj})
+        },
+        setRedirect: (path) => {
+            dispatch({type: "SET_REDIRECT", payload:path})
+        },
+        setAuth: (auth) => {
+            dispatch({type: "SET_AUTH", payload: auth})
         }
     }
 }
