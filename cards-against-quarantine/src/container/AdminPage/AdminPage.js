@@ -2,8 +2,8 @@
 import React, {Component} from 'react';
 import './AdminPage.css';
 
-import CardsList from '../../components/cards-list.component';
-import CreateCard from '../../components/create-card.component';
+import CardsList from '../../components/CardsList/CardsList';
+import CreateCard from '../CreateCard/CreateCard';
 
 export default class AdminPage extends Component {
     render() {
