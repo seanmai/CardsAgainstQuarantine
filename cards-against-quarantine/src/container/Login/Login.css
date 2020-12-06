@@ -10,7 +10,7 @@
     display: grid;
     place-items: center;
     box-shadow: 5px;
-    padding:10px;
+    padding:30px;
     border: 1px solid #ccc ;
     box-shadow: 1px 1px 5px #888888
 }

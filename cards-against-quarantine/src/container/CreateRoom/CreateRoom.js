@@ -43,7 +43,7 @@ export default class CreateRoom extends Component {
             <div className="createRoomContainer">
                 <label className="title">Create Game</label>
                 <div className="modelSelectBox">                
-                    <div>
+                    <div className="settings-div">
                         <form onSubmit={this.submitHandler}>
                             <div className="category-div">
                                 <div>
