@@ -17,7 +17,7 @@ const CreateCard = () => {
     const [modalIsOpen, setIsOpen] = useState(false);
     const [content, setContent] = useState('');
     const [type, setType] = useState('black');
-    const [category, setCategory] = useState('none');
+    const [category, setCategory] = useState('');
     const [categoryList, setCategoryList] = useState([]);
 
     const openModal = () => setIsOpen(true);
@@ -37,10 +37,11 @@ const CreateCard = () => {
         console.log(card);
 
         axios.post('http://localhost:4000/card-categories/cards/add', card)
-            .then(res => console.log(res))
+            .then((res) => {
+                console.log(res);
+                window.location = '/admin';
+            })
             .catch(err => console.log(err));
-        
-        // window.location = '/admin'
     }
 
     useEffect(() => {
@@ -63,7 +64,7 @@ const CreateCard = () => {
                         <h1>New Card</h1>
                         <label htmlFor="category">Card Category: </label>
                         <select value={category} onChange={handleCategoryChange} name="category" id="categories">
-                            <option value="none">Please Select a Category</option>
+                            <option value="">Please Select a Category</option>
                             {categoryList.map((category) => {return <option key={category._id} value={category.name}>{category.name}</option>;})}
                         </select>
                         <br/>
