@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal'
 import axios from 'axios';
 
 const customStyles = {
-    content : {
+    content: {
         top: '40%',
         left: '40%',
         bottom: 'auto',
@@ -14,10 +14,11 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 const CreateCard = () => {
-    const [modalIsOpen, setIsOpen] = React.useState(false);
-    const [content, setContent] = React.useState('');
-    const [type, setType] = React.useState('black');
-    const [category, setCategory] = React.useState('');
+    const [modalIsOpen, setIsOpen] = useState(false);
+    const [content, setContent] = useState('');
+    const [type, setType] = useState('black');
+    const [category, setCategory] = useState('');
+    const [categoryList, setCategoryList] = useState([]);
 
     const openModal = () => setIsOpen(true);
     const closeModal = () => setIsOpen(false);
@@ -35,52 +36,51 @@ const CreateCard = () => {
 
         axios.post('http://localhost:4000/card-categories/cards/add', card)
             .then(res => console.log(res.data));
-
-        window.location = '/cards'
+        window.location = '/admin'
     }
 
-    axios.get('http://localhost:4000/card-categories/cards')
-        .then((res) => { 
-            console.log(res);
-        });
+    useEffect(() => {
+        axios.get('http://localhost:4000/card-categories')
+        .then((res) => {
+            setCategoryList(res.data);
+        }); 
+    }, []);
 
 
     return (
         <div>
-            <button onClick={openModal}>Create Card</button>
+            <button onClick={openModal}>Add Card</button>
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
                 style={customStyles}
             >
-                    <form id="create_card_form" onSubmit={handleSubmit}>
+                    <form id="create-card-form" onSubmit={handleSubmit}>
+                        <h1>New Card</h1>
                         <label htmlFor="category">Card Category: </label>
                         <select value={category} onChange={handleCategoryChange} name="category" id="categories">
-                            <option value="nsfw">NSFW</option>
-                            <option value="family_friendly">Family Friendly</option>
-                            <option value="french">French</option>
-                            <option value="christmas">Christmas</option>
+                            {categoryList.map((category) => {return <option key={category._id} value={category.name}>{category.name}</option>;})}
                         </select>
                         <br/>
-                        <label htmlFor="card_type">Card Type: </label>
+                        <label htmlFor="card-type">Card Type: </label>
                         <input 
                             type="radio" 
-                            id="black_card_type" 
+                            id="black-card-type" 
                             value="black" 
                             name="card_type" 
                             checked={type === "black"}
                             onChange={handleTypeChange}
                         />
-                        <label htmlFor="black_card_type">Black</label>
+                        <label htmlFor="black-card-type">Black</label>
                         <input 
                             type="radio" 
-                            id="white_card_type" 
+                            id="white-card-type" 
                             value="white" 
-                            name="card_type"
+                            name="card-type"
                             checked={type === "white"}
                             onChange={handleTypeChange}
                         />
-                        <label htmlFor="black_card_type">White</label>
+                        <label htmlFor="black-card-type">White</label>
                         <br/>
                         <label htmlFor="content">Card Content: </label>
                         <input type="text" value={content} onChange={handleContentChange}/>

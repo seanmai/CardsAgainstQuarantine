@@ -1,56 +1,24 @@
-import React from 'react';
-
-const cardlist = [
-    {
-        type: "black",
-        category: "nsfw",
-        content: "asd"  
-    },
-    {
-        type: "black",
-        category: "french",
-        content: "asdf"  
-    },
-    {
-        type: "white",
-        category: "french",
-        content: "asdfg"  
-    },
-    {
-        type: "white",
-        category: "nsfw",
-        content: "asdfs"  
-    },
-    {
-        type: "white",
-        category: "nsfw",
-        content: "asdsf"  
-    },
-    {
-        type: "black",
-        category: "nsfw",
-        content: "asdaf"  
-    },
-];
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
+import './CardsList.css'
 
 const CardsList = () => {
-    const [itemList, setItemList] = React.useState([]);
+    const [cardList, setCardList] = useState([]);
 
-    const getCardsList = () => {
-        const itemList = cardlist.map((card) => {
-            return <li key={card.content}>{card.content}</li>;
-        });
-        return itemList;
-    };
+    useEffect(() => {
+        axios.get('http://localhost:4000/card-categories/cards')
+            .then((res) => {
+                setCardList(res['data']);
+            });
+    }, []);
 
     return (
-        <div>
-            <ul>
-                {getCardsList()}
+        <div id="card-list-container">
+            <ul id="card-list">
+                {cardList.map((card) => { return <li key={card._id}>{card.content}</li> })}
             </ul>
         </div>
     );
 }
-
 
 export default CardsList;
