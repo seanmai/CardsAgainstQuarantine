@@ -6,6 +6,9 @@ import Login from './container/Login/Login';
 import Lobby from './container/Lobby/Lobby';
 import Room from './container/Room/Room';
 import AdminPage from './container/AdminPage/AdminPage';
+import CreateRoom from './container/CreateRoom/CreateRoom';
+
+import { connect } from 'react-redux';
 
 function App() {
   return (
@@ -14,12 +17,13 @@ function App() {
 
       {/* Routes to check UI containers */}
       <Route path='/login' exact component={Login}/>
-      <Route path='/lobby' exact component={Lobby}/>
       <Route path='/room' exact component={Room}/>
       <Route path='/admin' exact component={AdminPage}/>
       
+      <Route path='/create' exact component={CreateRoom}/>
+      <Route path='/' exact component={Lobby}/>
     </Router>
   );
 }
 
-export default App;
+export default connect() (App);

@@ -36,7 +36,7 @@ const CreateCard = () => {
 
         console.log(card);
 
-        axios.post('http://localhost:4000/card-categories/cards/add', { data: card})
+        axios.post('http://localhost:4000/card-categories/cards/add', card)
             .then(res => console.log(res))
             .catch(err => console.log(err));
         

@@ -3,8 +3,9 @@
 
 import React, { Component } from 'react';
 import './CreateRoom.css'
+import { connect } from 'react-redux';
 
-export default class CreateRoom extends Component {
+class CreateRoom extends Component {
     constructor(props){
         super(props);   
         this.state = {
@@ -96,3 +97,13 @@ export default class CreateRoom extends Component {
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        currentUser: state.currentUser,
+        redirect: state.redirect,
+        auth: state.authenticated
+    }
+}
+
+
+export default connect(mapStateToProps) (CreateRoom);
