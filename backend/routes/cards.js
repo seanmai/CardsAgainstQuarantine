@@ -10,7 +10,6 @@ router.route('/').get((req, res) => {
 
 router.route('/add').post((req, res) => {
     const name = req.body.name;
-
     const newCategory = new Category({name});
 
     newCategory.save()
@@ -32,16 +31,14 @@ router.route('/:id').post((req, res) => {
 
 // Deletes category and all cards in that category
 router.route('/:id').delete((req, res) => {
-    let name = '';
-    Catagory.findById(id, (category) => {
-        name = category.name;
-    });
-    Card.deleteMany({category: name})
-        .then(() => res.json('Cards deleted'))
-        .catch(err => res.status(400).json(err));
-    Category.findByIdAndDelete(req.params.id)
-        .then(() => res.json('Category deleted'))
-        .catch(err => res.status(400).json(err));
+    Category.findById(req.params.id)
+    .then(foundCategory => {
+        Category.deleteMany({_id: foundCategory._id})
+            .then(() => res.json('Category deleted.'))
+            .catch(err => res.status(400).json(err));
+        return Card.deleteMany({category: foundCategory.name});
+    })
+    .catch(err => res.status(400).json(err));
 });
 
 router.route('/cards').get((req, res) => {
