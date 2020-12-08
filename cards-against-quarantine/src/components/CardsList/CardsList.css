@@ -1,0 +1,27 @@
+#card-table{
+    width: 100%;
+    max-width: 700px;
+    margin: 0 0 10px 0;
+    border-collapse: collapse;
+    line-height: 1.8em;
+}
+
+#card-table th {
+    text-align: left;
+}
+
+#card-table .card-content {
+    width: 50%;
+}
+
+#card-table .button-container {
+    float: right;
+}
+
+#card-table button {
+    margin: 0 5px;
+}
+
+#card-table .card-row:hover {
+    background-color: #eeeeee;
+}

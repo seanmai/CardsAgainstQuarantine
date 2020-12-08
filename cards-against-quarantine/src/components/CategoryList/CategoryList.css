@@ -1,0 +1,30 @@
+#category-list {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    max-width: 700px;
+}
+
+#category-list li {
+    border: 1px solid black;
+    border-radius: 3px;
+    line-height: 2em;
+    padding: 0px 5px;
+    margin: 5px 0;
+}
+
+#category-list li:hover {
+    background-color: #eeeeee;
+}
+
+.list-item {
+    font-weight: normal;
+}
+
+.button-container {
+    float: right;
+}
+
+.button-container button {
+    margin: 0 5px;
+}
