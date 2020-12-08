@@ -20,11 +20,12 @@ router.route('/add').post((req, res) => {
 // Change to put request later
 router.route('/:id').post((req, res) => {
     Category.findById(req.params.id)
-        .then(category => {
-            category.name = req.body.name;
-            category.save()
+        .then(foundCategory => {
+            Card.updateMany({category: foundCategory.name}, {category: req.body.name})
                 .then(() => res.json('Category updated.'))
                 .catch(err => res.status(400).json(err));
+            foundCategory.name = req.body.name;
+            foundCategory.save();
         })
         .catch(err => res.status(400).json(err));
 });
@@ -32,13 +33,13 @@ router.route('/:id').post((req, res) => {
 // Deletes category and all cards in that category
 router.route('/:id').delete((req, res) => {
     Category.findById(req.params.id)
-    .then(foundCategory => {
-        Category.deleteMany({_id: foundCategory._id})
-            .then(() => res.json('Category deleted.'))
-            .catch(err => res.status(400).json(err));
-        return Card.deleteMany({category: foundCategory.name});
-    })
-    .catch(err => res.status(400).json(err));
+        .then(foundCategory => {
+            Category.deleteMany({_id: foundCategory._id})
+                .then(() => res.json('Category deleted.'))
+                .catch(err => res.status(400).json(err));
+            return Card.deleteMany({category: foundCategory.name});
+        })
+        .catch(err => res.status(400).json(err));
 });
 
 router.route('/cards').get((req, res) => {
