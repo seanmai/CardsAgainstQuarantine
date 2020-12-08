@@ -38,7 +38,7 @@ const EditCategory = (props) => {
                 onRequestClose={closeModal}
                 style={customStyles}
             >
-                    <form id="create-card-form" onSubmit={handleSubmit}>
+                    <form id="edit-category-form" onSubmit={handleSubmit}>
                         <h1>Edit Category</h1>
                         <label htmlFor="category-name">Category Name: </label>
                         <input type="text" value={categoryName} onChange={handleCategoryChange}/>

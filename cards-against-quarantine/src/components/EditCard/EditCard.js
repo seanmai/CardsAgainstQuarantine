@@ -64,7 +64,7 @@ const EditCard = (props) => {
                 onRequestClose={closeModal}
                 style={customStyles}
             >
-                    <form id="create-card-form" onSubmit={handleSubmit}>
+                    <form id="edit-card-form" onSubmit={handleSubmit}>
                         <h1>Edit Card</h1>
                         <label htmlFor="category">Card Category: </label>
                         <select value={category} onChange={handleCategoryChange} name="category" id="categories">

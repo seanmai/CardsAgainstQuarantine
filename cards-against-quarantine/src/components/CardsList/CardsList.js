@@ -27,10 +27,6 @@ const CardsList = () => {
             });
     }
 
-    const editCard = (editID, data) => {
-
-    }
-
     return (
         <div id="card-table-container">
             <table id="card-table">
@@ -43,12 +39,14 @@ const CardsList = () => {
                 </thead>
                 <tbody>
                     {cardList.map((card) => { return (
-                        <tr key={card._id}>
-                            <td>{card.content}</td>
-                            <td>{card.type}</td>
-                            <td>{card.category}</td>
-                            <td><EditCard cardID={card._id}/></td>
-                            <td><button onClick={() => {deleteCard(card._id)}}>Delete</button></td>
+                        <tr key={card._id} className="card-row">
+                            <td className="card-content">{card.content}</td>
+                            <td className="card-type">{card.type}</td>
+                            <td className="card-category">{card.category}</td>
+                            <td className="button-container">
+                                <EditCard cardID={card._id}/>
+                                <button onClick={() => {deleteCard(card._id)}}>Delete</button>
+                            </td>
                         </tr> 
                     )})}
                 </tbody>

@@ -1,14 +1,27 @@
-#card-list {
-    list-style: none;
-    padding: 0;
+#card-table{
+    width: 100%;
+    max-width: 700px;
+    margin: 0 0 10px 0;
+    border-collapse: collapse;
+    line-height: 1.8em;
 }
 
-#card-list li {
-    border: 1px solid black;
-    line-height: 1.5em;
-    padding: 0px 5px;
+#card-table th {
+    text-align: left;
 }
 
-.list-item {
-    font-weight: bold;
+#card-table .card-content {
+    width: 50%;
+}
+
+#card-table .button-container {
+    float: right;
+}
+
+#card-table button {
+    margin: 0 5px;
+}
+
+#card-table .card-row:hover {
+    background-color: #eeeeee;
 }
