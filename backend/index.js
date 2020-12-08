@@ -16,6 +16,11 @@ initializePassport(passport);
 const app = express();
 const port = process.env.PORT || 4000;
 
+app.use(function(req,res,next) {
+	req.io = io;
+	next();
+});
+
 app.use(cors());
 app.use(express.json());
 // might need this for parsing form input
@@ -38,7 +43,6 @@ const gamesRouter = require("./routes/games");
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/card-categories", cardsRouter);
-app.use("/games", gamesRouter);
 
 mongoose.connect(process.env.DATABASEURI, {useNewUrlParser: true, useCreateIndex: true});
 const connection = mongoose.connection
@@ -50,4 +54,8 @@ app.listen(port, () => {
 
     console.log("Server listening on PORT4000.");
 });
+
+
+let io = require('socket.io')(server);
+app.use("/games", gamesRouter)(io);
 

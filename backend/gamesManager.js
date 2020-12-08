@@ -29,22 +29,40 @@ let games = class{
 		let game = findGame(id);
 		game.dealCards();
 		game.playBlackCard();
-		console.log("starting game..");
 	}
 
 	joinGame(player, gameId){
 		let game = findGame(gameId);
 		//check if game found 
 		if(game.addPlayer(player)){
-			
+			return true;
 		} 
-
+		return false;
 	}
 
 	generateGameId(){
 		// check if game with that id already exists 
 		// otherwise generate another 
 		return shortid.generate();
+	}
+
+	validGameId(id){
+		let game = findGame(id);
+		if(game === undefined){
+			return false;
+		} 
+		return true;
+	}
+
+	getGameState(id){
+		let game = findGame(id);
+		return game.getState();
+	}
+
+	// card would depend on what they send from client side 
+	submitWhiteCard(username, card){
+		let game = findGame(id);
+		game.playWhiteCard(username, card);
 	}
 
 }

@@ -109,7 +109,7 @@ let game = class{
 		this.players[index].cards = _.without(this.players[index].cards, card);
 	}
 
-	// param depends on how they handle the winning card on front-end 
+	// param depends on the winning card is handled on front-end 
 	// could be username or the card 
 	selectRoundWinner(username){
 		updateScoreboard(username);
@@ -158,6 +158,17 @@ let game = class{
 				i.score++;
 			}
 		});
+	}
+
+	getState(){
+		state = {
+			currentRound = this.currentRound;
+			czar = this.czar;
+			players = this.players;
+			boardCards = this.boardCards;
+			blackCard = this.blackCard;
+		}
+		return state;
 	}
 
 	// getRandomNumber(max){
