@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import './CategoryList.css';
+import EditCategory from '../EditCategory/EditCategory';
 
 const CategoryList = () => {
     const [categoryList, setCategoryList] = useState([]);
@@ -29,7 +30,10 @@ const CategoryList = () => {
                 {categoryList.map((category) => { return (
                     <li key={category._id}>
                         <span className="list-item">{category.name}</span>
-                        <button onClick={() => { deleteCategory(category._id) }}>Delete</button>
+                        <span className="button-container">
+                            <EditCategory categoryID={category._id}/>
+                            <button onClick={() => { deleteCategory(category._id) }}>Delete</button>
+                        </span>
                     </li> 
                 )})}
             </ul>

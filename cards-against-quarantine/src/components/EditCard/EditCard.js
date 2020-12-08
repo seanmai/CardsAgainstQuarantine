@@ -13,7 +13,7 @@ const customStyles = {
 
 Modal.setAppElement('#root');
 
-const CreateCard = () => {
+const EditCard = (props) => {
     const [modalIsOpen, setIsOpen] = useState(false);
     const [content, setContent] = useState('');
     const [type, setType] = useState('black');
@@ -21,7 +21,12 @@ const CreateCard = () => {
     const [categoryList, setCategoryList] = useState([]);
 
     const openModal = () => setIsOpen(true);
-    const closeModal = () => setIsOpen(false);
+    const closeModal = () => {
+        setIsOpen(false);
+        setType('black');
+        setCategory('');
+        setContent('');
+    };
     const handleContentChange = (e) => setContent(e.target.value);
     const handleTypeChange = (e) => setType(e.target.value);
     const handleCategoryChange = (e) => setCategory(e.target.value);
@@ -36,12 +41,11 @@ const CreateCard = () => {
 
         console.log(card);
 
-        axios.post('http://localhost:4000/card-categories/cards/add', card)
+        axios.post(`http://localhost:4000/card-categories/cards/${props.cardID}`, card)
             .then((res) => {
                 console.log(res);
                 window.location = '/admin';
             })
-            .catch(err => console.log(err));
     }
 
     useEffect(() => {
@@ -53,15 +57,15 @@ const CreateCard = () => {
 
 
     return (
-        <div>
-            <button id="create-card-button" onClick={openModal}>Add Card</button>
+        <span>
+            <button onClick={openModal}>Edit</button>
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
                 style={customStyles}
             >
                     <form id="create-card-form" onSubmit={handleSubmit}>
-                        <h1>New Card</h1>
+                        <h1>Edit Card</h1>
                         <label htmlFor="category">Card Category: </label>
                         <select value={category} onChange={handleCategoryChange} name="category" id="categories">
                             <option value="">Please Select a Category</option>
@@ -92,11 +96,11 @@ const CreateCard = () => {
                         <input type="text" value={content} onChange={handleContentChange}/>
                         <br/>
                         <input type="button" value="Cancel" onClick={closeModal}/>
-                        <input type="submit" value="Add"/>
+                        <input type="submit" value="Apply"/>
                     </form>
             </Modal>
-        </div>
+        </span>
     );
 }
 
-export default CreateCard;
+export default EditCard;
