@@ -2,6 +2,7 @@
     height: 95vh;
 }
 
+
 .lobby-container button{
     background-color: white;
     border-width: 1px;
@@ -71,11 +72,22 @@
 }
 
 .footerbtn {
-    margin-top: 5vh;
     vertical-align: bottom;
     display: flex;
     justify-content: space-between;
     width: 100%;
+
+    position: absolute;
+    bottom: 0;
+    z-index: 1
+
 }
 
 
+/* Handle Small devices */
+@media screen and (max-width: 540px) {
+    .main-title {
+        font-size: 1.1em;
+        margin-left: 5vw;
+    }
+}

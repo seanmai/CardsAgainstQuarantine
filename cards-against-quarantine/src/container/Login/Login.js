@@ -13,26 +13,66 @@ class Login extends Component {
             password: ''
         },
         valid: false,
-        auth: false
+        auth: false,
+        error: null
     }
 
     submitHandler = (event) => {
         event.preventDefault();
-        if (this.state.mode === 'Sign up' && this.state.valid){
-            //Signup logic
-            axios.post('http://localhost:4000/users/register', this.state.credentials)
-            .then(res => console.log(res.data));
-
-        }else if (this.state.mode === 'Login'){
-            axios.post('http://localhost:4000/users/login', this.state.credentials)
-            .then(res => this.setState({auth: res.status === 200}));
+        // Successful signup
+        const onSuccess = res => {
+            this.setState({auth: res.status})
         }
 
+        const onFailure = error => {
+            this.setState({error: true})
+        }
+
+        if (this.state.mode === 'Sign up' && this.state.valid){
+            axios.post('http://localhost:4000/users/register', this.state.credentials)
+            .then(onSuccess)
+            .catch(onFailure);
+        }else if (this.state.mode === 'Login'){
+            axios.post('http://localhost:4000/users/login', this.state.credentials)
+            .then(res => this.setState({auth: res.status === 200}))
+            .catch(onFailure);
+        }else {
+            onFailure();
+        }
     }
 
     createNewUser = () => {
-        this.setState({mode: 'Sign up'})
+        this.setState({ mode: 'Sign up', 
+                        error: false})
     }
+
+    usernameOnChangeHandler = (event) => {
+        this.state.error = false;
+        this.setState(prevState => ({
+            ...prevState,
+            credentials: {
+                ...prevState.credentials,
+                username: event.target.value
+            }
+        }))
+    } 
+
+    passwordOnChangeHandler = (event) => {
+        this.state.error = false;
+        this.setState(prevState => ({
+            ...prevState,
+            credentials: {
+                ...prevState.credentials,
+                password: event.target.value
+            }
+        }))
+    } 
+
+
+    verifyOnChangeHandler = (event) => {
+        this.state.error = false;
+        this.setState({valid: event.target.value===this.state.credentials.password});
+    } 
 
     componentDidUpdate(){
         // Authentication steps
@@ -46,15 +86,22 @@ class Login extends Component {
 
     render() {
         let confirmPassword = null;
-
-        console.log(this.state.credentials);
         if(this.state.mode === 'Sign up'){
             confirmPassword = (
                 <div className="CredentialField">
                     <label>Confirm Password: </label>
-                    <input type="password" onChange={e => this.setState({valid: e.target.value===this.state.credentials.password})}></input>     
+                    <input type="password" onChange={this.verifyOnChangeHandler}></input>     
                 </div>
             )
+        }
+
+        let error_message = null;
+        if (this.state.error){
+            if (!this.state.valid && this.state.mode === 'Sign up') {
+                error_message = <label className="ErrorMessage">Passwords does not match</label>
+            }else{
+                error_message = <label className="ErrorMessage"> {this.state.mode === 'Login' ? 'Incorrect username/password':'Username is taken'} </label> 
+            }
         }
 
         let redirect = <Redirect to={this.props.redirect}/>;
@@ -65,26 +112,15 @@ class Login extends Component {
                 <div className="Login">
                     <label className="Title">{this.state.mode}</label>
                     <form className="LoginForm" onSubmit={this.submitHandler}>
+                        {error_message}
                         <div className="CredentialField">
                             <label>Username: </label>
-                            <input type="text" onChange={e => this.setState(prevState => ({
-                                ...prevState,
-                                credentials: {
-                                    ...prevState.credentials,
-                                    username: e.target.value
-                                }
-                            }))}></input>    
+                            <input type="text" onChange={this.usernameOnChangeHandler}></input>    
                         </div>
 
                         <div className="CredentialField">
                             <label>Password: </label>
-                            <input type="password" onChange={e => this.setState(prevState => ({
-                                ...prevState,
-                                credentials: {
-                                    ...prevState.credentials,
-                                    password: e.target.value
-                                }
-                            }))}></input>     
+                            <input type="password" onChange={this.passwordOnChangeHandler}></input>     
 
                         </div>
                         {confirmPassword}

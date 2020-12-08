@@ -12,7 +12,7 @@
     box-shadow: 5px;
     padding:30px;
     border: 1px solid #ccc ;
-    box-shadow: 1px 1px 5px #888888
+    box-shadow: 1px 1px 5px #888888;
 }
 
 .MainTitle{
@@ -72,13 +72,27 @@
     text-align:center;
 }
 
+.ErrorMessage {
+    font-size: 1.5em;
+    text-align: center;
+    color: red;
+    margin: 5px;
+}
+
 
 /* Handle Small devices */
 @media screen and (max-width: 540px) {
 
     .CredentialField label {
-        font-size: 1.3em;
+        font-size: 1.2em;
         vertical-align: center;
+    }
+    .CredentialField input {
+        padding: 10px;
+        float:right;
+        border-width: 1px;
+        border-radius: 5px;
+        width: 30vw;
     }
 
     .Title{
@@ -89,5 +103,6 @@
     .MainTitle{
         font-size: 3em;
         margin: 10px;
+        margin-left: 10vw;
     }
 }
