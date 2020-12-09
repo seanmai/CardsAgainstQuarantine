@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 import './Lobby.css'
 import HelpModal from '../HelpModal/HelpModal'
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-
+import { Redirect, Link } from 'react-router-dom';
+import EditCard from '../../components/EditCard/EditCard'
 
 class Lobby extends Component {
     state = {
@@ -21,22 +21,14 @@ class Lobby extends Component {
     }
 
     // Logout function
-    // TODO implementation
     logoutHandler = () => {
         console.log("Logout button clicked");
         this.props.setLogout();
     }
 
-    // Edit cards function
-    // TODO implementation
-    // Should load into
-    editCardHandler = () => {
-        console.log("edit card button clicked")
-    }
-
-
     render() {
         let modal = null;
+
         if(this.state.display_modal){
             modal = <HelpModal showModal={this.state.display_modal} closeModal={this.hideHelpModal}></HelpModal>
         }
@@ -64,7 +56,9 @@ class Lobby extends Component {
 
                     <div className="lobby-section">
                         <h2>Host Game _____________. </h2>
-                        <button>Create Game</button>
+                        <Link to="/createroom" style={{ textDecoration: 'none' }}>
+                            <button>Create Game</button>
+                        </Link>
                         <h2>Join Game _____________. </h2>
                         <input placeholder="Enter Room Code"></input>
                         <button onClick={this.showHelpModal}>How To Play</button>
@@ -73,7 +67,7 @@ class Lobby extends Component {
 
                     <div className="footerbtn">
                         <button className="logoutbtn" onClick={this.logoutHandler}>Logout</button>
-                        <button className="editbtn" onClick={this.editCardHandler}>Edit Cards</button>
+                        <EditCard></EditCard>
                     </div>
                 </div>
             </div>
