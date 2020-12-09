@@ -9,7 +9,7 @@ const cors = require('cors');
 const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
-const io = require('socket.io')(server);
+const socket = require('socket.io');
 
 const initializePassport = require('./passport');
 initializePassport(passport);
@@ -30,16 +30,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session())
 
-const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
-const cardsRouter = require("./routes/cards");
-const gamesRouter = require("./routes/games.js")(io);
-
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
-app.use("/card-categories", cardsRouter);
-app.use("/games", gamesRouter);
-
 mongoose.connect(process.env.DATABASEURI, {useNewUrlParser: true, useCreateIndex: true});
 const connection = mongoose.connection
 connection.once('open', () => {
@@ -51,6 +41,17 @@ const port = process.env.PORT || 4000;
 let server = app.listen(port, () => {
     console.log("Server listening on PORT: "+ port);
 });
+let io = socket(server);
+
+const indexRouter = require("./routes/index");
+const usersRouter = require("./routes/users");
+const cardsRouter = require("./routes/cards");
+const gamesRouter = require("./routes/games.js")(io);
+
+app.use("/", indexRouter);
+app.use("/users", usersRouter);
+app.use("/card-categories", cardsRouter);
+app.use("/games", gamesRouter);
 
 // app.use(function(req, res, next) {
     //     req.io = io;

@@ -66,9 +66,9 @@ module.exports = function(io) {
 
 
 		// Chat portion
-		socket.on("message", (gameId, username, message) => {
-			socket.to(gameId).emit('message-broadcast', );
-		});
+		// socket.on("message", (gameId, username, message) => {
+		// 	socket.to(gameId).emit('message-broadcast', );
+		// });
 	
 	});
 

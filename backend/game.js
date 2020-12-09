@@ -194,9 +194,9 @@ let game = class{
 		let scoreBoard = [];
 		for(let i = 0; i < this.numPlayers; i++){
 			let entry = {
-				name: this.players[i].name;
-				score: this.players[i].score;
-			}
+				name: this.players[i].name,
+				score: this.players[i].score
+			};
 			scoreBoard.push(entry);
 		}
 		return scoreBoard;
