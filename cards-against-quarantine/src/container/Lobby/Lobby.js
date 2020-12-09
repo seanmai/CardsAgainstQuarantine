@@ -6,6 +6,7 @@ import HelpModal from '../HelpModal/HelpModal'
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import EditCard from '../../components/EditCard/EditCard'
+import EditCategory from '../../components/EditCategory/EditCategory'
 
 class Lobby extends Component {
     state = {
@@ -67,7 +68,10 @@ class Lobby extends Component {
 
                     <div className="footerbtn">
                         <button className="logoutbtn" onClick={this.logoutHandler}>Logout</button>
-                        <EditCard></EditCard>
+                        <div>
+                            <EditCategory></EditCategory>
+                            <EditCard></EditCard>
+                        </div>
                     </div>
                 </div>
             </div>
