@@ -3,7 +3,8 @@ const defaultState = {
         name: null
     },
     redirect: '/login',
-    authenticated: false
+    authenticated: false,
+    gameid: null
 }
 
 function reducer (state = defaultState, action){
@@ -32,6 +33,11 @@ function reducer (state = defaultState, action){
                 currentUser: {
                     name: null,
                 }
+            }
+        case "SET_GAMEID":
+            return {
+                ...state, 
+                gameid: action.payload
             }
         default: return state
     }
