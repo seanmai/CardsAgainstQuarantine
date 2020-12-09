@@ -16,55 +16,61 @@ module.exports = function(io) {
 
 	io.on('connection', function(socket) {
 
-			socket.on("host-game", (username, gameInfo) => {
-				let id = GamesManager.createGame(username, gameInfo);
-				socket.emit('game is is:' + id);
-				socket.join(id);
-			});
+		socket.on("host-game", (username, gameInfo) => {
+			let id = GamesManager.createGame(username, gameInfo);
+			socket.emit('game is is:' + id);
+			socket.join(id);
+		});
 
-			socket.on("join-game", (gameId, username) => {
-				if(GamesManager.validGameId(gameId)){
-					if(GamesManager.joinGame(username, gameId)){
-						socket.join(gameId);
-						socket.to(gameId).emit('user-joined', username + ' joined the game');
-					} else{
-						socket.emit('server message', 'connection rejected: maximum players reached');
-					}
-				} 
-			});
+		socket.on("join-game", (gameId, username) => {
+			if(GamesManager.validGameId(gameId)){
+				if(GamesManager.joinGame(username, gameId)){
+					socket.join(gameId);
+					socket.to(gameId).emit('user-joined', username + ' joined the game');
+				} else{
+					socket.emit('join-error', 'connection rejected: maximum players reached');
+				}
+			} 
+		});
 
-			socket.on('start-game', (gameId, username) => {
-				if(GamesManager.validGameId(gameId)){
-					GamesManager.startGame(gameId);
+		socket.on('start-game', (gameId, username) => {
+			if(GamesManager.validGameId(gameId)){
+				GamesManager.startGame(gameId);
+				socket.to(gameId).emit('game-state', GamesManager.getGameState(gameId));
+			}
+		});
+
+		// info would include the card and username
+		socket.on('submit-card', (gameId, data) => {
+			if(GamesManager.validGameId(gameId)){
+				if(GamesManager.validUser(data.username)){
+					GamesManager.submitWhiteCard(data.username, data.card);
+					socket.to(gameId).emit('card-submitted', GamesManager.getBoardCards(gameId));
+				}
+			}
+		});
+
+		socket.on('round-winner', (gameId, data) => {
+			if(GamesManager.validGameId(gameId)){
+				GamesManager.selectWinner(data.username, data.gameId);
+				// send updated score board
+				socket.to(gameId).emit('update-scoreboard', GamesManager.getScoreBoard(gameId));
+				if(GamesManager.isGameOver(gameId)){
+					socket.to(gameId).emit('game-over', GamesManager.getGameState(gameId));
+				} else{
+					GamesManager.startNextRound(gameId);
 					socket.to(gameId).emit('game-state', GamesManager.getGameState(gameId));
 				}
-			});
-
-			// info would include the card and username
-			socket.on('submit-card', (gameId, data) => {
-				if(GamesManager.validGameId(gameId)){
-					if(GamesManager.validUser(data.username)){
-						GamesManager.submitWhiteCard(data.username, data.card);
-						socket.to(gameId).emit('card-submitted', GamesManager.getBoardCards(gameId));
-					}
-				}
-			});
-
-			socket.on('round-winner', (gameId, data) => {
-				if(GamesManager.validGameId(gameId)){
-					GamesManager.selectWinner(data.username, data.gameId);
-					// send updated score board
-					socket.to(gameId).emit('update-scoreboard', GamesManager.getScoreBoard(gameId));
-					if(GamesManager.isGameOver(gameId)){
-						socket.to(gameId).emit('game-over', GamesManager.getGameState(gameId));
-					} else{
-						GamesManager.startNextRound(gameId);
-						socket.to(gameId).emit('game-state', GamesManager.getGameState(gameId));
-					}
-				}
-			});
-		
+			}
 		});
+
+
+		// Chat portion
+		socket.on("message", (gameId, username, message) => {
+			socket.to(gameId).emit('message-broadcast', );
+		});
+	
+	});
 
 	return router;
 
