@@ -37,10 +37,10 @@ module.exports = function(oi) {
 		});
 
 		socket.on('select-winner', (gameId, info) => {
-			GamesManager.
+			// GamesManager.
 		});
 
-		socket.on('round-winner')
+		// socket.on('round-winner')
 		
 	});
 

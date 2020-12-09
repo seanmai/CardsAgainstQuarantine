@@ -1,6 +1,6 @@
 var _ = require('underscore');
 let Game = require('./game.js');
-let shortid = require('shortid');
+const shortid = require("custom-id");
 
 //add async and await
 
@@ -43,7 +43,7 @@ let games = class{
 	generateGameId(){
 		// check if game with that id already exists 
 		// otherwise generate another 
-		return shortid.generate();
+		return shortid({});
 	}
 
 	validGameId(id){

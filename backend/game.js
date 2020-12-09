@@ -3,21 +3,14 @@ var _ = require('underscore');
 let game = class{
 
 	//add async and await
-
 	constructor(username, id, category, rounds, maxPlayers){
 		this.id = id;
-	constructor(username, category, rounds, maxPlayers){
 		this.cardCategory = category;
 		this.rounds = rounds;
 		this.maxPlayers = maxPlayers;
 		this.numPlayers = 1;
 		this.currentRound = 0;
 		this.czar = username;
-		let user = {
-			name: username,
-			cards: []
-		}
-		this.players = [user];
 		let user = {
 			name: username,
 			cards: [],
@@ -30,7 +23,7 @@ let game = class{
 		this.boardCards = [];
 		// let score = {user: username, score: 0};
 		// this.scoreboard.push(score);
-	}	
+	}
 
 	setCzar(){
 		this.czar = this.players[this.players.indexOf(this.czar)+1] || this.players[0];
@@ -161,12 +154,12 @@ let game = class{
 	}
 
 	getState(){
-		state = {
-			currentRound = this.currentRound;
-			czar = this.czar;
-			players = this.players;
-			boardCards = this.boardCards;
-			blackCard = this.blackCard;
+		let state = {
+			currentRound: this.currentRound,
+			czar: this.czar,
+			players: this.players,
+			boardCards: this.boardCards,
+			blackCard: this.blackCard
 		}
 		return state;
 	}

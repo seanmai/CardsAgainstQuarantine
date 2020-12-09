@@ -49,8 +49,7 @@ const connection = mongoose.connection
 connection.once('open', () => {
     console.log("MongoDB connection established.")
 })
-
-app.listen(port, () => {
+let server = app.listen(port, () => {
 
     console.log("Server listening on PORT4000.");
 });
