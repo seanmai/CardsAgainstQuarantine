@@ -14,7 +14,6 @@ let gamesManager = class{
 	createGame(userInfo, gameInfo){
 		let gameId = this.generateGameId();
 		let game = new Game(userInfo.username, gameId, gameInfo.category, gameInfo.rounds, gameInfo.maxPlayers);
-		// let game = new Game('user', gameId, 'funny', 4, 5);
 		this.gamesList.push(game);
 		return gameId;
 	}

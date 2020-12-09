@@ -56,7 +56,7 @@ module.exports = function(io) {
 					// send updated score board
 					socket.to(gameId).emit('update-scoreboard', GamesManager.getScoreBoard(gameId));
 					if(GamesManager.isGameOver(gameId)){
-						socket.to(gameId).emit('game-over', "true");
+						socket.to(gameId).emit('game-over', GamesManager.getGameState(gameId));
 					} else{
 						GamesManager.startNextRound(gameId);
 						socket.to(gameId).emit('game-state', GamesManager.getGameState(gameId));
