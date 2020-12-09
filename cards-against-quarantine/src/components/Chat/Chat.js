@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import socketIO from 'socket.io-client';
-import ChatBox from '../ChatBox/ChatBox';
 
 // const socket = socketIO('https://localhost:4000');
 const messages = ['hello', 'test', 'test123'];
 
 const Chat = () => {
+
+    const [message, setMessage] = useState('');
+
+    const handleMessageChange = (e) => {setMessage(e.target.value)};
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setMessage('');
+    };
 
     const receiveMessage = () => {
         
@@ -20,7 +28,16 @@ const Chat = () => {
                     })}
                 </div>
             </div>
-            <ChatBox />
+            <form id="chat-box" onSubmit={handleSubmit}>
+                <input 
+                    value={message} 
+                    placeholder="Type a message..." 
+                    id="m" 
+                    autoComplete="off" 
+                    onChange={handleMessageChange}
+                />
+                <input type="submit" value="Send"/>
+            </form>
         </div>
     );
 }
