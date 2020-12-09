@@ -4,6 +4,8 @@
 import React, { Component } from 'react';
 import './CreateRoom.css'
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 
 class CreateRoom extends Component {
     constructor(props){
@@ -35,10 +37,13 @@ class CreateRoom extends Component {
     submitHandler = (event) => {
         event.preventDefault();
 
+        // To set gameid
+        // this.props.setGameID(id)
+        // To access game id
+        // this.props.gameid
     }
 
     render() {
-
         return (
             // TODO Design Modal, fill up the text description
             <div className="createRoomContainer">
@@ -101,9 +106,17 @@ function mapStateToProps(state) {
     return {
         currentUser: state.currentUser,
         redirect: state.redirect,
-        auth: state.authenticated
+        auth: state.authenticated,
+        gameid: state.gameid
     }
 }
 
+function mapDispatchToProps(dispatch){
+    return {
+        setGameID: (userObj) => {
+            dispatch({type: "SET_GAMEID", payload:userObj})
+        },
+    }
+}
 
-export default connect(mapStateToProps) (CreateRoom);
+export default connect(mapStateToProps, mapDispatchToProps) (CreateRoom);
