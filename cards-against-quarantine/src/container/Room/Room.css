@@ -1,0 +1,39 @@
+.cardbar {
+    display: flex;
+    flex-wrap: nowrap;
+    border: solid black 1px;
+    justify-content: space-between;
+}
+
+.played-cards {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.flex-container {
+    height: 100vh;
+    border-left: solid black 2px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 0 auto;
+    max-height: 100%;
+}
+
+.game-area {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    flex: 3;
+    justify-content: flex-end;
+}
+
+.game-extras {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    border-left: solid black 2px;
+    border-right: solid black 2px;
+    min-height: 0;
+}

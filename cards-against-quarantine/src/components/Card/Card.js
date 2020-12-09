@@ -5,10 +5,10 @@ import './Card.css'
 // This is the basic card template
 // TODO style card
 
-const Card = (props) =>(
-    <div className={Card}>
-        <p>{props.content}</p>
-    </div>
-);
+const Card = ({ content, onClick, className, ...props }) => {
+    return (
+        <button className={`card ${className}`} onClick={onClick} value={content} readOnly {...props}>{content}</button>
+    );
+}
 
 export default Card
