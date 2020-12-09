@@ -58,7 +58,7 @@ class Lobby extends Component {
 
                     {/* Need to pass login user through redux store */}
                     <div><label className="loginlbl">logged in as: {this.props.currentUser.name}</label></div>
-                    <div>
+                    <div className="main-title">
                         <h1>Cards Against Quarantine</h1>
                     </div>
 
