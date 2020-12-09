@@ -75,7 +75,6 @@ const Room = (props) => {
         setCards(cards.map(card => { return { ...card, selected: false } }))
         setSelected("")
     }  
-    console.log("user", username);
 
     return (
         <div className="flex-container">
