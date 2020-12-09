@@ -21,12 +21,27 @@ let game = class{
 		this.dealtCards = [];
 		this.blackCard = null;
 		this.boardCards = [];
-		// let score = {user: username, score: 0};
-		// this.scoreboard.push(score);
+		this.turnsLeft = [];
 	}
 
 	setCzar(){
-		this.czar = this.players[this.players.indexOf(this.czar)+1] || this.players[0];
+		let index = getUserIndex(this.czar);
+		if(index !== -1){
+			if(index === this.numPlayers-1){
+				this.czar = this.players[0].name;
+			} else {
+				this.czar = this.players[++index].name;
+			}
+		}
+	}
+
+	getUserIndex(){
+		for(let i = 0; i < this.players; i++){
+			if(this.czar === this.players[i].name){
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	addPlayer(username){
@@ -37,8 +52,7 @@ let game = class{
 				score: 0
 			}
 			this.players.push(user);
-			// let score = {user: username, score: 0};
-			// this.scoreboard.push(score);
+			this.turnsLeft.push(username);
 			this.numPlayers++;
 			return true;
 		} 
@@ -98,14 +112,21 @@ let game = class{
 			card: card
 		}
 		this.boardCards.push(played);
-		let index = this.players.indexOf(username);
+		let index = getUserIndex(username);
+		this.turnsLeft = _.without(this.turnsLeft, username);
 		this.players[index].cards = _.without(this.players[index].cards, card);
 	}
+
+
 
 	// param depends on the winning card is handled on front-end 
 	// could be username or the card 
 	selectRoundWinner(username){
 		updateScoreboard(username);
+	}
+
+	getBoardCards(){
+		return this.boardCards;
 	}
 
 	nextRound(){
@@ -117,7 +138,23 @@ let game = class{
 			}
 		}
 		setCzar();
+		resetTurnsLeft();
 		this.currentRound++;
+	}
+
+	resetTurnsLeft(){
+		for(let i = 0; i < this.numPlayers; i++){
+			if(players[0].user.name !== this.czar){
+				this.turnsLeft.push(players[0].user.name);
+			}
+		}
+	}
+
+	allPlayed(){
+		if(this.turnsLeft.length == 0){
+			return true;
+		}
+		return false;
 	}
 
 	// ready(){
@@ -153,6 +190,18 @@ let game = class{
 		});
 	}
 
+	getScoreBoard(){
+		let scoreBoard = [];
+		for(let i = 0; i < this.numPlayers; i++){
+			let entry = {
+				name: this.players[i].name;
+				score: this.players[i].score;
+			}
+			scoreBoard.push(entry);
+		}
+		return scoreBoard;
+	}
+
 	getState(){
 		let state = {
 			currentRound: this.currentRound,
@@ -162,6 +211,16 @@ let game = class{
 			blackCard: this.blackCard
 		}
 		return state;
+	}
+
+	validPlayer(username){
+		let user = _.find(this.players, function(player){
+			return player.name === username;
+		});
+		if(user === undefined){
+			return false;
+		}
+		return true;
 	}
 
 	// getRandomNumber(max){

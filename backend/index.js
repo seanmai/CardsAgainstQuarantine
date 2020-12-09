@@ -14,16 +14,24 @@ const initializePassport = require('./passport');
 initializePassport(passport);
 
 const app = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 4005;
 
-app.use(function(req,res,next) {
-	req.io = io;
-	next();
+let server = app.listen(port, () => {
+    console.log("Server listening on PORT: "+ port);
 });
+
+let io = require('socket.io')(server);
+
+// app.use(function(req, res, next) {
+//     req.io = io;
+//     next();
+// });
+
+const gamesRouter = require("./routes/games.js")(io);
 
 app.use(cors());
 app.use(express.json());
-// might need this for parsing form input
+might need this for parsing form input
 app.use(express.urlencoded({extended: false}));
 // TODO: Use flash on client side to show error when logging in
 app.use(flash())
@@ -38,23 +46,14 @@ app.use(passport.session())
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const cardsRouter = require("./routes/cards");
-const gamesRouter = require("./routes/games");
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/card-categories", cardsRouter);
+app.use("/games", gamesRouter);
 
 mongoose.connect(process.env.DATABASEURI, {useNewUrlParser: true, useCreateIndex: true});
 const connection = mongoose.connection
 connection.once('open', () => {
     console.log("MongoDB connection established.")
-})
-let server = app.listen(port, () => {
-
-    console.log("Server listening on PORT4000.");
 });
-
-
-let io = require('socket.io')(server);
-app.use("/games", gamesRouter)(io);
-

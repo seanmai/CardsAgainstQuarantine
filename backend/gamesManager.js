@@ -4,15 +4,17 @@ const shortid = require("custom-id");
 
 //add async and await
 
-let games = class{
+let gamesManager = class{
 
 	constructor(){
 		this.gamesList = [];
+		this.allPlayers = [];
 	}	
 
 	createGame(userInfo, gameInfo){
-		let gameId = generateGameId();
-		let game = new Game(userInfo.username, gameId, gameInfo.category, gameInfo.rounds, gameInfo.maxPlayers);
+		let gameId = this.generateGameId();
+		// let game = new Game(userInfo.username, gameId, gameInfo.category, gameInfo.rounds, gameInfo.maxPlayers);
+		let game = new Game('user', gameId, 'funny', 4, 5);
 		this.gamesList.push(game);
 		return gameId;
 	}
@@ -32,7 +34,7 @@ let games = class{
 	}
 
 	joinGame(player, gameId){
-		let game = findGame(gameId);
+		let game = this.findGame(gameId);
 		//check if game found 
 		if(game.addPlayer(player)){
 			return true;
@@ -62,9 +64,69 @@ let games = class{
 	// card would depend on what they send from client side 
 	submitWhiteCard(username, card){
 		let game = findGame(id);
-		game.playWhiteCard(username, card);
+		if(game !== undefined){
+			game.playWhiteCard(username, card);
+		}
+	}
+
+	validUser(username){
+		for(let i = 0; i < gamesList.lenght; i++){
+			if(this.gamesList[i].validPlayer(username)){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	selectWinner(username, gameId){
+		let game = findGame(id);
+		if(game !== undefined){
+			game.selectRoundWinner(username);
+		}
+	}
+
+	startNextRound(gameId){
+		let game = findGame(gameId);
+		if(game !== undefined){
+			game.nextRound();
+		}
+	}
+
+	isGameOver(gameId){
+		let game = findGame(gameId);
+		if(game !== undefined){
+			if(!game.gameOver()){
+				return false;
+			}
+			return true;
+		}
+	}
+
+	allPlayed(id){
+		let game = findGame(id);
+		if(game !== undefined){
+			if(game.allPlayed()){
+				return true;
+			} 
+		}
+		return false;
+	}
+
+	/* contains username + the card played*/
+	getBoardCards(gameId){
+		let game = findGame(gameId);
+		if(game !== undefined){
+			return game.getBoardCards();
+		}
+	}
+
+	getScoreBoard(gameId){
+		let game = findGame(gameId);
+		if(game !== undefined){
+			return game.getScoreBoard();
+		}
 	}
 
 }
 
-module.exports = games;
+module.exports = gamesManager;
