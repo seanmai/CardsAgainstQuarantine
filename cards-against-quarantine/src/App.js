@@ -7,7 +7,6 @@ import Lobby from './container/Lobby/Lobby';
 import Room from './container/Room/Room';
 import AdminPage from './container/AdminPage/AdminPage';
 import CreateRoom from './container/CreateRoom/CreateRoom';
-
 import { connect } from 'react-redux';
 
 function App() {
@@ -20,7 +19,8 @@ function App() {
       <Route path='/room' exact component={Room}/>
       <Route path='/admin' exact component={AdminPage}/>
       
-      <Route path='/create' exact component={CreateRoom}/>
+      <Route path='/createroom' exact component={CreateRoom}/>
+
       <Route path='/' exact component={Lobby}/>
     </Router>
   );
