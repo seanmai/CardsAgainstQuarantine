@@ -4,7 +4,7 @@ import './Room.css'
 
 import Card from '../../components/Card/Card';
 import Scoreboard from './Scoreboard'
-
+import { connect, useSelector } from 'react-redux';
 
 const test_cards = [
     {
@@ -50,9 +50,10 @@ const played_cards = [
 const test_black = "black card"
 const player_type = "czar"
 
-const Room = () => {
+const Room = (props) => {
     const [cards, setCards] = useState(test_cards)
     const [selected, setSelected] = useState("")
+    const username = useSelector(state => state.currentUser.name);
 
     const cardClickHandler = (e) => {
         if (e.target.value !== "") {
@@ -73,7 +74,7 @@ const Room = () => {
     const returnCard = (e) => {
         setCards(cards.map(card => { return { ...card, selected: false } }))
         setSelected("")
-    }
+    }  
 
     return (
         <div className="flex-container">
@@ -137,5 +138,12 @@ const Room = () => {
     )
 }
 
+function mapStateToProps(state) {
+    return {
+        currentUser: state.currentUser,
+        redirect: state.redirect,
+        auth: state.authenticated
+    }
+}
 
-export default Room
+export default connect(mapStateToProps) (Room);
