@@ -32,7 +32,7 @@ const EditCategory = (props) => {
 
     return (
         <span>
-            <button onClick={openModal}>Edit</button>
+            <button onClick={openModal}>Edit Categories</button>
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
