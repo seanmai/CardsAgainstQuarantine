@@ -1,4 +1,20 @@
-.Card {
-    width: 30px;
-    height: 100px;
+.card {
+    width: 8rem;
+    height: 10rem;
+    border: solid black 1px;
+    background: beige;
+    margin: 1rem;
+    text-align: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.card:disabled {
+    color: black;
+    cursor: default;
+}
+
+.card:focus, .selected {
+    outline: none;
+    border: solid black 3px;
 }
