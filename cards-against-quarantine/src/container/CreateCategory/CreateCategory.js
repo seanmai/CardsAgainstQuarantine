@@ -4,8 +4,8 @@ import axios from 'axios';
 
 const customStyles = {
     content: {
-        top: '40%',
-        left: '40%',
+        top: '20%',
+        left: '20%',
         bottom: 'auto',
         right: 'auto',
     }

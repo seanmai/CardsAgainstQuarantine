@@ -7,6 +7,8 @@ import Lobby from './container/Lobby/Lobby';
 import Room from './container/Room/Room';
 import AdminPage from './container/AdminPage/AdminPage';
 import CreateRoom from './container/CreateRoom/CreateRoom';
+import Chat from './components/Chat/Chat'
+
 import { connect } from 'react-redux';
 
 function App() {
@@ -22,6 +24,7 @@ function App() {
       <Route path='/createroom' exact component={CreateRoom}/>
 
       <Route path='/' exact component={Lobby}/>
+      <Route path='/chat-test' exact component={Chat}/>
     </Router>
   );
 }
