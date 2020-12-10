@@ -17,8 +17,9 @@ module.exports = function(io) {
 	io.on('connection', function(socket) {
 
 		socket.on("host-game", (username, gameInfo) => {
+			console.log(username)
 			let id = GamesManager.createGame(username, gameInfo);
-			socket.emit('game is is:' + id);
+			socket.emit('game id', id);
 			socket.join(id);
 		});
 

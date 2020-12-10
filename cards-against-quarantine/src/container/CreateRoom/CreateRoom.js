@@ -5,8 +5,9 @@ import React, { Component } from 'react';
 import './CreateRoom.css'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import socketIOClient from "socket.io-client";
 
-
+let socket;
 class CreateRoom extends Component {
     constructor(props){
         super(props);   
@@ -14,8 +15,10 @@ class CreateRoom extends Component {
             category: null,
             win_mode: null,
             win_rounds: null,
-            max_player: 2
+            max_player: 2,
+            endpoint: 'http://localhost:3000'
         }
+        socket = socketIOClient(this.state.endpoint);
     }
 
     updateCategorySelector = (event) => {
@@ -37,7 +40,24 @@ class CreateRoom extends Component {
     submitHandler = (event) => {
         event.preventDefault();
 
-        // To set gameid
+        let userInfo = {
+            username : this.props.currentUser
+        }
+        let gameInfo = {
+            category : this.state.category,
+            rounds : this.state.win_rounds,
+            max_player : this.state.max_player
+        }
+        socket.emit("host-game", (userInfo, gameInfo));
+
+        socket.on('game id', id => {
+            console.log(id)
+            this.props.setGameID(id);
+        });
+        
+        // link to game room
+
+           // To set gameid
         // this.props.setGameID(id)
         // To access game id
         // this.props.gameid
