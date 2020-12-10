@@ -58,7 +58,7 @@ const EditCard = (props) => {
 
     return (
         <span>
-            <button onClick={openModal}>Edit</button>
+            <button onClick={openModal}>Edit Cards</button>
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}

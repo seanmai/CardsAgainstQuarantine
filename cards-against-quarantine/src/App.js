@@ -21,7 +21,8 @@ function App() {
       <Route path='/room' exact component={Room}/>
       <Route path='/admin' exact component={AdminPage}/>
       
-      <Route path='/create' exact component={CreateRoom}/>
+      <Route path='/createroom' exact component={CreateRoom}/>
+
       <Route path='/' exact component={Lobby}/>
       <Route path='/chat-test' exact component={Chat}/>
     </Router>
