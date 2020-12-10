@@ -26,9 +26,9 @@ module.exports = function(io) {
 		socket.on("join-game", (message) => {
 			console.log(message)
 			if(GamesManager.validGameId(message.gameId)){
-				if(GamesManager.joinGame(message.username.name, message.gameId)){
+				if(GamesManager.joinGame(message.username, message.gameId)){
 					socket.join(message.gameId);
-					socket.to(message.gameId).emit('user-joined', message.username.name + ' joined the game');
+					socket.to(message.gameId).emit('user-joined', message.username + ' joined the game');
 				} else{
 					socket.emit('join-error', 'connection rejected: maximum players reached');
 				}

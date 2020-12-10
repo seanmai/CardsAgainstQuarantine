@@ -42,7 +42,7 @@ class CreateRoom extends Component {
         event.preventDefault();
 
         let message = {
-            username : this.props.currentUser,
+            username : this.props.currentUser.name,
             category : this.state.category,
             rounds : this.state.win_rounds,
             max_player : this.state.max_player

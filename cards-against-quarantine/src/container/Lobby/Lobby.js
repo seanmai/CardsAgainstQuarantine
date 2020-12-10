@@ -40,7 +40,7 @@ class Lobby extends Component {
 
         let message = {
             gameID : roomID,
-            username: this.props.currentUser,
+            username: this.props.currentUser.name,
         }
 
         socket.emit("join-game", (message));

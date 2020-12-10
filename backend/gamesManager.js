@@ -13,7 +13,7 @@ let gamesManager = class{
 
 	createGame(message){
 		let gameId = this.generateGameId();
-		let game = new Game(message.username.name, gameId, message.category, message.rounds, message.maxPlayers);
+		let game = new Game(message.username, gameId, message.category, message.rounds, message.maxPlayers);
 		this.gamesList.push(game);
 		return gameId;
 	}
