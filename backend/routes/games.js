@@ -50,7 +50,7 @@ module.exports = function(io) {
 
 		socket.on('round-winner', (gameId, data) => {
 			if(GamesManager.validGameId(gameId)){
-				GamesManager.selectWinner(data.username, data.gameId);
+				GamesManager.selectWinner(data.username, gameId);
 				// send updated score board
 				socket.to(gameId).emit('update-scoreboard', GamesManager.getScoreBoard(gameId));
 				if(GamesManager.isGameOver(gameId)){
