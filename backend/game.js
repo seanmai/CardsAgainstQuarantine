@@ -63,11 +63,8 @@ let game = class{
 	}
 
 	
-	initWhiteCards(){
+	initCards(){
 		this.whiteCards = Card.find({category: this.cardCategory, type: 'white'}).toArray();
-	}
-	
-	initBlackCards(){
 		this.blackCards = Card.find({category: this.cardCategory, type: 'black'}).toArray();
 	}
 	

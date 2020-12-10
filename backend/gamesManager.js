@@ -28,6 +28,7 @@ let gamesManager = class{
 
 	startGame(id){
 		let game = findGame(id);
+		game.initCards();
 		game.dealCards();
 		game.playBlackCard();
 	}
