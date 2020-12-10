@@ -7,10 +7,17 @@ import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import EditCard from '../../components/EditCard/EditCard'
 import EditCategory from '../../components/EditCategory/EditCategory'
+import socketIOClient from "socket.io-client";
 
+let socket;
 class Lobby extends Component {
-    state = {
-        display_modal: false,
+    constructor(props) {
+        super(props);   
+        this.state = {
+            display_modal: false,
+            endpoint: 'http://localhost:4000'
+        }
+        socket = socketIOClient(this.state.endpoint);
     }
 
     showHelpModal = () => {
@@ -25,6 +32,23 @@ class Lobby extends Component {
     logoutHandler = () => {
         console.log("Logout button clicked");
         this.props.setLogout();
+    }
+
+    submitHandler = (event) => {
+        event.preventDefault();
+        let roomID = document.getElementById("roomID").value;
+
+        let message = {
+            gameID : roomID,
+            username: this.props.currentUser,
+        }
+
+        socket.emit("join-game", (message));
+
+        socket.on('join-error', error => {
+            // TODO: Handle error on Client Side
+            console.log(error);
+        });
     }
 
     render() {
@@ -61,7 +85,10 @@ class Lobby extends Component {
                             <button>Create Game</button>
                         </Link>
                         <h2>Join Game _____________. </h2>
-                        <input placeholder="Enter Room Code"></input>
+                        <form onSubmit={this.submitHandler}>
+                            <input type="text" placeholder="Enter Room Code" id="roomID" />
+                            <button>Join Game</button>
+                        </form>
                         <button onClick={this.showHelpModal}>How To Play</button>
 
                     </div> 

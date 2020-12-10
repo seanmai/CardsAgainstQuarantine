@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import './CreateRoom.css'
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import socketIOClient from "socket.io-client";
 
 let socket;
@@ -16,7 +16,8 @@ class CreateRoom extends Component {
             win_mode: null,
             win_rounds: null,
             max_player: 2,
-            endpoint: 'http://localhost:3000'
+            endpoint: 'http://localhost:4000',
+            redirect: false
         }
         socket = socketIOClient(this.state.endpoint);
     }
@@ -40,32 +41,33 @@ class CreateRoom extends Component {
     submitHandler = (event) => {
         event.preventDefault();
 
-        let userInfo = {
-            username : this.props.currentUser
-        }
-        let gameInfo = {
+        let message = {
+            username : this.props.currentUser,
             category : this.state.category,
             rounds : this.state.win_rounds,
             max_player : this.state.max_player
         }
-        socket.emit("host-game", (userInfo, gameInfo));
+
+        socket.emit("host-game", (message));
 
         socket.on('game id', id => {
             console.log(id)
             this.props.setGameID(id);
         });
-        
-        // link to game room
 
-           // To set gameid
-        // this.props.setGameID(id)
-        // To access game id
-        // this.props.gameid
+        this.setState({redirect: true})
     }
 
     render() {
+        let redirect;
+        let redirectToReffer = this.state.redirect
+        if (redirectToReffer === true) {
+            redirect = <Redirect to="/room"/>;
+        }
         return (
             // TODO Design Modal, fill up the text description
+            <div>
+            {redirect}
             <div className="createRoomContainer">
                 <label className="title">Create Game</label>
                 <div className="modelSelectBox">                
@@ -112,11 +114,15 @@ class CreateRoom extends Component {
                             </div>
                             <div className="button-div">
                                 <button className="cancelButton">Cancel</button>
-                                <button className="createButton">Create Game</button>
+                                
+                                {/* <Link to="/room" style={{ textDecoration: 'none' }}> */}
+                                    <button className="createButton">Create Game</button>
+                                {/* </Link> */}
                             </div>
                         </form>
                     </div>
                 </div>
+            </div>
             </div>
         );
     }

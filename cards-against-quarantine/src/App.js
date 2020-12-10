@@ -20,6 +20,7 @@ function App() {
       <Route path='/admin' exact component={AdminPage}/>
       
       <Route path='/createroom' exact component={CreateRoom}/>
+      <Route path='/room' exact component={Room}/>
 
       <Route path='/' exact component={Lobby}/>
     </Router>

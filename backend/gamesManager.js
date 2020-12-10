@@ -11,9 +11,9 @@ let gamesManager = class{
 		this.allPlayers = [];
 	}	
 
-	createGame(userInfo, gameInfo){
+	createGame(message){
 		let gameId = this.generateGameId();
-		let game = new Game(userInfo.username, gameId, gameInfo.category, gameInfo.rounds, gameInfo.maxPlayers);
+		let game = new Game(message.username.name, gameId, message.category, message.rounds, message.maxPlayers);
 		this.gamesList.push(game);
 		return gameId;
 	}
@@ -48,7 +48,7 @@ let gamesManager = class{
 	}
 
 	validGameId(id){
-		let game = findGame(id);
+		let game = this.findGame(id);
 		if(game === undefined){
 			return false;
 		} 
