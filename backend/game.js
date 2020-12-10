@@ -1,4 +1,5 @@
 var _ = require('underscore');
+let Card = require('../models/card.model');
 
 let game = class{
 
@@ -16,8 +17,10 @@ let game = class{
 			cards: [],
 			score: 0
 		}
-		this.players = [user];
+		this.players = [];
 		// stores the id of the cards 
+		this.whiteCards = [];
+		this.blackCards = [];
 		this.dealtCards = [];
 		this.blackCard = null;
 		this.boardCards = [];
@@ -59,6 +62,37 @@ let game = class{
 		return false;
 	}
 
+	
+	initWhiteCards(){
+		this.whiteCards = Card.find({category: this.cardCategory, type: 'white'}).toArray();
+	}
+	
+	initBlackCards(){
+		this.blackCards = Card.find({category: this.cardCategory, type: 'black'}).toArray();
+	}
+	
+	getRandomCard(type) {
+		let cardsList = []
+		switch(type){
+			case 'white':
+				cardsList = this.whiteCards;
+				break;
+			case 'black':
+				cardsList = this.blackCards;
+				break;
+			}
+		let index = Math.floor(Math.random() * cardsList.length);
+		return cardsList.splice(index, 1)[0];
+
+	}
+
+	dealCard(index){
+		let card = getRandomCard('white');
+
+		this.dealtCards.push(card);
+		this.players[index].cards.push(card);
+	}
+
 	dealHand(){
 		for(let playerIndex = 0; i < numPlayers; playerIndex++){
 			while(cardIndex < 5){
@@ -67,41 +101,9 @@ let game = class{
 		}
 	}
 
-	dealCard(index){
-		// must get white card from database
-		// let card = db.getRandomWhiteCard();
-		while(!validCard(card._id)){
-			// card = db.getRandomWhiteCard();
-		}
-		this.dealtCards.push(card._id);
-		this.players[index].cards.push(card);
-		
-		// let number = 0;
-		// for(let i = 0; i < numPlayers; i++){
-		// 	let index = 0;
-		// 	while(index < 5){
-		// 		number = getRandomNumber(cards.length);
-		// 		this.players[i].cards[index] = cards[index];
-		// 		cards = _.without(cards, cards[index]);
-		// 		index++;
-		// 	}
-		// }
-	}
-
-	validCard(id){
-		if(this.dealtCards.indexOf(id) === -1){
-			return true;
-		} 
-		return false;
-	}
-
 	dealBlackCard(){
-		// must get a random black card from the database
-		// let card = db.getRandomBlackCards().toArray();
-		while(!validCard(card._id)){
-			// card = db.getRandomWhiteCard();
-		}
-		this.dealtCards.push(card._id);
+		let card = getRandomCard('black');
+		this.dealtCards.push(card);
 		this.blackCard = card;
 	}
 
@@ -222,13 +224,6 @@ let game = class{
 		}
 		return true;
 	}
-
-	// getRandomNumber(max){
-	// 	return Math.floor {
-	// 		Math.random() * (max-min)+min;
-	// 	}
-	// }
-
 }
 
 module.exports = game;

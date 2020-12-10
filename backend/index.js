@@ -56,8 +56,3 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/card-categories", cardsRouter);
 app.use("/games", gamesRouter);
-
-// app.use(function(req, res, next) {
-    //     req.io = io;
-//     next();
-// });
