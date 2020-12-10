@@ -67,10 +67,10 @@ module.exports = function(io) {
 
 
 		// Chat portion
-		// socket.on("message", (gameId, username, message) => {
-		// 	socket.to(gameId).emit('message-broadcast', );
-		// });
-	
+		// Data => { gameId, username, message }
+		socket.on("message", (data) => {
+			socket.to(data.gameId).emit('message-broadcast', data);
+		});
 	});
 
 	return router;
