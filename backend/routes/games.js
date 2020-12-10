@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const GamesManager = new (require('../gamesManager.js'))();
-let Card = require('../models/card.model');
 
 
 module.exports = function(io) {
@@ -11,7 +10,6 @@ module.exports = function(io) {
 	router.route('/').get((req, res) => {
 		// let id = GamesManager.createGame(req.username, req.gameInfo);
 		// res.json('game id is: ' + id);
-		// console.log("CONNECTEDFFFF");
 	});
 
 	io.on('connection', function(socket) {
