@@ -41,7 +41,11 @@ const port = process.env.PORT || 4000;
 let server = app.listen(port, () => {
     console.log("Server listening on PORT: "+ port);
 });
-let io = socket(server);
+let io = socket(server, {
+    cors: {
+        origin: '*',
+    }
+});
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
