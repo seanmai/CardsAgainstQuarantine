@@ -1,4 +1,5 @@
-var _ = require('underscore');
+let _ = require('underscore');
+let dbHelper = require('./cardGetter.js');
 
 let game = class{
 
@@ -18,10 +19,11 @@ let game = class{
 		}
 		this.players = [user];
 		// stores the id of the cards 
-		this.dealtCards = [];
+		// this.dealtCards = [];
 		this.blackCard = null;
 		this.boardCards = [];
 		this.turnsLeft = [];
+		this.db = new dbHelper();
 	}
 
 	setCzar(){
@@ -68,40 +70,13 @@ let game = class{
 	}
 
 	dealCard(index){
-		// must get white card from database
-		// let card = db.getRandomWhiteCard();
-		while(!validCard(card._id)){
-			// card = db.getRandomWhiteCard();
-		}
-		this.dealtCards.push(card._id);
+		let card = db.getRandomWhiteCard();
+		// this.dealtCards.push(card._id);
 		this.players[index].cards.push(card);
-		
-		// let number = 0;
-		// for(let i = 0; i < numPlayers; i++){
-		// 	let index = 0;
-		// 	while(index < 5){
-		// 		number = getRandomNumber(cards.length);
-		// 		this.players[i].cards[index] = cards[index];
-		// 		cards = _.without(cards, cards[index]);
-		// 		index++;
-		// 	}
-		// }
-	}
-
-	validCard(id){
-		if(this.dealtCards.indexOf(id) === -1){
-			return true;
-		} 
-		return false;
 	}
 
 	dealBlackCard(){
-		// must get a random black card from the database
-		// let card = db.getRandomBlackCards().toArray();
-		while(!validCard(card._id)){
-			// card = db.getRandomWhiteCard();
-		}
-		this.dealtCards.push(card._id);
+		let card = db.getRandomBlackCards().toArray();
 		this.blackCard = card;
 	}
 
@@ -116,8 +91,6 @@ let game = class{
 		this.turnsLeft = _.without(this.turnsLeft, username);
 		this.players[index].cards = _.without(this.players[index].cards, card);
 	}
-
-
 
 	// param depends on the winning card is handled on front-end 
 	// could be username or the card 
@@ -156,14 +129,6 @@ let game = class{
 		}
 		return false;
 	}
-
-	// ready(){
-	// 	return (this.numPlayers === this.maxPlayers);
-	// }
-
-	// startGame(){
-
-	// }
 
 	gameOver(){
 		if(this.currentRound === this.rounds){
@@ -223,11 +188,9 @@ let game = class{
 		return true;
 	}
 
-	// getRandomNumber(max){
-	// 	return Math.floor {
-	// 		Math.random() * (max-min)+min;
-	// 	}
-	// }
+	setDecks(){
+		this.db.getDecks(this.cardCategory);
+	}
 
 }
 
