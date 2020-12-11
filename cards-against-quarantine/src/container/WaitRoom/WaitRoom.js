@@ -10,22 +10,24 @@ class WaitRoom extends Component {
         super(props);   
         this.state = {
             endpoint: 'http://localhost:4000',
-            players: ["John", "Jacky", "Jason", "J"],
+            players: [],
             redirect: null,
         }
         socket = socketIOClient(this.state.endpoint);
+        socket.on("user-joined", (message) => {
+            this.setState({players:message})
+        });
+        socket.on("game-started", (message) => {
+            this.setState({redirect: "/room"})
+        });
+
     }
 
     // Implement creategame logic
     // Todo - Need to handle the start game when HOST clicks on it
     startGameHandler = (event) => {
         event.preventDefault();
-
-        // needs to emit startgame
-        // socket.emit("host-game", (message));
-        
-
-        this.setState({redirect: "/room"})
+        socket.emit("start-game", this.props.gameid);        
     }
 
     exitRoomHandler = (event) => {
@@ -34,11 +36,6 @@ class WaitRoom extends Component {
         this.setState({redirect: "/"})
 
     }
-
-    componentDidMount() {
-
-    }
-
 
     render() {
         let redirect;
@@ -62,8 +59,8 @@ class WaitRoom extends Component {
                     <div className="content-wrapper">
                         <label className="box-title">Current Players: </label>
                         <div className="player-container">
-                            {this.state.players.map(function(name, index){
-                                return <label key={index} >{(index+1)+". "+name}</label>
+                            {this.state.players.map(function(players, index){
+                                return <label key={index} >{(index+1)+". "+players.name}</label>
                             })}
 
                         </div>
