@@ -90,9 +90,9 @@ class CreateRoom extends Component {
                                     <div>
                                         <label>Card Categories: </label>
                                         <select className="selector" onChange={this.updateCategorySelector}>
-                                        {this.state.card_categories.map(function(category, index){
-                                            return <option key={index} value={category.name}>{category.name}</option>
-                                        })}
+                                            {this.state.card_categories.map(function(category, index){
+                                                return <option key={index} value={category.name}>{category.name}</option>
+                                            })}
                                         </select>
                                     </div>
                                 </div>
