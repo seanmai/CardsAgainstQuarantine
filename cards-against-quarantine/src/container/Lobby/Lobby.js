@@ -73,9 +73,7 @@ class Lobby extends Component {
         }else {
             redirect = null;
         }
-        console.log("JACKY", this.props.currentUser.isAdmin)
         return (
-            // Still need to implement admin user view
             <div>
                 {redirect}
                 {this.props.gameid !== null ? <Redirect to="/wait"/>:null}
