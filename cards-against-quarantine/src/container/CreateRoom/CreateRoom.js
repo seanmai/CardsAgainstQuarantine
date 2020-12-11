@@ -6,6 +6,7 @@ import './CreateRoom.css'
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import socketIOClient from "socket.io-client";
+import axios from 'axios';
 
 let socket;
 class CreateRoom extends Component {
@@ -18,7 +19,8 @@ class CreateRoom extends Component {
             win_rounds: 3,
             max_player: 2,
             endpoint: 'http://localhost:4000',
-            redirect: false
+            redirect: false,
+            card_categories: []
         }
         socket = socketIOClient(this.state.endpoint);
     }
@@ -58,6 +60,15 @@ class CreateRoom extends Component {
 
         this.setState({ redirect: true })
     }
+    componentDidMount() {
+        axios.get('http://localhost:4000/card-categories')
+            .then((res) => {
+                console.log("jacky",res.data);
+                this.setState({
+                    card_categories: res.data
+                })
+            });
+    }
 
     render() {
         let redirect;
@@ -79,10 +90,9 @@ class CreateRoom extends Component {
                                     <div>
                                         <label>Card Categories: </label>
                                         <select className="selector" onChange={this.updateCategorySelector}>
-                                            <option value="test category 1">Test1</option>
-                                            <option value="test category 2">Test2</option>
-                                            <option value="test category 3">Test3</option>
-                                            <option value="test category 4">Test4</option>
+                                            {this.state.card_categories.map(function(category, index){
+                                                return <option key={index} value={category.name}>{category.name}</option>
+                                            })}
                                         </select>
                                     </div>
                                 </div>
