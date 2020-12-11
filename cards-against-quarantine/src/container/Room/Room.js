@@ -59,6 +59,8 @@ const Room = (props) => {
     const [black, setBlack] = useState("")
     const [selected, setSelected] = useState("")
     const [czar, setCzar] = useState(false)
+    const [scores, setScores] = useState([])
+    const [disable, setDisable] = useState(false)
     const username = useSelector(state => state.currentUser.name);
     const gameId = useSelector(state => state.gameid);
 
@@ -71,9 +73,22 @@ const Room = (props) => {
             setCards(player_cards.map(c => { return { content: c, selected: false } }))
 
             const curr_played = data.boardCards
-            setPlayed(curr_played.map(c => { return { content: c, selected: false } }))
+            setPlayed(curr_played.map(c => { return { content: c.card, user: c.user, selected: false } }))
+            setScores(data.players)
+
+            if (data.boardCards.length === 0) {
+                if (czar) {
+                    setDisable(true)
+                } else {
+                    setDisable(false)
+                }
+            }
         });
-    }, []);
+        socket.on('game-over', data => {
+            console.log('handle end of game')
+            console.log(data)
+        });
+    }, [username]);
 
     const cardClickHandler = (e) => {
         if (e.target.value !== "") {
@@ -89,11 +104,18 @@ const Room = (props) => {
             card: selected
         }
         socket.emit('submit-card', gameId, data)
+        setDisable(true)
     }
 
     const winSubmitHandler = (e) => {
         e.preventDefault()
-        console.log("winner is " + selected)
+        console.log(played)
+        const winner = played.find(c => c.content === selected)
+        const data = {
+            gameId,
+            username: winner.user
+        }
+        socket.emit('round-winner', gameId, data)
     }
     const returnCard = (e) => {
         setCards(cards.map(card => { return { ...card, selected: false } }))
@@ -108,6 +130,8 @@ const Room = (props) => {
         <div className="flex-container">
             <button onClick={createGame}>Start Game</button>
             <div className="game-area">
+                {czar && "YOU ARE CZAR"}
+                {!czar && "YOU ARE Player"}
                 <Card
                     disabled
                     content={black} >
@@ -146,7 +170,7 @@ const Room = (props) => {
                     {cards.map(card => {
                         return (
                             <Card
-                                disabled={czar}
+                                disabled={czar || disable}
                                 key={card.content}
                                 content={card.selected ? "" : card.content}
                                 onClick={cardClickHandler}>
@@ -156,7 +180,7 @@ const Room = (props) => {
                 </div>
             </div>
             <div className="game-extras">
-                <Scoreboard />
+                <Scoreboard scores={scores} />
                 <div>
                     <h1>
                         Chat

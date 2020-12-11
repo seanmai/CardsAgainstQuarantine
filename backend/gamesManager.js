@@ -79,21 +79,21 @@ let gamesManager = class {
 	}
 
 	selectWinner(username, gameId) {
-		let game = findGame(id);
+		let game = this.findGame(gameId);
 		if (game !== undefined) {
 			game.selectRoundWinner(username);
 		}
 	}
 
 	startNextRound(gameId) {
-		let game = findGame(gameId);
+		let game = this.findGame(gameId);
 		if (game !== undefined) {
 			game.nextRound();
 		}
 	}
 
 	isGameOver(gameId) {
-		let game = findGame(gameId);
+		let game = this.findGame(gameId);
 		if (game !== undefined) {
 			if (!game.gameOver()) {
 				return false;
@@ -114,14 +114,14 @@ let gamesManager = class {
 
 	/* contains username + the card played*/
 	getBoardCards(gameId) {
-		let game = findGame(gameId);
+		let game = this.findGame(gameId);
 		if (game !== undefined) {
 			return game.getBoardCards();
 		}
 	}
 
 	getScoreBoard(gameId) {
-		let game = findGame(gameId);
+		let game = this.findGame(gameId);
 		if (game !== undefined) {
 			return game.getScoreBoard();
 		}
