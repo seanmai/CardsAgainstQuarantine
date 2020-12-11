@@ -28,7 +28,7 @@ let game = class {
 	}
 
 	setCzar() {
-		let index = getUserIndex(this.czar);
+		let index = this.getUserIndex(this.czar);
 		if (index !== -1) {
 			if (index === this.numPlayers - 1) {
 				this.czar = this.players[0].name;
@@ -38,9 +38,9 @@ let game = class {
 		}
 	}
 
-	getUserIndex() {
-		for (let i = 0; i < this.players; i++) {
-			if (this.czar === this.players[i].name) {
+	getUserIndex(username) {
+		for (let i = 0; i < this.numPlayers; i++) {
+			if (username === this.players[i].name) {
 				return i;
 			}
 		}
@@ -67,7 +67,6 @@ let game = class {
 		Card.find({ category: this.cardCategory, type: 'white' }).exec((err, cards) => {
 			if (err) console.log(err)
 			else {
-				console.log("test", cards)
 				cards.forEach(card => {
 					this.whiteCards.push(card.content);
 				});
@@ -76,7 +75,6 @@ let game = class {
 		Card.find({ category: this.cardCategory, type: 'black' }).exec((err, cards) => {
 			if (err) console.log(err)
 			else {
-				console.log(cards)
 				cards.forEach(card => {
 					this.blackCards.push(card.content);
 				});
@@ -138,7 +136,7 @@ let game = class {
 	// param depends on the winning card is handled on front-end 
 	// could be username or the card 
 	selectRoundWinner(username) {
-		updateScoreboard(username);
+		this.updateScoreboard(username);
 	}
 
 	getBoardCards() {
@@ -147,20 +145,20 @@ let game = class {
 
 	nextRound() {
 		this.boardCards = [];
-		dealBlackCard();
-		for (let playerIndex = 0; i < numPlayers; playerIndex++) {
+		this.dealBlackCard();
+		for (let playerIndex = 0; playerIndex < this.numPlayers; playerIndex++) {
 			if (this.players[playerIndex].name !== this.czar) {
 				dealCard(playerIndex);
 			}
 		}
-		setCzar();
-		resetTurnsLeft();
+		this.setCzar();
+		this.resetTurnsLeft();
 		this.currentRound++;
 	}
 
 	resetTurnsLeft() {
 		for (let i = 0; i < this.numPlayers; i++) {
-			if (players[0].user.name !== this.czar) {
+			if (this.players[0].name !== this.czar) {
 				this.turnsLeft.push(players[0].user.name);
 			}
 		}
@@ -201,7 +199,17 @@ let game = class {
 	updateScoreboard(username) {
 		this.players.map(function (i) {
 			if (i.username == username) {
-				i.score++;
+				return (
+					{
+						name: i.name,
+						cards: i.cards,
+						score: i.score + 1
+					}
+				)
+
+			}
+			else {
+				return i
 			}
 		});
 	}

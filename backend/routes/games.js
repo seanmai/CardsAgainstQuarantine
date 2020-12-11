@@ -37,7 +37,9 @@ module.exports = function (io) {
 		socket.on('start-game', (gameId, username) => {
 			if (GamesManager.validGameId(gameId)) {
 				GamesManager.startGame(gameId);
+				// ********** remove following line later *****************
 				socket.emit('game-state', GamesManager.getGameState(gameId));
+				socket.to(gameId).emit('game-state', GamesManager.getGameState(gameId));
 			} else {
 				console.log("invalid id")
 			}
@@ -49,7 +51,9 @@ module.exports = function (io) {
 				if (GamesManager.validUser(data.username)) {
 					console.log("submitting ", data)
 					GamesManager.submitWhiteCard(gameId, data.username, data.card);
-					socket.to(gameId).emit('card-submitted', GamesManager.getBoardCards(gameId));
+					// ********** remove following line later *****************
+					socket.emit('game-state', GamesManager.getGameState(gameId));
+					socket.to(gameId).emit('game-state', GamesManager.getGameState(gameId));
 				}
 			}
 		});
@@ -58,11 +62,17 @@ module.exports = function (io) {
 			if (GamesManager.validGameId(gameId)) {
 				GamesManager.selectWinner(data.username, data.gameId);
 				// send updated score board
+				// ********** remove following line later *****************
+				socket.emit('update-scoreboard', GamesManager.getScoreBoard(gameId));
 				socket.to(gameId).emit('update-scoreboard', GamesManager.getScoreBoard(gameId));
 				if (GamesManager.isGameOver(gameId)) {
+					// ********** remove following line later *****************
+					socket.emit('game-over', GamesManager.getGameState(gameId));
 					socket.to(gameId).emit('game-over', GamesManager.getGameState(gameId));
 				} else {
 					GamesManager.startNextRound(gameId);
+					// ********** remove following line later *****************
+					socket.emit('game-state', GamesManager.getGameState(gameId));
 					socket.to(gameId).emit('game-state', GamesManager.getGameState(gameId));
 				}
 			}
