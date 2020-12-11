@@ -73,9 +73,7 @@ class Lobby extends Component {
         }else {
             redirect = null;
         }
-    
         return (
-            // Still need to implement admin user view
             <div>
                 {redirect}
                 {this.props.gameid !== null ? <Redirect to="/wait"/>:null}
@@ -83,7 +81,7 @@ class Lobby extends Component {
                 <div className="lobby-container">
 
                     {/* Need to pass login user through redux store */}
-                    <div><label className="loginlbl">logged in as: {this.props.currentUser.name}</label></div>
+                    <div><label className="loginlbl"><strong>logged in as:</strong> {this.props.currentUser.name}<label style={{color: 'green'}}>{this.props.currentUser.isAdmin ? " (admin)" : null }</label></label></div>
                     <div className="main-title">
                         <h1>Cards Against Quarantine</h1>
                     </div>
@@ -110,10 +108,7 @@ class Lobby extends Component {
 
                     <div className="footerbtn">
                         <button className="logoutbtn" onClick={this.logoutHandler}>Logout</button>
-                        <div>
-                            <EditCategory></EditCategory>
-                            <EditCard></EditCard>
-                        </div>
+                        {this.props.currentUser.isAdmin ? <div><EditCategory></EditCategory><EditCard></EditCard></div> : null}
                     </div>
                 </div>
             </div>
