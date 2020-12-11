@@ -54,7 +54,7 @@ class WaitRoom extends Component {
             {redirect}
             <div className="label-container">
                 <label><strong>RoomID:</strong> {this.props.gameid}</label>
-                <label><strong>User:</strong> {this.props.currentUser.name}</label>
+                <label><strong>User:</strong> {this.props.currentUser.name} <label style={{color: 'green'}}>{this.props.currentUser.isAdmin ? " (admin)" : null }</label></label>
             </div>
             <div className="main-container">
                 <label className="title">Waiting for players to join</label>
