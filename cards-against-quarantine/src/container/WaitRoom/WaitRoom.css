@@ -1,0 +1,89 @@
+.title {
+    font-size: 3em;
+}
+
+.label-container{
+    display:flex;
+    justify-content: space-between;
+    margin: 10px;
+}
+
+.label-container label {
+    font-size: 1.2em;
+}
+
+.main-container {
+    width: 100%;
+    height: 100%;
+    position:relative;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.main-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 60vh;
+    width: 100%;
+    margin-top: 10%;
+    top: 50%; 
+    
+}
+
+.content-wrapper {
+    border: 1px solid #ccc;
+    padding: 30px;
+    box-shadow: 1px 1px 5px #888888;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.box-title{
+    font-size: 1.7em;
+    margin: 10px;
+    text-align: center;
+    
+}
+
+.player-container{
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+.player-container label{
+    text-align: center;
+}
+
+.button-wrapper{
+    padding: 10px; 
+    display: flex;
+    align-items: center;
+}
+
+.button-wrapper button{
+
+    background-color: white;
+    border-width: 1px;
+    margin: 5px;
+    font-size: 1em; 
+    padding: 10px 40px;
+    border-radius: 5px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.cancelButton{
+    width:50%;
+}
+
+.start-button{
+    width:50%;
+    color: white;
+    background-color: #4A86E8 !important;
+}
+

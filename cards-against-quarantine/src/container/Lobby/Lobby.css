@@ -80,6 +80,9 @@
     z-index: 1
 }
 
+.join-container{
+    display:inline-block;
+}
 
 /* Handle Small devices */
 @media screen and (max-width: 540px) {
