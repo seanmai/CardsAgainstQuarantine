@@ -13,7 +13,7 @@ class CreateRoom extends Component {
         super(props);
         this.state = {
             // TODO fix these fake defaults pls
-            category: 'test category 1',
+            category: 'Base',
             win_mode: 'rounds_played',
             win_rounds: 3,
             max_player: 2,

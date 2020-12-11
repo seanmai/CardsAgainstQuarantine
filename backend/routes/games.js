@@ -16,7 +16,6 @@ module.exports = function (io) {
 
 	io.on('connection', function (socket) {
 		socket.on("host-game", (message) => {
-			console.log("Hellllloooooooooooo")
 			console.log(message)
 			let id = GamesManager.createGame(message);
 			socket.emit('game id', id);
@@ -48,7 +47,8 @@ module.exports = function (io) {
 		socket.on('submit-card', (gameId, data) => {
 			if (GamesManager.validGameId(gameId)) {
 				if (GamesManager.validUser(data.username)) {
-					GamesManager.submitWhiteCard(data.username, data.card);
+					console.log("submitting ", data)
+					GamesManager.submitWhiteCard(gameId, data.username, data.card);
 					socket.to(gameId).emit('card-submitted', GamesManager.getBoardCards(gameId));
 				}
 			}

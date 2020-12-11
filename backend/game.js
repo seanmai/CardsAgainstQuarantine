@@ -64,12 +64,6 @@ let game = class {
 
 
 	initCards() {
-		Card.find().exec((err, cards) => {
-			if (err) console.log(err)
-			else {
-				console.log("test numero one", cards)
-			}
-		});
 		Card.find({ category: this.cardCategory, type: 'white' }).exec((err, cards) => {
 			if (err) console.log(err)
 			else {
@@ -133,8 +127,9 @@ let game = class {
 			card: card
 		}
 		this.boardCards.push(played);
-		let index = getUserIndex(username);
+		let index = this.getUserIndex(username);
 		this.turnsLeft = _.without(this.turnsLeft, username);
+		console.log(index)
 		this.players[index].cards = _.without(this.players[index].cards, card);
 	}
 

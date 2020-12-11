@@ -15,6 +15,7 @@ let gamesManager = class {
 		let gameId = this.generateGameId();
 		let game = new Game(message.username, gameId, message.category, message.rounds, message.maxPlayers);
 		this.gamesList.push(game);
+		game.initCards();
 		return gameId;
 	}
 
@@ -28,7 +29,6 @@ let gamesManager = class {
 
 	startGame(id) {
 		let game = this.findGame(id);
-		game.initCards();
 		game.dealHand();
 		game.dealBlackCard();
 	}
@@ -62,15 +62,15 @@ let gamesManager = class {
 	}
 
 	// card would depend on what they send from client side 
-	submitWhiteCard(username, card) {
-		let game = findGame(id);
+	submitWhiteCard(id, username, card) {
+		let game = this.findGame(id);
 		if (game !== undefined) {
 			game.playWhiteCard(username, card);
 		}
 	}
 
 	validUser(username) {
-		for (let i = 0; i < gamesList.lenght; i++) {
+		for (let i = 0; i < this.gamesList.length; i++) {
 			if (this.gamesList[i].validPlayer(username)) {
 				return true;
 			}

@@ -53,20 +53,20 @@ const test_played = [
     },
 ]
 
-const player_type = "czar"
-
 const Room = (props) => {
     const [cards, setCards] = useState(test_cards)
     const [played, setPlayed] = useState(test_played)
     const [black, setBlack] = useState("")
     const [selected, setSelected] = useState("")
+    const [czar, setCzar] = useState(false)
     const username = useSelector(state => state.currentUser.name);
     const gameId = useSelector(state => state.gameid);
 
     useEffect(() => {
         socket.on('game-state', data => {
+            console.log(data)
             setBlack(data.blackCard)
-
+            setCzar(data.czar === username)
             const player_cards = data.players.filter(p => p.name === username)[0].cards
             setCards(player_cards.map(c => { return { content: c, selected: false } }))
 
@@ -84,7 +84,11 @@ const Room = (props) => {
 
     const cardSubmitHandler = (e) => {
         e.preventDefault()
-        console.log("submitting " + selected)
+        const data = {
+            username: username,
+            card: selected
+        }
+        socket.emit('submit-card', gameId, data)
     }
 
     const winSubmitHandler = (e) => {
@@ -108,7 +112,7 @@ const Room = (props) => {
                     disabled
                     content={black} >
                 </Card>
-                {player_type === 'player' &&
+                {!czar &&
                     <form onSubmit={cardSubmitHandler}>
                         <Card
                             disabled={selected === ""}
@@ -119,7 +123,7 @@ const Room = (props) => {
                         <button type="submit" disabled={selected === ""}>Submit</button>
                     </form>
                 }
-                {player_type === 'czar' &&
+                {czar &&
                     <form onSubmit={winSubmitHandler}>
                         <div className="played-cards">
                             {played.map(card => {
@@ -142,7 +146,7 @@ const Room = (props) => {
                     {cards.map(card => {
                         return (
                             <Card
-                                disabled={player_type === 'czar'}
+                                disabled={czar}
                                 key={card.content}
                                 content={card.selected ? "" : card.content}
                                 onClick={cardClickHandler}>
