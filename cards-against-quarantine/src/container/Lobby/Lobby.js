@@ -39,7 +39,7 @@ class Lobby extends Component {
         let roomID = document.getElementById("roomID").value;
 
         let message = {
-            gameID : roomID,
+            gameId : roomID,
             username: this.props.currentUser.name,
         }
 

@@ -1,6 +1,7 @@
 var _ = require('underscore');
 let Game = require('./game.js');
 const shortid = require("custom-id");
+const games = require('./routes/games.js');
 
 //add async and await
 
@@ -13,14 +14,17 @@ let gamesManager = class {
 
 	createGame(message) {
 		let gameId = this.generateGameId();
-		let game = new Game(message.username, gameId, message.category, message.rounds, message.maxPlayers);
+		let game = new Game(message.username, gameId, message.category, message.rounds, message.max_player);
 		this.gamesList.push(game);
 		game.initCards();
 		return gameId;
 	}
 
 	findGame(gameId) {
-		return _.findWhere(this.gamesList, { id: gameId });
+		let game = this.gamesList.filter((entry) => {
+			return entry.id === gameId;
+		});
+		return game[0];
 	}
 
 	deleteGame(id) {
