@@ -1,10 +1,15 @@
 // This container is the game room
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import socketIO from 'socket.io-client';
+
+
 import './Room.css'
 
 import Card from '../../components/Card/Card';
 import Scoreboard from './Scoreboard'
 import { connect, useSelector } from 'react-redux';
+
+const socket = socketIO('http://localhost:4000');
 
 const test_cards = [
     {
@@ -29,7 +34,7 @@ const test_cards = [
     },
 ]
 
-const played_cards = [
+const test_played = [
     {
         content: "hehe",
         selected: false
@@ -47,13 +52,28 @@ const played_cards = [
         selected: false
     },
 ]
-const test_black = "black card"
-const player_type = "czar"
 
 const Room = (props) => {
     const [cards, setCards] = useState(test_cards)
+    const [played, setPlayed] = useState(test_played)
+    const [black, setBlack] = useState("")
     const [selected, setSelected] = useState("")
+    const [czar, setCzar] = useState(false)
     const username = useSelector(state => state.currentUser.name);
+    const gameId = useSelector(state => state.gameid);
+
+    useEffect(() => {
+        socket.on('game-state', data => {
+            console.log(data)
+            setBlack(data.blackCard)
+            setCzar(data.czar === username)
+            const player_cards = data.players.filter(p => p.name === username)[0].cards
+            setCards(player_cards.map(c => { return { content: c, selected: false } }))
+
+            const curr_played = data.boardCards
+            setPlayed(curr_played.map(c => { return { content: c, selected: false } }))
+        });
+    }, []);
 
     const cardClickHandler = (e) => {
         if (e.target.value !== "") {
@@ -64,7 +84,11 @@ const Room = (props) => {
 
     const cardSubmitHandler = (e) => {
         e.preventDefault()
-        console.log("submitting " + selected)
+        const data = {
+            username: username,
+            card: selected
+        }
+        socket.emit('submit-card', gameId, data)
     }
 
     const winSubmitHandler = (e) => {
@@ -74,16 +98,21 @@ const Room = (props) => {
     const returnCard = (e) => {
         setCards(cards.map(card => { return { ...card, selected: false } }))
         setSelected("")
-    }  
+    }
+
+    const createGame = () => {
+        socket.emit('start-game', gameId, username)
+    }
 
     return (
         <div className="flex-container">
+            <button onClick={createGame}>Start Game</button>
             <div className="game-area">
                 <Card
                     disabled
-                    content={test_black} >
+                    content={black} >
                 </Card>
-                {player_type === 'player' &&
+                {!czar &&
                     <form onSubmit={cardSubmitHandler}>
                         <Card
                             disabled={selected === ""}
@@ -94,10 +123,10 @@ const Room = (props) => {
                         <button type="submit" disabled={selected === ""}>Submit</button>
                     </form>
                 }
-                {player_type === 'czar' &&
+                {czar &&
                     <form onSubmit={winSubmitHandler}>
                         <div className="played-cards">
-                            {played_cards.map(card => {
+                            {played.map(card => {
                                 return (
                                     <Card
                                         key={card.content}
@@ -117,7 +146,7 @@ const Room = (props) => {
                     {cards.map(card => {
                         return (
                             <Card
-                                disabled={player_type === 'czar'}
+                                disabled={czar}
                                 key={card.content}
                                 content={card.selected ? "" : card.content}
                                 onClick={cardClickHandler}>
@@ -141,9 +170,10 @@ const Room = (props) => {
 function mapStateToProps(state) {
     return {
         currentUser: state.currentUser,
+        gameId: state.gameid,
         redirect: state.redirect,
         auth: state.authenticated
     }
 }
 
-export default connect(mapStateToProps) (Room);
+export default connect(mapStateToProps)(Room);

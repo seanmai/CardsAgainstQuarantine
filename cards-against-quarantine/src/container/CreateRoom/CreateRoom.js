@@ -9,12 +9,13 @@ import socketIOClient from "socket.io-client";
 
 let socket;
 class CreateRoom extends Component {
-    constructor(props){
-        super(props);   
+    constructor(props) {
+        super(props);
         this.state = {
-            category: null,
-            win_mode: null,
-            win_rounds: null,
+            // TODO fix these fake defaults pls
+            category: 'Base',
+            win_mode: 'rounds_played',
+            win_rounds: 3,
             max_player: 2,
             endpoint: 'http://localhost:4000',
             redirect: false
@@ -23,18 +24,18 @@ class CreateRoom extends Component {
     }
 
     updateCategorySelector = (event) => {
-        this.setState({category: event.target.value})
+        this.setState({ category: event.target.value })
     }
     updateMaxPlayerSelector = (event) => {
-        this.setState({max_player: event.target.value})
+        this.setState({ max_player: event.target.value })
     }
 
     updateWinConditionSelector = (event) => {
-        this.setState({win_mode: event.target.value})
+        this.setState({ win_mode: event.target.value })
     }
 
     updateWinRoundsSelector = (event) => {
-        this.setState({win_rounds: event.target.value})
+        this.setState({ win_rounds: event.target.value })
     }
 
     // Implement creategame logic
@@ -42,10 +43,10 @@ class CreateRoom extends Component {
         event.preventDefault();
 
         let message = {
-            username : this.props.currentUser.name,
-            category : this.state.category,
-            rounds : this.state.win_rounds,
-            max_player : this.state.max_player
+            username: this.props.currentUser.name,
+            category: this.state.category,
+            rounds: this.state.win_rounds,
+            max_player: this.state.max_player
         }
 
         socket.emit("host-game", (message));
@@ -55,74 +56,75 @@ class CreateRoom extends Component {
             this.props.setGameID(id);
         });
 
-        this.setState({redirect: true})
+        this.setState({ redirect: true })
     }
 
     render() {
         let redirect;
         let redirectToReffer = this.state.redirect
         if (redirectToReffer === true) {
-            redirect = <Redirect to="/wait"/>;
+            redirect = <Redirect to="/wait" />;
         }
         return (
+            // <div>hello world</div>
             // TODO Design Modal, fill up the text description
             <div>
-            {redirect}
-            <div className="createRoomContainer">
-                <label className="title">Create Game</label>
-                <div className="modelSelectBox">                
-                    <div className="settings-div">
-                        <form onSubmit={this.submitHandler}>
-                            <div className="category-div">
-                                <div>
-                                    <label>Card Categories: </label>
-                                    <select className="selector" onChange={this.updateCategorySelector}>
-                                        <option>Test1</option>
-                                        <option>Test2</option>
-                                        <option>Test3</option>
-                                        <option>Test4</option>
-                                    </select>
+                {redirect}
+                <div className="createRoomContainer">
+                    <label className="title">Create Game</label>
+                    <div className="modelSelectBox">
+                        <div className="settings-div">
+                            <form onSubmit={this.submitHandler}>
+                                <div className="category-div">
+                                    <div>
+                                        <label>Card Categories: </label>
+                                        <select className="selector" onChange={this.updateCategorySelector}>
+                                            <option value="test category 1">Test1</option>
+                                            <option value="test category 2">Test2</option>
+                                            <option value="test category 3">Test3</option>
+                                            <option value="test category 4">Test4</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div className="condition-div">
-                                <div>
-                                    <label>Win Condition: </label>
-                                    <select className="selector" onChange={this.updateWinConditionSelector}>
-                                        <option value="rounds_played">Rounds Played</option>
-                                        <option value="rounds_won">Rounds Won</option>
-                                    </select>
-                                    <select className="selector condition-number-selector" onChange={this.updateWinRoundsSelector}>
-                                        <option value="3">3</option>
-                                        <option value="5">5</option>
-                                        <option value="7">7</option>
-                                        <option value="10">10</option>
-                                    </select>
+                                <div className="condition-div">
+                                    <div>
+                                        <label>Win Condition: </label>
+                                        <select className="selector" onChange={this.updateWinConditionSelector}>
+                                            <option value="rounds_played">Rounds Played</option>
+                                            <option value="rounds_won">Rounds Won</option>
+                                        </select>
+                                        <select className="selector condition-number-selector" onChange={this.updateWinRoundsSelector}>
+                                            <option value="3">3</option>
+                                            <option value="5">5</option>
+                                            <option value="7">7</option>
+                                            <option value="10">10</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div className="player-div">
-                                <div>   
-                                    <label>Max Players: </label>
-                                    <select className="selector" onChange={this.updateMaxPlayerSelector}>
-                                        <option value="2">2</option>
-                                        <option value="4">4</option>
-                                        <option value="6">6</option>
-                                        <option value="8">8</option>
-                                    </select>
+                                <div className="player-div">
+                                    <div>
+                                        <label>Max Players: </label>
+                                        <select className="selector" onChange={this.updateMaxPlayerSelector}>
+                                            <option value="2">2</option>
+                                            <option value="4">4</option>
+                                            <option value="6">6</option>
+                                            <option value="8">8</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="button-div">
-                                <button className="cancelButton">Cancel</button>
-                                
-                                {/* <Link to="/room" style={{ textDecoration: 'none' }}> */}
+                                <div className="button-div">
+                                    <button className="cancelButton">Cancel</button>
+
+                                    {/* <Link to="/room" style={{ textDecoration: 'none' }}> */}
                                     <button className="createButton">Create Game</button>
-                                {/* </Link> */}
-                            </div>
-                        </form>
+                                    {/* </Link> */}
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
             </div>
         );
     }
@@ -137,12 +139,12 @@ function mapStateToProps(state) {
     }
 }
 
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps(dispatch) {
     return {
         setGameID: (userObj) => {
-            dispatch({type: "SET_GAMEID", payload:userObj})
+            dispatch({ type: "SET_GAMEID", payload: userObj })
         },
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (CreateRoom);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateRoom);
