@@ -44,10 +44,18 @@ class Lobby extends Component {
         }
 
         socket.emit("join-game", (message));
+        
+
+        // Success join handler
+        // Todo - Need to update socket response to say join room success
+        this.props.setGameID(roomID)
+
 
         socket.on('join-error', error => {
             // TODO: Handle error on Client Side
             console.log(error);
+            this.props.setGameID(null)
+
         });
     }
 
@@ -70,6 +78,7 @@ class Lobby extends Component {
             // Still need to implement admin user view
             <div>
                 {redirect}
+                {this.props.gameid !== null ? <Redirect to="/wait"/>:null}
                 {modal}
                 <div className="lobby-container">
 
@@ -81,14 +90,20 @@ class Lobby extends Component {
 
                     <div className="lobby-section">
                         <h2>Host Game _____________. </h2>
+
+
+
                         <Link to="/createroom" style={{ textDecoration: 'none' }}>
                             <button>Create Game</button>
                         </Link>
                         <h2>Join Game _____________. </h2>
-                        <form onSubmit={this.submitHandler}>
-                            <input type="text" placeholder="Enter Room Code" id="roomID" />
-                            <button>Join Game</button>
-                        </form>
+                        <div className={"join-container"}>
+                            <form onSubmit={this.submitHandler}>
+                                <input type="text" placeholder="Enter Room Code" id="roomID" />
+                                {/* <button>Join Game</button> */}
+                            </form>
+                        </div>
+
                         <button onClick={this.showHelpModal}>How To Play</button>
 
                     </div> 
@@ -114,7 +129,8 @@ function mapStateToProps(state) {
     return {
         currentUser: state.currentUser,
         redirect: state.redirect,
-        auth: state.authenticated
+        auth: state.authenticated,
+        gameid: state.gameid
     }
 }
 
@@ -125,6 +141,9 @@ function mapDispatchToProps(dispatch){
         },
         setLogout: (logout) => {
             dispatch({type: "SET_UNAUTH"})
+        },
+        setGameID: (userObj) => {
+            dispatch({type: "SET_GAMEID", payload:userObj})
         }
     }
 }

@@ -62,7 +62,7 @@ class CreateRoom extends Component {
         let redirect;
         let redirectToReffer = this.state.redirect
         if (redirectToReffer === true) {
-            redirect = <Redirect to="/room"/>;
+            redirect = <Redirect to="/wait"/>;
         }
         return (
             // TODO Design Modal, fill up the text description
