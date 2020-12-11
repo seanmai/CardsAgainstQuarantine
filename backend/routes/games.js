@@ -23,7 +23,6 @@ module.exports = function (io) {
 		});
 
 		socket.on("join-game", (message) => {
-			console.log(message)
 			if (GamesManager.validGameId(message.gameId)) {
 				if (GamesManager.joinGame(message.username, message.gameId)) {
 					socket.join(message.gameId);
