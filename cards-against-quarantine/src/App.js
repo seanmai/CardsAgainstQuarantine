@@ -17,17 +17,16 @@ function App() {
       {/* <Route path="/" exact component={}/> */}
 
       {/* Routes to check UI containers */}
-      <Route path='/login' exact component={Login}/>
-      <Route path='/room' exact component={Room}/>
-      <Route path='/admin' exact component={AdminPage}/>
-      
-      <Route path='/createroom' exact component={CreateRoom}/>
-      <Route path='/room' exact component={Room}/>
+      <Route path='/login' exact component={Login} />
+      <Route path='/admin' exact component={AdminPage} />
 
-      <Route path='/' exact component={Lobby}/>
-      <Route path='/chat-test' exact component={Chat}/>
+      <Route path='/createroom' exact component={CreateRoom} />
+      <Route path='/room' exact component={Room} />
+
+      <Route path='/' exact component={Lobby} />
+      <Route path='/chat-test' exact component={Chat} />
     </Router>
   );
 }
 
-export default connect() (App);
+export default connect()(App);

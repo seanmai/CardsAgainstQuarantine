@@ -1,3 +1,4 @@
 *package-lock.json
 *.eslintcache
+backend/package-lock.json
 cards-against-quarantine/.eslintcache
