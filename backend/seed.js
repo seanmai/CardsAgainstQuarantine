@@ -1,6 +1,13 @@
 let mongoose = require('mongoose');
 let Card = require('./models/card.model');
 let Category = require('./models/category.model');
+
+let categoryData = [
+    { name: 'Base' },
+    { name: 'NSFW' },
+    { name: 'Holidays' }
+];
+
 let cardData = [
     // Base Pack Black Cards (20)
     {
@@ -463,24 +470,32 @@ let cardData = [
         type: 'white',
         content: 'Mall Santa.'
     },
-
 ];
 
 const seedDB = () => {
-    Food.remove({}, (err) => {
-        if(err){
-            console.log(err);
-        } else {
-            console.log('Removed all food items.');
-            data.forEach(function(seed){
-                Food.create(seed, function(err, food){
-                    if(err){
-                        console.log(err);
-                    } else {
-                        console.log('Added a food item.')
-                    }
+    Category.remove({}, (err) => {
+        if(err) console.log(err);
+        else {
+            console.log('Removed all categories');
+            categoryData.forEach(function(seed){
+                Category.create(seed, (err, category) => {
+                    if(err) console.log(err);
                 });
             });
+            console.log('Added categories')
+        }
+    });
+
+    Card.remove({}, (err) => {
+        if(err) console.log(err);
+        else {
+            console.log('Removed all card');
+            cardData.forEach(function(seed){
+                Card.create(seed, function(err, card){
+                    if(err) console.log(err);
+                });
+            });
+            console.log('Added cards')
         }
     });
 }
