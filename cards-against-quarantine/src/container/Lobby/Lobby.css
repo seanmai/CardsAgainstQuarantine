@@ -68,6 +68,7 @@
     position: absolute;
     top: 5px;
     right: 5px;  
+    font-size: 1.2em;
 }
 
 .footerbtn {
@@ -80,6 +81,9 @@
     z-index: 1
 }
 
+.join-container{
+    display:inline-block;
+}
 
 /* Handle Small devices */
 @media screen and (max-width: 540px) {

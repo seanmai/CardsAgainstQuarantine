@@ -10,7 +10,8 @@ class Login extends Component {
         mode: 'Login',
         credentials : {
             username: '',
-            password: ''
+            password: '',
+            isAdmin: false
         },
         valid: false,
         auth: false,
@@ -19,9 +20,22 @@ class Login extends Component {
 
     submitHandler = (event) => {
         event.preventDefault();
-        // Successful signup
-        const onSuccess = res => {
+        const onSuccessSignup = res => {
             this.setState({auth: res.status})
+        }
+
+        const onSuccessLogin = res => {
+            this.setState(prevState => ({
+                ...prevState,
+
+                credentials: {
+                    ...prevState.credentials,
+                    isAdmin: res.data.user.isAdmin
+                },
+
+                auth: res.status
+            }))
+
         }
 
         const onFailure = error => {
@@ -30,11 +44,11 @@ class Login extends Component {
 
         if (this.state.mode === 'Sign up' && this.state.valid){
             axios.post('http://localhost:4000/users/register', this.state.credentials)
-            .then(onSuccess)
+            .then(onSuccessSignup)
             .catch(onFailure);
         }else if (this.state.mode === 'Login'){
             axios.post('http://localhost:4000/users/login', this.state.credentials)
-            .then(res => this.setState({auth: res.status === 200}))
+            .then(onSuccessLogin)
             .catch(onFailure);
         }else {
             onFailure();
@@ -78,7 +92,8 @@ class Login extends Component {
         // Authentication steps
         if (this.state.auth){
             this.props.setUser({
-                name: this.state.credentials.username
+                name: this.state.credentials.username,
+                isAdmin: this.state.credentials.isAdmin
             })
             this.props.setAuth(this.state.auth);
         }

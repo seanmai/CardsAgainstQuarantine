@@ -44,10 +44,18 @@ class Lobby extends Component {
         }
 
         socket.emit("join-game", (message));
+        
+
+        // Success join handler
+        // Todo - Need to update socket response to say join room success
+        this.props.setGameID(roomID)
+
 
         socket.on('join-error', error => {
             // TODO: Handle error on Client Side
             console.log(error);
+            this.props.setGameID(null)
+
         });
     }
 
@@ -65,40 +73,42 @@ class Lobby extends Component {
         }else {
             redirect = null;
         }
-    
         return (
-            // Still need to implement admin user view
             <div>
                 {redirect}
+                {this.props.gameid !== null ? <Redirect to="/wait"/>:null}
                 {modal}
                 <div className="lobby-container">
 
                     {/* Need to pass login user through redux store */}
-                    <div><label className="loginlbl">logged in as: {this.props.currentUser.name}</label></div>
+                    <div><label className="loginlbl"><strong>logged in as:</strong> {this.props.currentUser.name}<label style={{color: 'green'}}>{this.props.currentUser.isAdmin ? " (admin)" : null }</label></label></div>
                     <div className="main-title">
                         <h1>Cards Against Quarantine</h1>
                     </div>
 
                     <div className="lobby-section">
                         <h2>Host Game _____________. </h2>
+
+
+
                         <Link to="/createroom" style={{ textDecoration: 'none' }}>
                             <button>Create Game</button>
                         </Link>
                         <h2>Join Game _____________. </h2>
-                        <form onSubmit={this.submitHandler}>
-                            <input type="text" placeholder="Enter Room Code" id="roomID" />
-                            <button>Join Game</button>
-                        </form>
+                        <div className={"join-container"}>
+                            <form onSubmit={this.submitHandler}>
+                                <input type="text" placeholder="Enter Room Code" id="roomID" />
+                                {/* <button>Join Game</button> */}
+                            </form>
+                        </div>
+
                         <button onClick={this.showHelpModal}>How To Play</button>
 
                     </div> 
 
                     <div className="footerbtn">
                         <button className="logoutbtn" onClick={this.logoutHandler}>Logout</button>
-                        <div>
-                            <EditCategory></EditCategory>
-                            <EditCard></EditCard>
-                        </div>
+                        {this.props.currentUser.isAdmin ? <div><EditCategory></EditCategory><EditCard></EditCard></div> : null}
                     </div>
                 </div>
             </div>
@@ -114,7 +124,8 @@ function mapStateToProps(state) {
     return {
         currentUser: state.currentUser,
         redirect: state.redirect,
-        auth: state.authenticated
+        auth: state.authenticated,
+        gameid: state.gameid
     }
 }
 
@@ -125,6 +136,9 @@ function mapDispatchToProps(dispatch){
         },
         setLogout: (logout) => {
             dispatch({type: "SET_UNAUTH"})
+        },
+        setGameID: (userObj) => {
+            dispatch({type: "SET_GAMEID", payload:userObj})
         }
     }
 }
