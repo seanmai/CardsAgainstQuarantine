@@ -1,5 +1,5 @@
 var _ = require('underscore');
-let Card = require('../models/card.model');
+let Card = require('./models/card.model');
 
 let game = class{
 

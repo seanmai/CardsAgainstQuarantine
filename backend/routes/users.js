@@ -16,12 +16,16 @@ router.route('/register/fail').get((req, res) => {
     res.status(401).send({ error: "user already exists" });
 })
 
-router.route('/login').post(passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/users/login/fail',
-    // TODO: Show flash message on client side 
-    failureFlash : true
-}))
+router.route('/login').post((req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+        if (err) { return next(err); }
+        if (!user) { return res.redirect('/users/login/fail'); }
+        req.logIn(user, function(err) {
+            if (err) { return next(err); }
+            res.send({user: user, redirect_path: "/"});
+        });
+    })(req, res, next)
+});
 
 router.route('/logout').get((req, res) => {
     req.logout();
