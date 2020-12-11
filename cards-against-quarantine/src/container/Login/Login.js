@@ -20,15 +20,6 @@ class Login extends Component {
 
     submitHandler = (event) => {
         event.preventDefault();
-        // Successful signup
-        // const onSuccess = res => {
-        //     console.log("LOGIN", res.data.user.isAdmin);
-        //     this.props.setUser({
-        //         name: res.data.user.username,
-        //         isAdmin: res.data.user.isAdmin
-        //     })
-        //     this.setState({auth: res.status})
-        // }
         const onSuccessSignup = res => {
             this.setState({auth: res.status})
         }
