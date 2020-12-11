@@ -10,6 +10,7 @@ const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
 const socket = require('socket.io');
+const seedDB = require("./seed");
 
 const initializePassport = require('./passport');
 initializePassport(passport);
@@ -56,3 +57,5 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/card-categories", cardsRouter);
 app.use("/games", gamesRouter);
+
+seedDB();
