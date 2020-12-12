@@ -179,6 +179,7 @@ let game = class {
 
 	// }
 
+	// We only have the max rds win condition at the moment
 	gameOver() {
 		if (this.currentRound === this.rounds) {
 			return true;

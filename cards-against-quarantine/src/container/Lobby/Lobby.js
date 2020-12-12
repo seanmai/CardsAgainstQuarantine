@@ -85,11 +85,11 @@ class Lobby extends Component {
                     </div>
 
                     <div className="lobby-section">
-                        <h2>Host Game _____________. </h2>
+                        <h2><u>Host Game_______</u></h2>
                         <Link to="/createroom" style={{ textDecoration: 'none' }}>
                             <button>Create Game</button>
                         </Link>
-                        <h2>Join Game _____________. </h2>
+                        <h2><u>Join Game_______</u></h2>
                         <div className={"join-container"}>
                             <form onSubmit={this.submitHandler}>
                                 <input type="text" placeholder="Enter Room Code" id="roomID" />

@@ -30,11 +30,14 @@ const Chat = (props) => {
     useEffect(() => {
         socket.on('message-broadcast', data => {
             document.querySelector('#messages').innerHTML += "<p><strong>" + data.username + ": </strong>" + data.message + "</p>";
+            let messagesContainer = document.querySelector('#messages-container');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         });
     }, []);
 
     return (
         <div id="chat-container">
+            <h1>Chat</h1>
             <div id="messages-container">
                 <div id="messages">
 

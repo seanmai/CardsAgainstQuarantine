@@ -75,6 +75,7 @@ module.exports = function (io) {
 				socket.to(gameId).emit('update-scoreboard', GamesManager.getScoreBoard(gameId));
 				if (GamesManager.isGameOver(gameId)) {
 					// ********** remove following line later *****************
+					console.log("GAME OVER");
 					socket.emit('game-over', GamesManager.getGameState(gameId));
 					socket.to(gameId).emit('game-over', GamesManager.getGameState(gameId));
 				} else {
