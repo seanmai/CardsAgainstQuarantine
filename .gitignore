@@ -2,3 +2,4 @@
 *.eslintcache
 backend/package-lock.json
 cards-against-quarantine/.eslintcache
+*debug.log

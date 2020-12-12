@@ -181,7 +181,7 @@ let game = class {
 
 	// We only have the max rds win condition at the moment
 	gameOver() {
-		if (this.currentRound === this.rounds) {
+		if (this.currentRound === this.rounds - 1) {
 			return true;
 		}
 		return false;
@@ -198,8 +198,11 @@ let game = class {
 	}
 
 	updateScoreboard(username) {
-		this.players.map(function (i) {
-			if (i.username == username) {
+		console.log("username:", username)
+		this.players = this.players.map(function (i) {
+			console.log("updating score for", i)
+			if (i.name === username) {
+				console.log("found ", i)
 				return (
 					{
 						name: i.name,
