@@ -12,10 +12,10 @@ const Chat = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const data = {};
-        data.gameId = '';
+        data.gameId = props.gameId;
         data.username = '';
         data.message = message;
-        socket.emit('message', props.gameId, data);
+        socket.emit('message', data);
         setMessage('');
     };
 
@@ -28,7 +28,7 @@ const Chat = (props) => {
     useEffect(() => {
         socket.on('message-broadcast', data => {
             let newMessage = document.createElement('P');
-            newMessage.innerText = data.message;
+            newMessage.innerText = data;
             document.querySelector('#messages').appendChild(newMessage);
         });
     }, []);

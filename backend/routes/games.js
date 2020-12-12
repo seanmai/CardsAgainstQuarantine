@@ -91,9 +91,10 @@ module.exports = function (io) {
 
 		// Chat portion
 		// Data => { gameId, username, message }
-		socket.on('message', (gameId, data) => {
-			socket.emit('message-broadcast', GamesManager.getGameState(gameId));
-			socket.to(gameId).emit('message-broadcast', data);
+		socket.on('message', (data) => {
+			// ********** remove following line later *****************
+			socket.emit('message-broadcast', data.message);
+			socket.to(data.gameId).emit('message-broadcast', data.message);
 		});
 	});
 
