@@ -91,8 +91,8 @@ module.exports = function (io) {
 		// Data => { gameId, username, message }
 		socket.on('message', (data) => {
 			// ********** remove following line later *****************
-			socket.emit('message-broadcast', data.message);
-			socket.to(data.gameId).emit('message-broadcast', data.message);
+			io.sockets.emit('message-broadcast', data);
+			socket.to(data.gameId).emit('message-broadcast', data);
 		});
 	});
 

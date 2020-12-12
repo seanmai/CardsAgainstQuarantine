@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import socketIO from 'socket.io-client';
 import './Chat.css';
+import { connect, useSelector } from 'react-redux';
+
 const socket = socketIO('http://localhost:4000');
 
 const Chat = (props) => {
-    
+    const username = useSelector(state => state.currentUser.name);
     const [message, setMessage] = useState('');
 
     const handleMessageChange = (e) => {setMessage(e.target.value)};
@@ -13,7 +15,7 @@ const Chat = (props) => {
         e.preventDefault();
         const data = {};
         data.gameId = props.gameId;
-        data.username = '';
+        data.username = username;
         data.message = message;
         socket.emit('message', data);
         setMessage('');
@@ -27,9 +29,7 @@ const Chat = (props) => {
     // if you want to test. we currently do not have it joined per room so.
     useEffect(() => {
         socket.on('message-broadcast', data => {
-            let newMessage = document.createElement('P');
-            newMessage.innerText = data;
-            document.querySelector('#messages').appendChild(newMessage);
+            document.querySelector('#messages').innerHTML += "<p><strong>" + data.username + ": </strong>" + data.message + "</p>";
         });
     }, []);
 
