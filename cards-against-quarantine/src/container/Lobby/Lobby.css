@@ -33,8 +33,6 @@
     text-align:center;
 }
 
-
-
 .lobby-section {
     display: flex;
     flex-direction: column;
@@ -79,6 +77,18 @@
     position: absolute;
     bottom: 0;
     z-index: 1
+}
+
+#admin-page-button {
+    text-decoration: none;
+    color: black;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px 40px;
+    margin: 5px;
+    user-select: none;
+    -moz-user-select: none;
+    cursor: pointer;
 }
 
 .join-container{
