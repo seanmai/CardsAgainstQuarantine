@@ -43,6 +43,13 @@ class WaitRoom extends Component {
 
     render() {
         let redirect;
+        let authredirect = null;
+        if (this.props.auth !== true) {
+            authredirect = <Redirect to={this.props.redirect}/>;
+        }else {
+            authredirect = null;
+        }
+
         if (this.state.redirect !== null) {
             redirect = <Redirect to={this.state.redirect}/>;
         }
@@ -55,6 +62,7 @@ class WaitRoom extends Component {
         return (
             // TODO Design Modal, fill up the text description
             <div>
+            {authredirect}
             {redirect}
             <div className="label-container">
                 <label><strong>RoomID:</strong> {this.props.gameid}</label>

@@ -72,15 +72,24 @@ class CreateRoom extends Component {
     }
 
     render() {
+        let authredirect = null;
+        if (this.props.auth !== true) {
+            authredirect = <Redirect to={this.props.redirect}/>;
+        }else {
+            authredirect = null;
+        }
+
         let redirect;
         let redirectToReffer = this.state.redirect
         if (redirectToReffer === true) {
             redirect = <Redirect to="/wait" />;
         }
+
         return (
             // <div>hello world</div>
             // TODO Design Modal, fill up the text description
             <div>
+                {authredirect}
                 {redirect}
                 <div className="createRoomContainer">
                     <label className="title">Create Game</label>
