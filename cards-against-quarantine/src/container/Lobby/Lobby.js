@@ -5,8 +5,6 @@ import './Lobby.css'
 import HelpModal from '../HelpModal/HelpModal'
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
-import EditCard from '../../components/EditCard/EditCard'
-import EditCategory from '../../components/EditCategory/EditCategory'
 import socketIOClient from "socket.io-client";
 
 let socket;
@@ -88,9 +86,6 @@ class Lobby extends Component {
 
                     <div className="lobby-section">
                         <h2>Host Game _____________. </h2>
-
-
-
                         <Link to="/createroom" style={{ textDecoration: 'none' }}>
                             <button>Create Game</button>
                         </Link>
@@ -101,19 +96,15 @@ class Lobby extends Component {
                                 {/* <button>Join Game</button> */}
                             </form>
                         </div>
-
                         <button onClick={this.showHelpModal}>How To Play</button>
-
                     </div> 
 
                     <div className="footerbtn">
                         <button className="logoutbtn" onClick={this.logoutHandler}>Logout</button>
-                        {this.props.currentUser.isAdmin ? <div><EditCategory></EditCategory><EditCard></EditCard></div> : null}
+                        {this.props.currentUser.isAdmin ? <a id="admin-page-button" href='/admin'>Admin</a>: null}
                     </div>
                 </div>
             </div>
-
-
         );
     }
 }

@@ -12,53 +12,11 @@ import { connect, useSelector } from 'react-redux';
 
 const socket = socketIO('http://localhost:4000');
 
-const test_cards = [
-    {
-        content: "stupid",
-        selected: false
-    },
-    {
-        content: "dumb",
-        selected: false
-    },
-    {
-        content: "ur mom",
-        selected: false
-    },
-    {
-        content: "yes",
-        selected: false
-    },
-    {
-        content: "test card",
-        selected: false
-    },
-]
-
-const test_played = [
-    {
-        content: "hehe",
-        selected: false
-    },
-    {
-        content: "haha",
-        selected: false
-    },
-    {
-        content: "hey",
-        selected: false
-    },
-    {
-        content: "other test card",
-        selected: false
-    },
-]
-
 const Room = (props) => {
-    const [cards, setCards] = useState(test_cards)
-    const [played, setPlayed] = useState(test_played)
-    const [black, setBlack] = useState("")
-    const [selected, setSelected] = useState("")
+    const [cards, setCards] = useState([])
+    const [played, setPlayed] = useState([])
+    const [black, setBlack] = useState('')
+    const [selected, setSelected] = useState('')
     const [czar, setCzar] = useState(false)
     const [scores, setScores] = useState([])
     const [disable, setDisable] = useState(false)
@@ -145,9 +103,10 @@ const Room = (props) => {
                                 disabled={selected === ""}
                                 type="button"
                                 content={selected}
-                                onClick={returnCard} >
+                                onClick={returnCard}
+                                >
                             </Card>
-                            <button id="submit-button" type="submit" disabled={selected === ""}>Submit</button>
+                            <button className="submit-button" type="submit" disabled={selected === ""}>Submit</button>
                         </form>
                     }
                     {czar &&
@@ -165,7 +124,7 @@ const Room = (props) => {
                                     )
                                 })}
                             </div>
-                        <button type="submit" disabled={selected === ""}>Submit</button>
+                        <button className="submit-button" type="submit" disabled={selected === ""}>Submit</button>
                     </form>
                 }
                 </div>
@@ -178,6 +137,7 @@ const Room = (props) => {
                                     disabled={czar || disable}
                                     key={card.content}
                                     content={card.selected ? '' : card.content}
+                                    className={card.content === selected ? 'selected' : ''}
                                     onClick={cardClickHandler}>
                                 </Card>
                             )
