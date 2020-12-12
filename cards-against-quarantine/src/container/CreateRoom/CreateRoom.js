@@ -119,9 +119,9 @@ class CreateRoom extends Component {
                                         <label>Max Players: </label>
                                         <select className="selector" onChange={this.updateMaxPlayerSelector}>
                                             <option value="2">2</option>
+                                            <option value="3">3</option>
                                             <option value="4">4</option>
-                                            <option value="6">6</option>
-                                            <option value="8">8</option>
+                                            <option value="5">5</option>
                                         </select>
                                     </div>
                                 </div>

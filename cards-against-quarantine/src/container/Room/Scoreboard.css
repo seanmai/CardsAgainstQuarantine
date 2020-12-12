@@ -1,5 +1,6 @@
 #scoreboard-container {
-    height: 40vh;
+    /* max-height: 40vh; */
+    height: 30vh;
 }
 
 #scoreboard-table {

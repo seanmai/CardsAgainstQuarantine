@@ -72,7 +72,10 @@ module.exports = function (io) {
 				// socket.to(gameId).emit('update-scoreboard', GamesManager.getScoreBoard(gameId));
 				if (GamesManager.isGameOver(gameId)) {
 					// ********** remove following line later *****************
-					io.in(gameId).emit('game-over', GamesManager.getGameState(gameId));
+					console.log("GAME OVER");
+					socket.emit('game-over', GamesManager.getGameState(gameId));
+					socket.to(gameId).emit('game-over', GamesManager.getGameState(gameId));
+					// io.in(gameId).emit('game-over', GamesManager.getGameState(gameId));
 					// io.to(gameId).emit(('game-over', GamesManager.getGameState(gameId));
 				} else {
 					GamesManager.startNextRound(gameId);
@@ -88,8 +91,11 @@ module.exports = function (io) {
 		// Data => { gameId, username, message }
 		socket.on('message', (data) => {
 			// ********** remove following line later *****************
-			io.to(gameId).emit('message-broadcast', data.message);
+			io.sockets.emit('message-broadcast', data);
+			// socket.to(data.gameId).emit('message-broadcast', data);
+			// io.to(gameId).emit('message-broadcast', data.message);
 			// socket.to(data.gameId).emit('message-broadcast', data.message);
+
 		});
 	});
 
