@@ -44,7 +44,7 @@ module.exports = function (io) {
 				io.in(gameId).emit('game-started', "game start");
 				io.in(gameId).emit('game-state', await GamesManager.getGameState(gameId));
 			} else {
-				console.log("invalid id")
+				console.log("invalid id");
 			}
 		});
 
@@ -66,22 +66,13 @@ module.exports = function (io) {
 		socket.on('round-winner', (gameId, data) => {
 			if (GamesManager.validGameId(gameId)) {
 				GamesManager.selectWinner(data.username, data.gameId);
-				// send updated score board
-				// ********** remove following line later *****************
 				io.in(gameId).emit('update-scoreboard', GamesManager.getScoreBoard(gameId));
-				// socket.to(gameId).emit('update-scoreboard', GamesManager.getScoreBoard(gameId));
 				if (GamesManager.isGameOver(gameId)) {
-					// ********** remove following line later *****************
 					console.log("GAME OVER");
-					socket.emit('game-over', GamesManager.getGameState(gameId));
-					socket.to(gameId).emit('game-over', GamesManager.getGameState(gameId));
-					// io.in(gameId).emit('game-over', GamesManager.getGameState(gameId));
-					// io.to(gameId).emit(('game-over', GamesManager.getGameState(gameId));
+					io.in(gameId).emit('game-over', GamesManager.getGameState(gameId));
 				} else {
 					GamesManager.startNextRound(gameId);
-					// ********** remove following line later *****************
 					io.in(gameId).emit('game-state', GamesManager.getGameState(gameId));
-					// io.to(gameId).emit('game-state', GamesManager.getGameState(gameId));
 				}
 			}
 		});
@@ -90,12 +81,7 @@ module.exports = function (io) {
 		// Chat portion
 		// Data => { gameId, username, message }
 		socket.on('message', (data) => {
-			// ********** remove following line later *****************
-			io.sockets.emit('message-broadcast', data);
-			// socket.to(data.gameId).emit('message-broadcast', data);
-			// io.to(gameId).emit('message-broadcast', data.message);
-			// socket.to(data.gameId).emit('message-broadcast', data.message);
-
+			io.in(data.gameId).emit('message-broadcast', data);
 		});
 	});
 
