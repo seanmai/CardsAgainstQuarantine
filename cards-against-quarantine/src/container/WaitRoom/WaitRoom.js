@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import './WaitRoom.css'
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import socketIOClient from "socket.io-client";
+// import socketIOClient from "socket.io-client";
+import {socket} from "../../socket.js";
 
-let socket;
+
+// let socket;
 class WaitRoom extends Component {
     constructor(props){
         super(props);   
@@ -14,7 +16,7 @@ class WaitRoom extends Component {
             redirect: null,
             broadcast: true
         }
-        socket = socketIOClient(this.state.endpoint);
+        // socket = socketIOClient(this.state.endpoint);
 
         socket.on("user-joined", (message) => {
             this.setState({players:message})
