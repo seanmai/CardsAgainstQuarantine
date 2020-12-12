@@ -8,7 +8,7 @@ const Scoreboard = ({ scores }) => {
             <h1 id="scoreboard-title">Scores</h1>
             <table id="scoreboard-table">
                 <tbody>
-                    {scores.map(score => {
+                    {scores.sort((a, b) => b.score - a.score).map(score => {
                         return (
                             <tr key={score.name}>
                                 <td className="scoreboard-name">{score.name} </td>

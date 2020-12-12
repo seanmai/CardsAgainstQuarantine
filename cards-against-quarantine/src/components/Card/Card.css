@@ -12,9 +12,8 @@
     font-weight: bold;
 }
 
-.card:disabled {
-    color: black;
-    cursor: default;
+.disabled {
+    pointer-events:none;
 }
 
 .card:focus, .selected {
@@ -25,4 +24,5 @@
 .black-card {
     background-color: black;
     color: white;
+    pointer-events:none;
 }
