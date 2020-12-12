@@ -102,7 +102,7 @@ class Lobby extends Component {
 
                     <div className="footerbtn">
                         <button className="logoutbtn" onClick={this.logoutHandler}>Logout</button>
-                        {this.props.currentUser.isAdmin ? <a id="admin-page-button" href='/admin'>Admin</a>: null}
+                        {this.props.currentUser.isAdmin ? <Link to="/admin"><button className="admin-page-button" >Admin</button></Link> : null}
                     </div>
                 </div>
             </div>
