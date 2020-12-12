@@ -5,9 +5,10 @@ import './Lobby.css'
 import HelpModal from '../HelpModal/HelpModal'
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
-import socketIOClient from "socket.io-client";
+// import socketIOClient from "socket.io-client";
+import {socket} from "../../socket.js";
 
-let socket;
+// let socket;
 class Lobby extends Component {
     constructor(props) {
         super(props);   
@@ -15,7 +16,7 @@ class Lobby extends Component {
             display_modal: false,
             endpoint: 'http://localhost:4000'
         }
-        socket = socketIOClient(this.state.endpoint);
+        // socket = socketIOClient(this.state.endpoint);
     }
 
     showHelpModal = () => {

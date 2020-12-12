@@ -5,10 +5,11 @@ import React, { Component } from 'react';
 import './CreateRoom.css'
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
-import socketIOClient from "socket.io-client";
+// import socketIOClient from "socket.io-client";
+import {socket} from "../../socket.js";
 import axios from 'axios';
 
-let socket;
+// let socket;
 class CreateRoom extends Component {
     constructor(props) {
         super(props);
@@ -22,7 +23,7 @@ class CreateRoom extends Component {
             redirect: false,
             card_categories: []
         }
-        socket = socketIOClient(this.state.endpoint);
+        // socket = socketIOClient(this.state.endpoint);
     }
 
     updateCategorySelector = (event) => {

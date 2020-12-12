@@ -1,7 +1,7 @@
 // This container is the game room
 import React, { useEffect, useState } from 'react';
-import socketIO from 'socket.io-client';
-
+// import socketIO from 'socket.io-client';
+import {socket} from "../../socket.js";
 
 import './Room.css'
 
@@ -10,7 +10,7 @@ import Scoreboard from './Scoreboard'
 import Chat from '../../components/Chat/Chat'
 import { connect, useSelector } from 'react-redux';
 
-const socket = socketIO('http://localhost:4000');
+// const socket = socketIO('http://localhost:4000');
 
 const Room = (props) => {
     const [cards, setCards] = useState([])
