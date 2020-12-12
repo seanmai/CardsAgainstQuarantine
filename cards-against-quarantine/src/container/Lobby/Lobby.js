@@ -47,7 +47,6 @@ class Lobby extends Component {
 
         // Success join handler
         // Todo - Need to update socket response to say join room success
-        // this.props.setGameID(roomID)
         this.props.setJoinGame(roomID);
 
         socket.on('join-error', error => {
