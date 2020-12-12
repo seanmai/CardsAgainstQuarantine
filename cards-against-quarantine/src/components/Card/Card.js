@@ -7,7 +7,7 @@ import './Card.css'
 
 const Card = ({ content, onClick, className, ...props }) => {
     return (
-        <button className={`card ${className}`} onClick={onClick} value={content} readOnly {...props}>{content}</button>
+        <div className={`card ${className}`} onClick={onClick} data-value={content} readOnly {...props}>{content}</div>
     );
 }
 

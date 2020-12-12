@@ -1,0 +1,17 @@
+#scoreboard-container {
+    height: 40vh;
+}
+
+#scoreboard-table {
+    width: 90%;
+    margin: auto;
+}
+
+#scoreboard-title {
+    padding-left: 5%;
+}
+
+.scoreboard-name {
+    width: 80%;
+    line-height: 1.5em;
+}

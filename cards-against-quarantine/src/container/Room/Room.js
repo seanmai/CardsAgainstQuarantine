@@ -7,6 +7,7 @@ import './Room.css'
 
 import Card from '../../components/Card/Card';
 import Scoreboard from './Scoreboard'
+import Chat from '../../components/Chat/Chat'
 import { connect, useSelector } from 'react-redux';
 
 const socket = socketIO('http://localhost:4000');
@@ -66,129 +67,130 @@ const Room = (props) => {
 
     useEffect(() => {
         socket.on('game-state', data => {
-            console.log(data)
-            setBlack(data.blackCard)
-            setCzar(data.czar === username)
-            const player_cards = data.players.filter(p => p.name === username)[0].cards
-            setCards(player_cards.map(c => { return { content: c, selected: false } }))
+            console.log(data);
+            setBlack(data.blackCard);
+            setCzar(data.czar === username);
+            const player_cards = data.players.filter(p => p.name === username)[0].cards;
+            setCards(player_cards.map(c => { return { content: c, selected: false } }));
 
-            const curr_played = data.boardCards
-            setPlayed(curr_played.map(c => { return { content: c.card, user: c.user, selected: false } }))
-            setScores(data.players)
+            const curr_played = data.boardCards;
+            setPlayed(curr_played.map(c => { return { content: c.card, user: c.user, selected: false } }));
+            setScores(data.players);
 
             if (data.boardCards.length === 0) {
-                if (czar) {
-                    setDisable(true)
+                if (data.czar) {
+                    setDisable(true);
                 } else {
-                    setDisable(false)
+                    setDisable(false);
                 }
             }
         });
         socket.on('game-over', data => {
-            console.log('handle end of game')
-            console.log(data)
+            console.log('handle end of game');
+            console.log(data);
         });
     }, [username]);
 
     const cardClickHandler = (e) => {
-        if (e.target.value !== "") {
-            setSelected(e.target.value)
-            setCards(cards.map(card => card.content === e.target.value ? { ...card, selected: true } : { ...card, selected: false }))
+        if (e.target.getAttribute('data-value') !== '') {
+            setSelected(e.target.getAttribute('data-value'));
+            setCards(cards.map(card => card.content === e.target.getAttribute('data-value')? { ...card, selected: true } : { ...card, selected: false }));
         }
     }
 
     const cardSubmitHandler = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         const data = {
             username: username,
             card: selected
-        }
-        socket.emit('submit-card', gameId, data)
-        setDisable(true)
+        };
+        socket.emit('submit-card', gameId, data);
+        setDisable(true);
     }
 
     const winSubmitHandler = (e) => {
-        e.preventDefault()
-        console.log(played)
-        const winner = played.find(c => c.content === selected)
+        e.preventDefault();
+        console.log(played);
+        const winner = played.find(c => c.content === selected);
         const data = {
             gameId,
             username: winner.user
-        }
-        socket.emit('round-winner', gameId, data)
+        };
+        socket.emit('round-winner', gameId, data);
     }
+
     const returnCard = (e) => {
-        setCards(cards.map(card => { return { ...card, selected: false } }))
-        setSelected("")
+        setCards(cards.map(card => { return { ...card, selected: false } }));
+        setSelected('');
     }
 
     const refreshGame = () => {
-        socket.emit('refresh', gameId)
+        socket.emit('refresh', gameId);
     }
 
     return (
-        <div className="flex-container">
+        <div id="flex-container">
             <button onClick={refreshGame}>Refresh Game</button>
-            <div className="game-area">
-                {czar && "YOU ARE CZAR"}
-                {!czar && "YOU ARE Player"}
-                <Card
-                    disabled
-                    content={black} >
-                </Card>
-                {!czar &&
-                    <form onSubmit={cardSubmitHandler}>
-                        <Card
-                            disabled={selected === ""}
-                            type="button"
-                            content={selected}
-                            onClick={returnCard} >
-                        </Card>
-                        <button type="submit" disabled={selected === ""}>Submit</button>
-                    </form>
-                }
-                {czar &&
-                    <form onSubmit={winSubmitHandler}>
-                        <div className="played-cards">
-                            {played.map(card => {
-                                return (
-                                    <Card
-                                        key={card.content}
-                                        className={card.content === selected ? "selected" : ""}
-                                        type="button"
-                                        content={card.selected ? "" : card.content}
-                                        onClick={cardClickHandler}>
-                                    </Card>
-                                )
-                            })}
-                        </div>
-                        <button type="submit" disabled={selected === ""}>Submit</button>
-                    </form>
-                }
-                <h1>Your Hand</h1>
-                <div className='cardbar'>
-                    {cards.map(card => {
-                        return (
+            <div id="game-container">
+                <div id="game-area">
+                    <h1>{czar ? 'YOU ARE THE CARD CZAR' : 'YOU ARE A PLAYER'}</h1>
+                    <Card
+                        disabled
+                        className="black-card"
+                        content={black} >
+                    </Card>
+                    {!czar &&
+                        <form onSubmit={cardSubmitHandler}>
                             <Card
-                                disabled={czar || disable}
-                                key={card.content}
-                                content={card.selected ? "" : card.content}
-                                onClick={cardClickHandler}>
+                                disabled={selected === ""}
+                                type="button"
+                                content={selected}
+                                onClick={returnCard} >
                             </Card>
-                        )
-                    })}
+                            <button id="submit-button" type="submit" disabled={selected === ""}>Submit</button>
+                        </form>
+                    }
+                    {czar &&
+                        <form onSubmit={winSubmitHandler}>
+                            <div className="played-cards">
+                                {played.map(card => {
+                                    return (
+                                        <Card
+                                            key={card.content}
+                                            className={card.content === selected ? 'selected' : ''}
+                                            type="button"
+                                            content={card.selected ? '' : card.content}
+                                            onClick={cardClickHandler}>
+                                        </Card>
+                                    )
+                                })}
+                            </div>
+                        <button type="submit" disabled={selected === ""}>Submit</button>
+                    </form>
+                }
+                </div>
+                <div id="game-hand">
+                    <h1>Your Hand</h1>
+                    <div className="cardbar">
+                        {cards.map(card => {
+                            return (
+                                <Card
+                                    disabled={czar || disable}
+                                    key={card.content}
+                                    content={card.selected ? '' : card.content}
+                                    onClick={cardClickHandler}>
+                                </Card>
+                            )
+                        })}
+                    </div>
                 </div>
             </div>
-            <div className="game-extras">
+            <div id="game-extras">
                 <Scoreboard scores={scores} />
-                <div>
-                    <h1>
-                        Chat
-                    </h1>
-                </div>
+                <Chat gameId={gameId}/>
             </div>
         </div>
-    )
+    );
 }
 
 function mapStateToProps(state) {
