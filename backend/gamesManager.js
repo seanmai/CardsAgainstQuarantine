@@ -27,7 +27,7 @@ let gamesManager = class {
 		return game[0];
 	}
 
-	deleteGame(id) {
+	deleteGame(gameId) {
 		this.gamesList = _.without(this.gamesList, { id: gameId });
 	}
 

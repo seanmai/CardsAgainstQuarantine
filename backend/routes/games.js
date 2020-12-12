@@ -70,6 +70,7 @@ module.exports = function (io) {
 				if (GamesManager.isGameOver(gameId)) {
 					console.log("GAME OVER");
 					io.in(gameId).emit('game-over', GamesManager.getGameState(gameId));
+					GamesManager.deleteGame(gameId);
 				} else {
 					GamesManager.startNextRound(gameId);
 					io.in(gameId).emit('game-state', GamesManager.getGameState(gameId));
