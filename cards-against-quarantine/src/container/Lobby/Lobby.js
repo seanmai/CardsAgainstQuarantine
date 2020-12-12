@@ -47,14 +47,12 @@ class Lobby extends Component {
 
         // Success join handler
         // Todo - Need to update socket response to say join room success
-        this.props.setGameID(roomID)
-
+        this.props.setJoinGame(roomID);
 
         socket.on('join-error', error => {
             // TODO: Handle error on Client Side
             console.log(error);
-            this.props.setGameID(null)
-
+            this.props.setEndGame()
         });
     }
 
@@ -131,6 +129,12 @@ function mapDispatchToProps(dispatch){
         },
         setGameID: (userObj) => {
             dispatch({type: "SET_GAMEID", payload:userObj})
+        },
+        setEndGame: (endgame) => {
+            dispatch({type: "SET_ENDGAME", payload:endgame})
+        },
+        setJoinGame: (gameId) => {
+            dispatch({type: "SET_JOINED", payload:gameId})
         }
     }
 }

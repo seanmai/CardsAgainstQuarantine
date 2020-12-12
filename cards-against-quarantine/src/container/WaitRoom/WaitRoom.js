@@ -38,7 +38,6 @@ class WaitRoom extends Component {
         event.preventDefault();
         this.props.setGameID(null);
         this.setState({redirect: "/"})
-
     }
 
     render() {
@@ -69,7 +68,7 @@ class WaitRoom extends Component {
                 <label><strong>User:</strong> {this.props.currentUser.name} <label style={{color: 'green'}}>{this.props.currentUser.isAdmin ? " (admin)" : null }</label></label>
             </div>
             <div className="main-container">
-                <label className="title">Waiting for players to join</label>
+                <label className="title">Waiting for more players</label>
                 <div className="main-box">
                     <div className="content-wrapper">
                         <label className="box-title">Current Players: </label>
@@ -79,11 +78,8 @@ class WaitRoom extends Component {
                             })}
 
                         </div>
-
-                        <div className="button-wrapper">
-                            <button onClick={this.exitRoomHandler}>Cancel Game</button>
-                            <button onClick={this.startGameHandler} className="start-button">Start Game</button>
-                        </div>
+                        {this.props.status.mode === "HOST" ? <div className="button-wrapper"><button onClick={this.exitRoomHandler}>Cancel Game</button><button onClick={this.startGameHandler} className="start-button">Start Game</button></div>
+ : null}
                     </div>
 
                 </div>
@@ -99,7 +95,8 @@ function mapStateToProps(state) {
         currentUser: state.currentUser,
         redirect: state.redirect,
         auth: state.authenticated,
-        gameid: state.gameid
+        gameid: state.gameid,
+        status: state.status
     }
 }
 
