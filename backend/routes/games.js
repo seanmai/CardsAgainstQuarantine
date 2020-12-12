@@ -27,16 +27,21 @@ module.exports = function (io) {
 				if (GamesManager.joinGame(message.username, message.gameId)) {
 					let players = GamesManager.findGame(message.gameId).players;
 					socket.join(message.gameId);
-					socket.to(message.gameId).emit('user-joined', players);
 				} else {
 					socket.emit('join-error', 'connection rejected: maximum players reached');
 				}
 			}
 		});
 
+		socket.on("wait-queue", (message) => {
+			let players = GamesManager.findGame(message.gameId).players;
+			io.sockets.emit('user-joined', players);
+		});
+
 		socket.on('start-game', (gameId, username) => {
 			if (GamesManager.validGameId(gameId)) {
 				GamesManager.startGame(gameId);
+				io.sockets.emit('game-started', "game start");
 				// ********** remove following line later *****************
 				socket.emit('game-state', GamesManager.getGameState(gameId));
 				socket.to(gameId).emit('game-state', GamesManager.getGameState(gameId));
