@@ -133,7 +133,7 @@ const Room = (props) => {
             <button onClick={refreshGame}>Refresh Game</button>
             <div id="game-container">
                 <div id="game-area">
-                    <h1>{czar ? 'YOU ARE THE CARD CZAR' : 'YOU ARE A PLAYER'}</h1>
+                    <h1>{czar ? 'You are the Card Czar' : 'You are a Player'}</h1>
                     <Card
                         disabled
                         className="black-card"
