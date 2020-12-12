@@ -43,7 +43,7 @@ module.exports = function (io) {
 				GamesManager.startGame(gameId);
 				io.sockets.emit('game-started', "game start");
 				io.sockets.emit('game-state', await GamesManager.getGameState(gameId));
-				socket.emit('game-state', await GamesManager.getGameState(gameId));
+				socket.broadcast.emit('game-state', await GamesManager.getGameState(gameId));
 			} else {
 				console.log("invalid id")
 			}
