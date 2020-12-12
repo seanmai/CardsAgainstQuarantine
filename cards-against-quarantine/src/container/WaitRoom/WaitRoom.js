@@ -12,15 +12,17 @@ class WaitRoom extends Component {
             endpoint: 'http://localhost:4000',
             players: [],
             redirect: null,
+            broadcast: true
         }
         socket = socketIOClient(this.state.endpoint);
+
         socket.on("user-joined", (message) => {
             this.setState({players:message})
         });
+
         socket.on("game-started", (message) => {
             this.setState({redirect: "/room"})
         });
-
     }
 
     // Implement creategame logic
@@ -43,7 +45,10 @@ class WaitRoom extends Component {
             redirect = <Redirect to={this.state.redirect}/>;
         }
 
-        
+        if (this.props.gameid && this.state.broadcast){
+            this.setState({broadcast: false})
+            socket.emit("wait-queue", {gameId: this.props.gameid});
+        }
 
         return (
             // TODO Design Modal, fill up the text description
