@@ -38,14 +38,12 @@ module.exports = function (io) {
 			io.sockets.emit('user-joined', players);
 		});
 
-		socket.on('start-game', (gameId) => {
+		socket.on('start-game', async (gameId) => {
 			if (GamesManager.validGameId(gameId)) {
 				GamesManager.startGame(gameId);
 				io.sockets.emit('game-started', "game start");
-				// ********** remove following line later *****************
-				// Supposed to use async/await
-				socket.emit('game-state', GamesManager.getGameState(gameId));
-				socket.to(gameId).emit('game-state', GamesManager.getGameState(gameId));
+				io.sockets.emit('game-state', await GamesManager.getGameState(gameId));
+
 			} else {
 				console.log("invalid id")
 			}
