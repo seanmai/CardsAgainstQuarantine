@@ -55,8 +55,9 @@ class CreateRoom extends Component {
         socket.emit("host-game", (message));
 
         socket.on('game id', id => {
-            console.log(id)
-            this.props.setGameID(id);
+            // console.log(id)
+            // this.props.setGameID(id);
+            this.props.setHost(id)
         });
 
         this.setState({ redirect: true })
@@ -164,6 +165,9 @@ function mapDispatchToProps(dispatch) {
         setGameID: (userObj) => {
             dispatch({ type: "SET_GAMEID", payload: userObj })
         },
+        setHost: (gameId) => {
+            dispatch({ type: "SET_HOST", payload: gameId })
+        }
     }
 }
 

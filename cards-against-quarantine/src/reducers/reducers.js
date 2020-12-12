@@ -4,7 +4,11 @@ const defaultState = {
     },
     redirect: '/login',
     authenticated: false,
-    gameid: null
+    gameid: null,
+    status: {
+        mode: null,
+        ingame: true
+    }
 }
 
 function reducer (state = defaultState, action){
@@ -38,6 +42,33 @@ function reducer (state = defaultState, action){
             return {
                 ...state, 
                 gameid: action.payload
+            }
+        case "SET_JOINED":
+            return {
+                ...state,
+                status: {
+                    mode: "JOIN",
+                    ingame: true
+                },
+                gameid: action.payload
+            }
+        case "SET_HOST":
+            return {
+                ...state,
+                status: {
+                    mode: "HOST",
+                    ingame: true
+                },
+                gameid: action.payload
+            }
+        case "SET_ENDGAME":
+            return {
+                ...state,
+                status: {
+                    mode: null,
+                    ingame: false
+                },
+                gameid: null
             }
         default: return state
     }
