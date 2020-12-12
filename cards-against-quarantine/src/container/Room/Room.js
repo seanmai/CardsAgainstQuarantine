@@ -122,13 +122,13 @@ const Room = (props) => {
         setSelected("")
     }
 
-    const createGame = () => {
-        socket.emit('start-game', gameId, username)
+    const refreshGame = () => {
+        socket.emit('refresh', gameId)
     }
 
     return (
         <div className="flex-container">
-            <button onClick={createGame}>Start Game</button>
+            <button onClick={refreshGame}>Refresh Game</button>
             <div className="game-area">
                 {czar && "YOU ARE CZAR"}
                 {!czar && "YOU ARE Player"}
