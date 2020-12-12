@@ -55,8 +55,6 @@ class CreateRoom extends Component {
         socket.emit("host-game", (message));
 
         socket.on('game id', id => {
-            // console.log(id)
-            // this.props.setGameID(id);
             this.props.setHost(id)
         });
 

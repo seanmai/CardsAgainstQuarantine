@@ -53,7 +53,6 @@ class Lobby extends Component {
         socket.on('join-error', error => {
             // TODO: Handle error on Client Side
             console.log(error);
-            // this.props.setGameID(null)
             this.props.setEndGame()
         });
     }
