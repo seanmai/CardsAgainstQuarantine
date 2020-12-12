@@ -9,7 +9,7 @@ import Card from '../../components/Card/Card';
 import Scoreboard from './Scoreboard'
 import Chat from '../../components/Chat/Chat'
 import GameEndModal from './GameEndModal'
-import { connect, useSelector } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 
 const Room = (props) => {
     const [cards, setCards] = useState([])
@@ -22,11 +22,12 @@ const Room = (props) => {
     const [disableForm, setDisable] = useState(false)
     const [enableCzar, setEnableCzar] = useState(false)
 
-    const [gameEnd, setGameEnd] = useState(true)
+    const [gameEnd, setGameEnd] = useState(false)
 
 
     const username = useSelector(state => state.currentUser.name);
     const gameId = useSelector(state => state.gameid);
+    const dispatch = useDispatch()
 
     useEffect(() => {
         socket.on('game-state', data => {
@@ -54,7 +55,7 @@ const Room = (props) => {
             setDisable(true)
             setEnableCzar(false)
             setGameEnd(true)
-
+            dispatch({ type: "SET_ENDGAME", payload: true })
         });
     }, [username, czar]);
 
@@ -170,4 +171,12 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(Room);
+function mapDispatchToProps(dispatch) {
+    return {
+        setEndGame: (endgame) => {
+            dispatch({ type: "SET_ENDGAME", payload: endgame })
+        },
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Room);

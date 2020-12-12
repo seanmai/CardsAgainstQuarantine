@@ -3,7 +3,7 @@ import '../HelpModal/HelpModal.css'
 import { Link } from 'react-router-dom';
 
 
-const GameEndModal = ({ showModal, scores }) => {
+const GameEndModal = ({ showModal, scores, handle }) => {
 
     const displayModal = showModal ? "modal display-block" : "modal display-none";
 
@@ -26,7 +26,7 @@ const GameEndModal = ({ showModal, scores }) => {
                         </tbody>
                     </table>
                 </div>
-                <Link to="/lobby" style={{ textDecoration: 'none' }}>
+                <Link to="/" style={{ textDecoration: 'none' }}>
                     <button className="close-button">Back To Lobby</button>
                 </Link>
 
