@@ -38,16 +38,21 @@ module.exports = function (io) {
 			io.sockets.emit('user-joined', players);
 		});
 
-		socket.on('start-game', (gameId, username) => {
+		socket.on('start-game', (gameId) => {
 			if (GamesManager.validGameId(gameId)) {
 				GamesManager.startGame(gameId);
 				io.sockets.emit('game-started', "game start");
 				// ********** remove following line later *****************
+				// Supposed to use async/await
 				socket.emit('game-state', GamesManager.getGameState(gameId));
 				socket.to(gameId).emit('game-state', GamesManager.getGameState(gameId));
 			} else {
 				console.log("invalid id")
 			}
+		});
+
+		socket.on('refresh', (gameId) => {
+			io.sockets.emit('game-state', GamesManager.getGameState(gameId));
 		});
 
 		// info would include the card and username
@@ -57,7 +62,7 @@ module.exports = function (io) {
 					console.log("submitting ", data)
 					GamesManager.submitWhiteCard(gameId, data.username, data.card);
 					// ********** remove following line later *****************
-					socket.emit('game-state', GamesManager.getGameState(gameId));
+					io.sockets.emit('game-state', GamesManager.getGameState(gameId));
 					socket.to(gameId).emit('game-state', GamesManager.getGameState(gameId));
 				}
 			}
