@@ -10,11 +10,21 @@
 .modal-main{
     position:fixed;
     background: white;
-    width: 80%;
+    width: 30%;
+    max-width: 50%;
     height: auto;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    /* align-items: center; */
+    z-index: 3;
+}
+
+.info-container {
+    margin: 5px;
 }
 
 .display-block{
@@ -28,7 +38,7 @@
 
 .closeBox {
     width: 100%;
-    padding: 5px;
+    /* padding: 5px; */
 }
 
 .role_button{
@@ -41,4 +51,34 @@
     white-space: nowrap;
     text-align: center;
 
+}
+
+.role_button:focus {
+    background-color: #4A86E8 !important;
+}
+
+.close-button {
+    background-color: white;
+    border-width: 1px;
+    width: 100%;
+    font-size: 1em; 
+    padding: 10px 0px;
+    border-radius: 5px;
+    white-space: nowrap;
+    text-align: center;
+    /* margin: auto; */
+    display:block;
+}
+
+@media screen and (max-width: 540px) {
+    .modal-main{
+        position:fixed;
+        background: white;
+        width: 80% !important;
+        min-width: 80%;
+        height: auto;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 }

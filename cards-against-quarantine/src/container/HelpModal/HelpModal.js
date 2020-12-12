@@ -12,7 +12,7 @@ export default class HelpModal extends Component {
         }
     }
 
-    viewRole = (role) => {
+    viewRole = role => {
         this.setState({display_role: role})
     }
 
@@ -23,13 +23,15 @@ export default class HelpModal extends Component {
 
         if (this.state.display_role === "Player"){
             role_description = [
-                <h2 key="Role">Player</h2>,
-                <h2 key="Desc"></h2>
+                <h2 key="Role">How to Play (Player): </h2>,
+                <label key="RoleDesc">Once the game starts, you are given 5 cards and for each round you are required to present a card in response to the black card.</label>,
+                <h2 key="WinCondition">Win Condition (Player):</h2>,
+                <label key="WinDesc">Once the cards are presented to the Card Czar, the Card Czar selects their favourite card and if your card is selected, you win the round</label>
             ]
         }else {
             role_description = [
-                <h2 key="Role">Czar</h2>,
-                <h2 key="Desc"></h2>
+                <h2 key="Role">How to Play (Czar): </h2>,
+                <label key="RoleDesc">As a Card Czar, your role is to select your most favourite card presented by each of the players</label>,
             ]
         }
 
@@ -41,9 +43,11 @@ export default class HelpModal extends Component {
                         <button className="role_button" onClick={() => {this.viewRole("Player")}}>Player</button>
                         <button className="role_button" onClick={() => {this.viewRole("Czar")}}>Card Czar</button>
                     </div>
-                    {role_description}
+                    <div className="info-container">
+                        {role_description}
+                    </div>
                     <div className="closeBox">
-                        <button onClick={this.props.closeModal}>Close</button>
+                        <button className="close-button" onClick={this.props.closeModal}>Close</button>
                     </div>
                 </div>
             </div>
