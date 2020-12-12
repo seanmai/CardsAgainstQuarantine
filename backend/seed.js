@@ -73,12 +73,12 @@ let cardData = [
     {
         category: 'Base',
         type: 'black',
-        content: 'A	Check me out, yo! I call this dance move "____."'
+        content: 'Check me out, yo! I call this dance move "____."'
     },
     {
         category: 'Base',
         type: 'black',
-        content: '	Coming to Broadway this season, ____: The Musical.'
+        content: 'Coming to Broadway this season, ____: The Musical.'
     },
     {
         category: 'Base',

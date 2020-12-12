@@ -1,12 +1,15 @@
 .card {
     width: 8rem;
     height: 10rem;
+    padding: 10px 5px;
     border: solid black 1px;
-    background: beige;
     margin: 1rem;
-    text-align: center;
-    font-size: 1.5rem;
+    font-size: 14px;
     cursor: pointer;
+    vertical-align: text-top;
+    user-select: none;
+    -moz-user-select: none;
+    font-weight: bold;
 }
 
 .card:disabled {
@@ -17,4 +20,9 @@
 .card:focus, .selected {
     outline: none;
     border: solid black 3px;
+}
+
+.black-card {
+    background-color: black;
+    color: white;
 }

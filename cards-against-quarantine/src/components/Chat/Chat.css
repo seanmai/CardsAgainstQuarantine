@@ -1,5 +1,9 @@
+#chat-container {
+    width: 100%;
+}
+
 #messages-container {
-    height: calc(100vh - 116px);
+    height: calc(65vh - 116px);
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -12,26 +16,24 @@
     font-size: 13px;
     list-style-type: none; 
     margin-top: auto;
-    max-width: 400px;
     padding: 0 10px;
     word-wrap: break-word;
 }
 
 #chat-box { 
     background-color: white;
-    padding: 20px 5px 10px 5px; 
+    padding: 20px 5px 10px 5px;
     position: fixed;
-    width: 100%; 
-    max-width: 400px;
     display: flex;
     align-items: center;
+    flex-direction: row;
+    flex: 1;
     justify-content: center;
 }
 
 #chat-box #type-input { 
     border: 0; 
-    padding: 10px; 
-    width: 80%; 
+    padding: 10px;
     margin-right: 0.5%;
     border-radius: 20px;
     background-color: #f2f2f2;
@@ -40,7 +42,6 @@
 
 #send-button { 
     font-weight: bold;
-    width: 20%; 
     background: #0099ff;
     border: none; 
     padding: 10px;

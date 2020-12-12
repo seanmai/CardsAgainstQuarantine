@@ -10,7 +10,7 @@
     flex-wrap: wrap;
 }
 
-.flex-container {
+#flex-container {
     height: 100vh;
     border-left: solid black 2px;
     display: flex;
@@ -21,19 +21,41 @@
     max-height: 100%;
 }
 
-.game-area {
+#game-container {
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+    flex: 3;
+    justify-content: flex-start;
+}
+
+#game-area {
+    display: flex;
+    flex-direction: column;
+    flex: 3;
+    justify-content: flex-start;
+}
+
+#game-hand {
     display: flex;
     flex-direction: column;
     flex: 3;
     justify-content: flex-end;
 }
 
-.game-extras {
+#game-extras {
     display: flex;
     flex-direction: column;
     flex: 1;
     border-left: solid black 2px;
     border-right: solid black 2px;
     min-height: 0;
+}
+
+#submit-button {
+    margin-left: 20px;
+}
+
+h1 {
+    padding-left: 10px;
 }

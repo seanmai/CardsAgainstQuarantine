@@ -148,7 +148,7 @@ let game = class {
 		this.dealBlackCard();
 		for (let playerIndex = 0; playerIndex < this.numPlayers; playerIndex++) {
 			if (this.players[playerIndex].name !== this.czar) {
-				dealCard(playerIndex);
+				this.dealCard(playerIndex);
 			}
 		}
 		this.setCzar();
@@ -159,7 +159,7 @@ let game = class {
 	resetTurnsLeft() {
 		for (let i = 0; i < this.numPlayers; i++) {
 			if (this.players[0].name !== this.czar) {
-				this.turnsLeft.push(players[0].user.name);
+				this.turnsLeft.push(this.players[0].name);
 			}
 		}
 	}

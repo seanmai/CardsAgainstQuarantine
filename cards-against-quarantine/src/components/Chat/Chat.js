@@ -3,7 +3,7 @@ import socketIO from 'socket.io-client';
 import './Chat.css';
 const socket = socketIO('http://localhost:4000');
 
-const Chat = () => {
+const Chat = (props) => {
     
     const [message, setMessage] = useState('');
 
@@ -15,7 +15,7 @@ const Chat = () => {
         data.gameId = '';
         data.username = '';
         data.message = message;
-        socket.emit("message", data);
+        socket.emit('message', props.gameId, data);
         setMessage('');
     };
 
@@ -27,9 +27,9 @@ const Chat = () => {
     // if you want to test. we currently do not have it joined per room so.
     useEffect(() => {
         socket.on('message-broadcast', data => {
-            let newMessage = document.createElement("P");
+            let newMessage = document.createElement('P');
             newMessage.innerText = data.message;
-            document.querySelector("#messages").appendChild(newMessage);
+            document.querySelector('#messages').appendChild(newMessage);
         });
     }, []);
 
