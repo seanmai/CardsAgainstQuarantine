@@ -62,6 +62,12 @@ let game = class {
 		return false;
 	}
 
+	removePlayer(username) {
+		this.players.splice(this.players.findIndex(player => player.name === username), 1);
+		this.turnsLeft.splice(this.turnsLeft.indexOf(username), 1);
+		this.numPlayers--;
+	}
+
 
 	initCards() {
 		Card.find({ category: this.cardCategory, type: 'white' }).exec((err, cards) => {
@@ -210,7 +216,6 @@ let game = class {
 						score: i.score + 1
 					}
 				)
-
 			}
 			else {
 				return i
