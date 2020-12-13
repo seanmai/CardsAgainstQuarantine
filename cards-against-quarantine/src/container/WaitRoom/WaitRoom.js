@@ -18,7 +18,7 @@ class WaitRoom extends Component {
         }
         // socket = socketIOClient(this.state.endpoint);
 
-        socket.on("user-joined", (message) => {
+        socket.on("update-users", (message) => {
             this.setState({players:message})
         });
 
@@ -37,6 +37,7 @@ class WaitRoom extends Component {
     exitRoomHandler = (event) => {
         event.preventDefault();
         this.props.setGameID(null);
+        socket.emit("exit-game", {gameId: this.props.gameid, username: this.props.currentUser.name})
         this.setState({redirect: "/"})
     }
 

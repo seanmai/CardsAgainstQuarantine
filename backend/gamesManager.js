@@ -20,6 +20,8 @@ let gamesManager = class {
 		return gameId;
 	}
 
+	// Should check if gameroom doesn't exist first ie) validGameId(gameId) then getGame(gameId)
+	// Don't join non-existent gameId's for now
 	findGame(gameId) {
 		let game = this.gamesList.filter((entry) => {
 			return entry.id === gameId;
