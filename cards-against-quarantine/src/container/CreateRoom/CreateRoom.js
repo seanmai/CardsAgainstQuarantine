@@ -63,7 +63,6 @@ class CreateRoom extends Component {
     componentDidMount() {
         axios.get('http://localhost:4000/card-categories')
             .then((res) => {
-                console.log("jacky",res.data);
                 this.setState({
                     card_categories: res.data
                 })
