@@ -14,8 +14,10 @@ class Lobby extends Component {
         super(props);   
         this.state = {
             display_modal: false,
-            endpoint: 'http://localhost:4000'
+            endpoint: 'http://localhost:4000',
+            room_input: null
         }
+        
         // socket = socketIOClient(this.state.endpoint);
     }
 
@@ -29,31 +31,40 @@ class Lobby extends Component {
 
     // Logout function
     logoutHandler = () => {
-        console.log("Logout button clicked");
         this.props.setLogout();
     }
 
     submitHandler = (event) => {
         event.preventDefault();
-        let roomID = document.getElementById("roomID").value;
+        // let roomID = document.getElementById("roomID").value;
 
         let message = {
-            gameId : roomID,
+            gameId : this.state.room_input,
             username: this.props.currentUser.name,
         }
+        socket.on('join-error', error => {
+            // TODO: Handle error on Client Side
+            console.log(error);
+            this.props.setEndGame()
+        });
+
+        socket.on('join-success', message => {
+            // TODO: Handle error on Client Side)
+            this.props.setJoinGame(this.state.room_input);
+        });
 
         socket.emit("join-game", (message));
         
 
         // Success join handler
         // Todo - Need to update socket response to say join room success
-        this.props.setJoinGame(roomID);
+        // this.props.setJoinGame(roomID);
 
-        socket.on('join-error', error => {
-            // TODO: Handle error on Client Side
-            console.log(error);
-            this.props.setEndGame()
-        });
+
+    }
+
+    roomInputHandler = (event) => {
+        this.setState({room_input: event.target.value})
     }
 
     render() {
@@ -91,7 +102,7 @@ class Lobby extends Component {
                         <h2><u>Join Game_______</u></h2>
                         <div className={"join-container"}>
                             <form onSubmit={this.submitHandler}>
-                                <input type="text" placeholder="Enter Room Code" id="roomID" />
+                                <input onChange={this.roomInputHandler} type="text" placeholder="Enter Room Code" id="roomID" />
                                 {/* <button>Join Game</button> */}
                             </form>
                         </div>
