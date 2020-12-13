@@ -78,7 +78,7 @@ class WaitRoom extends Component {
                             })}
 
                         </div>
-                        {this.props.status.mode === "HOST" ? <div className="button-wrapper"><button onClick={this.exitRoomHandler}>Cancel Game</button><button onClick={this.startGameHandler} className="start-button">Start Game</button></div>
+                        {this.props.status.mode === "HOST" ? <div className="button-wrapper"><button onClick={this.exitRoomHandler}>Cancel Game</button><button onClick={this.startGameHandler} className="start-button">Start Game</button></div> 
  : null}
                     </div>
 
