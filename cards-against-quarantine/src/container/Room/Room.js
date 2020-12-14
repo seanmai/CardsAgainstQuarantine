@@ -105,6 +105,26 @@ const Room = (props) => {
                         className="black-card"
                         content={black} >
                     </Card>
+
+                    <form onSubmit={winSubmitHandler}>
+                        <div className="played-cards">
+
+                            {played.map(card => {
+                                const classname = `${card.content === selected ? 'selected' : ''} ${!enableCzar || !czar ? 'disabled' : ''}`
+                                return (
+                                    <Card
+                                        key={card.content}
+                                        className={classname}
+                                        type="button"
+                                        content={card.selected ? '' : card.content}
+                                        onClick={cardClickHandler}>
+                                    </Card>
+                                )
+                            })}
+                        </div>
+                        {czar && <button className="submit-button" type="submit" disabled={!enableCzar || selected === ""}>Submit</button>}
+
+                    </form>
                     {!czar &&
                         <form onSubmit={cardSubmitHandler}>
                             <Card
@@ -117,25 +137,7 @@ const Room = (props) => {
                             <button className="submit-button" type="submit" disabled={selected === "" || disableForm}>Submit</button>
                         </form>
                     }
-                    {czar &&
-                        <form onSubmit={winSubmitHandler}>
-                            <div className="played-cards">
-                                {played.map(card => {
-                                    const classname = `${card.content === selected ? 'selected' : ''} ${!enableCzar ? 'disabled' : ''}`
-                                    return (
-                                        <Card
-                                            key={card.content}
-                                            className={classname}
-                                            type="button"
-                                            content={card.selected ? '' : card.content}
-                                            onClick={cardClickHandler}>
-                                        </Card>
-                                    )
-                                })}
-                            </div>
-                            <button className="submit-button" type="submit" disabled={!enableCzar || selected === ""}>Submit</button>
-                        </form>
-                    }
+
                 </div>
                 <div id="game-hand">
                     <h1>Your Hand</h1>
