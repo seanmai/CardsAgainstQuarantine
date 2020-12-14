@@ -8,6 +8,7 @@
 .played-cards {
     display: flex;
     flex-wrap: wrap;
+    min-height: 8.5rem;
 }
 
 #flex-container {
